@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "revision_unavailable",
+    "message": "The selected World Forge artifact is unavailable for promotion.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

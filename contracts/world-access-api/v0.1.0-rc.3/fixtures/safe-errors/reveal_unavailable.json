@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "reveal_unavailable",
+    "message": "The generated-world access record cannot be revealed.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

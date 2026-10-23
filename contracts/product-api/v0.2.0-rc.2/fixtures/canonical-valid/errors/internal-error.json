@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "internal_error",
+    "message": "The lifecycle preview request could not be completed.",
+    "request_id": "request:internal_error_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

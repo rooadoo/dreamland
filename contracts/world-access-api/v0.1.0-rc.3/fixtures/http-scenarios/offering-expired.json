@@ -1,0 +1,9 @@
+{
+  "condition": "offering_expired",
+  "expected_error_code": "launch_selection_unavailable",
+  "expected_http_status": 404,
+  "operation_id": "exchangeWorldAccessOffering",
+  "request_actor_class": "attendee",
+  "required_actor_class": "attendee",
+  "side_effects_committed": false
+}

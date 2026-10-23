@@ -1,0 +1,13 @@
+{
+  "command_id": null,
+  "criticality": "authoritative",
+  "data": {
+    "safe_label": "changed"
+  },
+  "emitted_at_ms": 1777000000012,
+  "event_id": "event:phase2alphaevent:12",
+  "schema_revision": "1",
+  "sequence": 12,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "future.authoritative_change"
+}

@@ -1,0 +1,145 @@
+{
+  "display": {
+    "answers": [
+      {
+        "field_id": "day-or-date",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "Saturday"
+        }
+      },
+      {
+        "field_id": "year",
+        "kind": "integer",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "+02026"
+        }
+      },
+      {
+        "field_id": "adjective",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "weathered"
+        }
+      },
+      {
+        "field_id": "industry-or-setting",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "observatory"
+        }
+      },
+      {
+        "field_id": "technology-one",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "VAX terminals"
+        }
+      },
+      {
+        "field_id": "technology-two",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "radio clocks"
+        }
+      },
+      {
+        "field_id": "important-job",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "track a comet"
+        }
+      },
+      {
+        "field_id": "wildcard-event",
+        "kind": "short-text",
+        "value": {
+          "clipped": false,
+          "controls_marked": false,
+          "text": "the clocks disagree"
+        }
+      }
+    ],
+    "rendered_sentence": {
+      "clipped": false,
+      "controls_marked": false,
+      "text": "On Saturday in +02026, inside a weathered observatory, people rely on VAX terminals and radio clocks to track a comet. Today, the clocks disagree."
+    }
+  },
+  "expires_at": "2026-08-25T12:05:00.000Z",
+  "kind": "forge_seed_prepared",
+  "preparation": {
+    "answers": [
+      {
+        "field_id": "day-or-date",
+        "kind": "short-text",
+        "value": "Saturday"
+      },
+      {
+        "field_id": "year",
+        "kind": "integer",
+        "value": "+02026"
+      },
+      {
+        "field_id": "adjective",
+        "kind": "short-text",
+        "value": "weathered"
+      },
+      {
+        "field_id": "industry-or-setting",
+        "kind": "short-text",
+        "value": "observatory"
+      },
+      {
+        "field_id": "technology-one",
+        "kind": "short-text",
+        "value": "VAX terminals"
+      },
+      {
+        "field_id": "technology-two",
+        "kind": "short-text",
+        "value": "radio clocks"
+      },
+      {
+        "field_id": "important-job",
+        "kind": "short-text",
+        "value": "track a comet"
+      },
+      {
+        "field_id": "wildcard-event",
+        "kind": "short-text",
+        "value": "the clocks disagree"
+      }
+    ],
+    "confirmation_state": "unconfirmed",
+    "kind": "dreamland.world_seed_preparation",
+    "preparation_digest": "sha256:390186a5051379735794b5ce6b48bfab89fda4cfce095c5dd8e4ae25de79901d",
+    "recipe_id": "world-recipe:bsides-room:v1",
+    "recipe_revision": "1",
+    "rendered_sentence": "On Saturday in +02026, inside a weathered observatory, people rely on VAX terminals and radio clocks to track a comet. Today, the clocks disagree.",
+    "schema_revision": "1"
+  },
+  "preparation_reference": "forge-preparation:fixture-00000002",
+  "prepared_at": "2026-08-25T12:00:00.000Z",
+  "service_epoch": "forge-epoch:fixture-00000001",
+  "source": {
+    "kind": "provider_free_integration_preview",
+    "label": "Deterministic no-provider World Forge backend integration preview",
+    "live_forge_evidence": false,
+    "provider_calls": false
+  }
+}

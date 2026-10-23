@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "grant_unavailable",
+    "message": "The launch grant is unavailable.",
+    "request_id": "request:grant_unavailable_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

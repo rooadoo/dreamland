@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "generated_client_sha256": "57346d9bc46e94c7da21048021f9a732c14218cac1325fae68fa12bf1d00922d",
+    "manifest_schema_sha256": "f901ba57c775837477485795ca00e36c21c64d9d9ba562478a708ffaacb4545b",
+    "openapi_sha256": "da1ad38cbbf46e7cd5f5067c9ffe58e2529adc98426e4d29209848be3c694a41"
+  },
+  "backend_commit": "07d9297dd8da4336b22d68c42583db40659c4856",
+  "compatibility": "unfrozen-integration-preview",
+  "contract_name": "dreamland-private-world-access-api",
+  "contract_revision": "0.1.0-rc.3",
+  "dependencies": {
+    "product_api": {
+      "contract": "dreamland-private-product-api",
+      "manifest_sha256": "a6952883e528f4a9272988ebdfc54853bbf2e925f3fa1d75d925636b1c7152ec",
+      "revision": "0.7.0-rc.3"
+    },
+    "world_forge_api": {
+      "contract": "dreamland-private-world-forge-api",
+      "manifest_sha256": "0824a9d7f8ea1b1ed264a5f6cd76dd6831054b44932973278b60db1c384baa09",
+      "revision": "0.1.0-rc.4"
+    }
+  },
+  "fixture_set": {
+    "index_sha256": "045a2708050619c202c797dba49e820ab5bb966bcd214d8882a970d9e370c54e",
+    "path": "fixtures/index.json"
+  },
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_world_access_contract.py client-smoke contracts/world-access-api/v0.1.0-rc.3",
+    "client_toolchain": {
+      "harness": "tools/world_access_client_smoke/run-smoke.mjs",
+      "harness_sha256": "e81f289a6446c75b5052323fbe74b01dc559ac600de10077edee85e95db8c3b2",
+      "install_command": "npm ci --prefix tools/world_access_client_smoke",
+      "package": "tools/world_access_client_smoke/package.json",
+      "package_lock": "tools/world_access_client_smoke/package-lock.json",
+      "package_lock_sha256": "bf75be431d9146783d2492e2d33dc3edd8beb8fc0d5474f1d2e0cd4a184f03db",
+      "package_sha256": "96514f7fdaaf61074b8d8927fe9b11cb6e0bd51e2a784966976c9c0e393cf9ba",
+      "typescript": "6.0.3"
+    },
+    "publish_command": ".venv/bin/python tools/product_world_access_contract.py publish contracts/world-access-api/v0.1.0-rc.3 --backend-commit COMMIT --published-at TIMESTAMP",
+    "refresh_command": ".venv/bin/python tools/product_world_access_contract.py refresh contracts/world-access-api/v0.1.0-rc.3",
+    "validate_command": ".venv/bin/python tools/product_world_access_contract.py validate contracts/world-access-api/v0.1.0-rc.3"
+  },
+  "implementation_status": "provider_free_integration_preview_only",
+  "publication_status": "published",
+  "published_at": "2026-08-30T17:42:08Z",
+  "schema_version": 1,
+  "source": {
+    "kind": "provider_free_generated_access_preview",
+    "live_capability_evidence": false,
+    "live_forge_evidence": false,
+    "normal_runtime_integration": false,
+    "production_capabilities_enabled": [],
+    "provider_calls": false
+  },
+  "transport_status": "manually_invoked_loopback_private_bff_only"
+}

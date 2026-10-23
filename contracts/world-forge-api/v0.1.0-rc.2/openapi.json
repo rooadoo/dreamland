@@ -1,0 +1,2408 @@
+{
+  "components": {
+    "parameters": {
+      "ActorContext": {
+        "in": "header",
+        "name": "X-Dreamland-Actor-Context",
+        "required": true,
+        "schema": {
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "AfterCursor": {
+        "in": "query",
+        "name": "after",
+        "required": true,
+        "schema": {
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "ExpectedEpoch": {
+        "in": "header",
+        "name": "X-Dreamland-Expected-Epoch",
+        "required": true,
+        "schema": {
+          "maxLength": 160,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "IdempotencyKey": {
+        "in": "header",
+        "name": "Idempotency-Key",
+        "required": true,
+        "schema": {
+          "maxLength": 128,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "Reference": {
+        "in": "path",
+        "name": "reference",
+        "required": true,
+        "schema": {
+          "maxLength": 256,
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {
+      "BuildProjection": {
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "else": {
+              "properties": {
+                "receipt": {
+                  "type": "null"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "lifecycle": {
+                  "properties": {
+                    "state": {
+                      "const": "selected"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                }
+              },
+              "required": [
+                "lifecycle"
+              ]
+            },
+            "then": {
+              "properties": {
+                "receipt": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "fixed_selection_reason": {
+                      "maxLength": 512,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "human_selection": {
+                      "const": "none",
+                      "type": "string"
+                    },
+                    "provenance": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "provider_free_integration_preview",
+                          "type": "string"
+                        },
+                        "label": {
+                          "const": "Deterministic no-provider World Forge backend integration preview",
+                          "type": "string"
+                        },
+                        "live_forge_evidence": {
+                          "const": false,
+                          "type": "boolean"
+                        },
+                        "provider_calls": {
+                          "const": false,
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "label",
+                        "provider_calls",
+                        "live_forge_evidence"
+                      ],
+                      "type": "object"
+                    },
+                    "revision": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "immutable_digest": {
+                          "maxLength": 71,
+                          "minLength": 1,
+                          "pattern": "^sha256:[a-f0-9]{64}$",
+                          "type": "string"
+                        },
+                        "revision_id": {
+                          "maxLength": 256,
+                          "minLength": 1,
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                          "type": "string"
+                        },
+                        "revision_label": {
+                          "maxLength": 128,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "revision_id",
+                        "revision_label",
+                        "immutable_digest"
+                      ],
+                      "type": "object"
+                    },
+                    "validation": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "safe_summary": {
+                          "maxLength": 512,
+                          "minLength": 1,
+                          "type": "string"
+                        },
+                        "state": {
+                          "const": "passed",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "state",
+                        "safe_summary"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "validation",
+                    "fixed_selection_reason",
+                    "revision",
+                    "human_selection",
+                    "provenance"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          {
+            "else": {
+              "properties": {
+                "cancellation": {
+                  "properties": {
+                    "state": {
+                      "const": "available"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "terminal": {
+                  "const": false
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "lifecycle": {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "selected",
+                        "failed",
+                        "cancelled",
+                        "deadline_exceeded"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                }
+              },
+              "required": [
+                "lifecycle"
+              ]
+            },
+            "then": {
+              "properties": {
+                "cancellation": {
+                  "properties": {
+                    "state": {
+                      "const": "unavailable"
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "terminal": {
+                  "const": true
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "cancellation": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "state": {
+                    "const": "available",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "state"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "safe_reason": {
+                    "maxLength": 512,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "state": {
+                    "const": "unavailable",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "state",
+                  "safe_reason"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "deadline_at": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+            "type": "string"
+          },
+          "job_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "kind": {
+            "const": "forge_job_projection",
+            "type": "string"
+          },
+          "lifecycle": {
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "state": {
+                      "enum": [
+                        "failed",
+                        "cancelled",
+                        "deadline_exceeded"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "state"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "safe_message"
+                  ]
+                }
+              }
+            ],
+            "properties": {
+              "changed_at": {
+                "maxLength": 40,
+                "minLength": 1,
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+                "type": "string"
+              },
+              "safe_message": {
+                "maxLength": 512,
+                "minLength": 1,
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "accepted",
+                  "queued",
+                  "building",
+                  "generated",
+                  "validating",
+                  "selected",
+                  "failed",
+                  "cancelled",
+                  "deadline_exceeded"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "state",
+              "changed_at"
+            ],
+            "type": "object"
+          },
+          "position": {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "last_event_id": {
+                "oneOf": [
+                  {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sequence": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "service_epoch": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "stream_id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "service_epoch",
+              "stream_id",
+              "last_event_id",
+              "sequence",
+              "cursor"
+            ],
+            "type": "object"
+          },
+          "receipt": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "fixed_selection_reason": {
+                    "maxLength": 512,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "human_selection": {
+                    "const": "none",
+                    "type": "string"
+                  },
+                  "provenance": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "provider_free_integration_preview",
+                        "type": "string"
+                      },
+                      "label": {
+                        "const": "Deterministic no-provider World Forge backend integration preview",
+                        "type": "string"
+                      },
+                      "live_forge_evidence": {
+                        "const": false,
+                        "type": "boolean"
+                      },
+                      "provider_calls": {
+                        "const": false,
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "label",
+                      "provider_calls",
+                      "live_forge_evidence"
+                    ],
+                    "type": "object"
+                  },
+                  "revision": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "immutable_digest": {
+                        "maxLength": 71,
+                        "minLength": 1,
+                        "pattern": "^sha256:[a-f0-9]{64}$",
+                        "type": "string"
+                      },
+                      "revision_id": {
+                        "maxLength": 256,
+                        "minLength": 1,
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                        "type": "string"
+                      },
+                      "revision_label": {
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "revision_id",
+                      "revision_label",
+                      "immutable_digest"
+                    ],
+                    "type": "object"
+                  },
+                  "validation": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "safe_summary": {
+                        "maxLength": 512,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "state": {
+                        "const": "passed",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "state",
+                      "safe_summary"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "validation",
+                  "fixed_selection_reason",
+                  "revision",
+                  "human_selection",
+                  "provenance"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reference": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "seed": {
+            "$ref": "#/components/schemas/WorldSeed"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "source": {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "provider_free_integration_preview",
+                "type": "string"
+              },
+              "label": {
+                "const": "Deterministic no-provider World Forge backend integration preview",
+                "type": "string"
+              },
+              "live_forge_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "label",
+              "provider_calls",
+              "live_forge_evidence"
+            ],
+            "type": "object"
+          },
+          "terminal": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "job_id",
+          "reference",
+          "seed",
+          "lifecycle",
+          "deadline_at",
+          "position",
+          "terminal",
+          "receipt",
+          "cancellation",
+          "source"
+        ],
+        "type": "object"
+      },
+      "CancelBuildRequest": {
+        "additionalProperties": false,
+        "properties": {},
+        "required": [],
+        "type": "object"
+      },
+      "CancelBuildResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "kind": {
+            "const": "forge_job_cancelled",
+            "type": "string"
+          },
+          "position": {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "last_event_id": {
+                "oneOf": [
+                  {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sequence": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "service_epoch": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "stream_id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "service_epoch",
+              "stream_id",
+              "last_event_id",
+              "sequence",
+              "cursor"
+            ],
+            "type": "object"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "job_id",
+          "position",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "EventPage": {
+        "additionalProperties": false,
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/ForgeEvent"
+            },
+            "maxItems": 32,
+            "type": "array"
+          },
+          "kind": {
+            "const": "forge_events",
+            "type": "string"
+          },
+          "page_complete": {
+            "type": "boolean"
+          },
+          "position": {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "last_event_id": {
+                "oneOf": [
+                  {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sequence": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "service_epoch": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "stream_id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "service_epoch",
+              "stream_id",
+              "last_event_id",
+              "sequence",
+              "cursor"
+            ],
+            "type": "object"
+          },
+          "requires_snapshot_reconciliation": {
+            "const": true,
+            "type": "boolean"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "stream_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "terminal": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "stream_id",
+          "events",
+          "position",
+          "terminal",
+          "page_complete",
+          "requires_snapshot_reconciliation"
+        ],
+        "type": "object"
+      },
+      "EventPosition": {
+        "additionalProperties": false,
+        "properties": {
+          "cursor": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "last_event_id": {
+            "oneOf": [
+              {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sequence": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "stream_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "service_epoch",
+          "stream_id",
+          "last_event_id",
+          "sequence",
+          "cursor"
+        ],
+        "type": "object"
+      },
+      "ForgeEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "changed_at": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+            "type": "string"
+          },
+          "cursor": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "event_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "job_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "requires_snapshot_reconciliation": {
+            "const": true,
+            "type": "boolean"
+          },
+          "sequence": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "accepted",
+              "queued",
+              "building",
+              "generated",
+              "validating",
+              "selected",
+              "failed",
+              "cancelled",
+              "deadline_exceeded"
+            ],
+            "type": "string"
+          },
+          "stream_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "terminal": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "stream_id",
+          "event_id",
+          "sequence",
+          "cursor",
+          "job_id",
+          "state",
+          "changed_at",
+          "terminal",
+          "service_epoch",
+          "requires_snapshot_reconciliation"
+        ],
+        "type": "object"
+      },
+      "ForgeIdentity": {
+        "additionalProperties": false,
+        "properties": {
+          "contract_name": {
+            "const": "dreamland-private-world-forge-api",
+            "type": "string"
+          },
+          "contract_revision": {
+            "const": "0.1.0-rc.2",
+            "type": "string"
+          },
+          "kind": {
+            "const": "forge_identity",
+            "type": "string"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "source": {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "provider_free_integration_preview",
+                "type": "string"
+              },
+              "label": {
+                "const": "Deterministic no-provider World Forge backend integration preview",
+                "type": "string"
+              },
+              "live_forge_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "label",
+              "provider_calls",
+              "live_forge_evidence"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "contract_name",
+          "contract_revision",
+          "service_epoch",
+          "source"
+        ],
+        "type": "object"
+      },
+      "PreparationDisplay": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "field_id": {
+                  "maxLength": 64,
+                  "minLength": 1,
+                  "pattern": "^[a-z][a-z0-9-]*$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "short-text",
+                    "integer"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "clipped": {
+                      "type": "boolean"
+                    },
+                    "controls_marked": {
+                      "type": "boolean"
+                    },
+                    "text": {
+                      "maxLength": 1024,
+                      "minLength": 0,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "clipped",
+                    "controls_marked"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "field_id",
+                "kind",
+                "value"
+              ],
+              "type": "object"
+            },
+            "maxItems": 8,
+            "minItems": 8,
+            "type": "array"
+          },
+          "rendered_sentence": {
+            "additionalProperties": false,
+            "properties": {
+              "clipped": {
+                "type": "boolean"
+              },
+              "controls_marked": {
+                "type": "boolean"
+              },
+              "text": {
+                "maxLength": 1024,
+                "minLength": 0,
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "clipped",
+              "controls_marked"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "answers",
+          "rendered_sentence"
+        ],
+        "type": "object"
+      },
+      "PreparationResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "display": {
+            "$ref": "#/components/schemas/PreparationDisplay"
+          },
+          "expires_at": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+            "type": "string"
+          },
+          "kind": {
+            "const": "forge_seed_prepared",
+            "type": "string"
+          },
+          "preparation": {
+            "$ref": "#/components/schemas/WorldSeedPreparation"
+          },
+          "preparation_reference": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "prepared_at": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+            "type": "string"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "source": {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "provider_free_integration_preview",
+                "type": "string"
+              },
+              "label": {
+                "const": "Deterministic no-provider World Forge backend integration preview",
+                "type": "string"
+              },
+              "live_forge_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "label",
+              "provider_calls",
+              "live_forge_evidence"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "preparation_reference",
+          "prepared_at",
+          "expires_at",
+          "preparation",
+          "display",
+          "source"
+        ],
+        "type": "object"
+      },
+      "PrepareSeedRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "field_id": {
+                  "maxLength": 64,
+                  "minLength": 1,
+                  "pattern": "^[a-z][a-z0-9-]*$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "short-text",
+                    "integer"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "maxLength": 160,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field_id",
+                "kind",
+                "value"
+              ],
+              "type": "object"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "type": "array"
+          },
+          "recipe_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "recipe_revision": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "recipe_id",
+          "recipe_revision",
+          "answers"
+        ],
+        "type": "object"
+      },
+      "PreviewSource": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "provider_free_integration_preview",
+            "type": "string"
+          },
+          "label": {
+            "const": "Deterministic no-provider World Forge backend integration preview",
+            "type": "string"
+          },
+          "live_forge_evidence": {
+            "const": false,
+            "type": "boolean"
+          },
+          "provider_calls": {
+            "const": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "label",
+          "provider_calls",
+          "live_forge_evidence"
+        ],
+        "type": "object"
+      },
+      "Recipe": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "additionalProperties": false,
+            "properties": {
+              "clipped": {
+                "type": "boolean"
+              },
+              "controls_marked": {
+                "type": "boolean"
+              },
+              "text": {
+                "maxLength": 1024,
+                "minLength": 0,
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "clipped",
+              "controls_marked"
+            ],
+            "type": "object"
+          },
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeField"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "type": "array"
+          },
+          "kind": {
+            "const": "forge_recipe",
+            "type": "string"
+          },
+          "preparation": {
+            "additionalProperties": false,
+            "properties": {
+              "safe_reason": {
+                "maxLength": 512,
+                "minLength": 1,
+                "type": "string"
+              },
+              "state": {
+                "enum": [
+                  "available",
+                  "unavailable"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "type": "object"
+          },
+          "recipe_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "recipe_revision": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "additionalProperties": false,
+            "properties": {
+              "clipped": {
+                "type": "boolean"
+              },
+              "controls_marked": {
+                "type": "boolean"
+              },
+              "text": {
+                "maxLength": 1024,
+                "minLength": 0,
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "clipped",
+              "controls_marked"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "recipe_id",
+          "recipe_revision",
+          "title",
+          "description",
+          "fields",
+          "preparation"
+        ],
+        "type": "object"
+      },
+      "RecipeField": {
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "minimum"
+                  ]
+                },
+                {
+                  "required": [
+                    "maximum"
+                  ]
+                },
+                {
+                  "required": [
+                    "maximum_input_characters"
+                  ]
+                },
+                {
+                  "required": [
+                    "accepted_pattern"
+                  ]
+                }
+              ]
+            },
+            "properties": {
+              "kind": {
+                "const": "short-text"
+              }
+            },
+            "required": [
+              "minimum_characters",
+              "maximum_characters"
+            ]
+          },
+          {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "minimum_characters"
+                  ]
+                },
+                {
+                  "required": [
+                    "maximum_characters"
+                  ]
+                }
+              ]
+            },
+            "properties": {
+              "kind": {
+                "const": "integer"
+              }
+            },
+            "required": [
+              "minimum",
+              "maximum",
+              "maximum_input_characters",
+              "accepted_pattern"
+            ]
+          }
+        ],
+        "properties": {
+          "accepted_pattern": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "field_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "short-text",
+              "integer"
+            ],
+            "type": "string"
+          },
+          "label": {
+            "additionalProperties": false,
+            "properties": {
+              "clipped": {
+                "type": "boolean"
+              },
+              "controls_marked": {
+                "type": "boolean"
+              },
+              "text": {
+                "maxLength": 1024,
+                "minLength": 0,
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "clipped",
+              "controls_marked"
+            ],
+            "type": "object"
+          },
+          "maximum": {
+            "type": "integer"
+          },
+          "maximum_characters": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "maximum_input_characters": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "minimum": {
+            "type": "integer"
+          },
+          "minimum_characters": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "prompt": {
+            "additionalProperties": false,
+            "properties": {
+              "clipped": {
+                "type": "boolean"
+              },
+              "controls_marked": {
+                "type": "boolean"
+              },
+              "text": {
+                "maxLength": 1024,
+                "minLength": 0,
+                "type": "string"
+              }
+            },
+            "required": [
+              "text",
+              "clipped",
+              "controls_marked"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "field_id",
+          "kind",
+          "label",
+          "prompt"
+        ],
+        "type": "object"
+      },
+      "RecipeListResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "forge_recipes",
+            "type": "string"
+          },
+          "recipes": {
+            "items": {
+              "$ref": "#/components/schemas/Recipe"
+            },
+            "maxItems": 16,
+            "type": "array"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "source": {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "provider_free_integration_preview",
+                "type": "string"
+              },
+              "label": {
+                "const": "Deterministic no-provider World Forge backend integration preview",
+                "type": "string"
+              },
+              "live_forge_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "label",
+              "provider_calls",
+              "live_forge_evidence"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "recipes",
+          "source"
+        ],
+        "type": "object"
+      },
+      "SafeDisplayText": {
+        "additionalProperties": false,
+        "properties": {
+          "clipped": {
+            "type": "boolean"
+          },
+          "controls_marked": {
+            "type": "boolean"
+          },
+          "text": {
+            "maxLength": 1024,
+            "minLength": 0,
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "clipped",
+          "controls_marked"
+        ],
+        "type": "object"
+      },
+      "SafeErrorEnvelope": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "invalid_request",
+                  "recipe_unknown",
+                  "recipe_revision_mismatch",
+                  "validation_failed",
+                  "preparation_expired",
+                  "preparation_consumed",
+                  "preparation_not_found",
+                  "preparation_capacity_exhausted",
+                  "authority_denied",
+                  "service_epoch_changed",
+                  "capacity_exhausted",
+                  "idempotency_capacity_exhausted",
+                  "idempotency_conflict",
+                  "idempotency_key_invalid",
+                  "job_not_found",
+                  "job_terminal",
+                  "resync_required",
+                  "request_too_large",
+                  "response_too_large",
+                  "unsupported_media_type",
+                  "temporarily_unavailable"
+                ],
+                "type": "string"
+              },
+              "issues": {
+                "items": {
+                  "$ref": "#/components/schemas/ValidationIssue"
+                },
+                "maxItems": 16,
+                "type": "array"
+              },
+              "message": {
+                "maxLength": 512,
+                "minLength": 1,
+                "type": "string"
+              },
+              "retry": {
+                "enum": [
+                  "none",
+                  "resume",
+                  "same_request"
+                ],
+                "type": "string"
+              },
+              "retry_after_ms": {
+                "oneOf": [
+                  {
+                    "maximum": 60000,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retry",
+              "retry_after_ms"
+            ],
+            "type": "object"
+          },
+          "kind": {
+            "const": "forge_error",
+            "type": "string"
+          },
+          "request_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "error",
+          "request_id"
+        ],
+        "type": "object"
+      },
+      "SubmitBuildRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "preparation_reference": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "preparation_reference"
+        ],
+        "type": "object"
+      },
+      "SubmitBuildResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline_at": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+            "type": "string"
+          },
+          "job_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "kind": {
+            "const": "forge_job_accepted",
+            "type": "string"
+          },
+          "position": {
+            "additionalProperties": false,
+            "properties": {
+              "cursor": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "last_event_id": {
+                "oneOf": [
+                  {
+                    "maxLength": 256,
+                    "minLength": 1,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sequence": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "service_epoch": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              },
+              "stream_id": {
+                "maxLength": 256,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "service_epoch",
+              "stream_id",
+              "last_event_id",
+              "sequence",
+              "cursor"
+            ],
+            "type": "object"
+          },
+          "reference": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "service_epoch": {
+            "maxLength": 256,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+            "type": "string"
+          },
+          "source": {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "provider_free_integration_preview",
+                "type": "string"
+              },
+              "label": {
+                "const": "Deterministic no-provider World Forge backend integration preview",
+                "type": "string"
+              },
+              "live_forge_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": false,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "label",
+              "provider_calls",
+              "live_forge_evidence"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "job_id",
+          "reference",
+          "position",
+          "deadline_at",
+          "replayed",
+          "source"
+        ],
+        "type": "object"
+      },
+      "ValidationIssue": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "field_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "type": "object"
+      },
+      "WorldSeed": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "field_id": {
+                  "maxLength": 64,
+                  "minLength": 1,
+                  "pattern": "^[a-z][a-z0-9-]*$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "short-text",
+                    "integer"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "maxLength": 160,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field_id",
+                "kind",
+                "value"
+              ],
+              "type": "object"
+            },
+            "maxItems": 8,
+            "minItems": 8,
+            "type": "array"
+          },
+          "confirmation_state": {
+            "const": "confirmed",
+            "type": "string"
+          },
+          "confirmed_at": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+            "type": "string"
+          },
+          "kind": {
+            "const": "dreamland.world_seed",
+            "type": "string"
+          },
+          "recipe_id": {
+            "const": "world-recipe:bsides-room:v1",
+            "type": "string"
+          },
+          "recipe_revision": {
+            "const": "1",
+            "type": "string"
+          },
+          "rendered_sentence": {
+            "maxLength": 768,
+            "minLength": 1,
+            "type": "string"
+          },
+          "schema_revision": {
+            "const": "1",
+            "type": "string"
+          },
+          "seed_hash": {
+            "maxLength": 71,
+            "minLength": 1,
+            "pattern": "^sha256:[a-f0-9]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "schema_revision",
+          "recipe_id",
+          "recipe_revision",
+          "answers",
+          "rendered_sentence",
+          "confirmation_state",
+          "confirmed_at",
+          "seed_hash"
+        ],
+        "type": "object"
+      },
+      "WorldSeedAnswer": {
+        "additionalProperties": false,
+        "properties": {
+          "field_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "short-text",
+              "integer"
+            ],
+            "type": "string"
+          },
+          "value": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "field_id",
+          "kind",
+          "value"
+        ],
+        "type": "object"
+      },
+      "WorldSeedPreparation": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "field_id": {
+                  "maxLength": 64,
+                  "minLength": 1,
+                  "pattern": "^[a-z][a-z0-9-]*$",
+                  "type": "string"
+                },
+                "kind": {
+                  "enum": [
+                    "short-text",
+                    "integer"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "maxLength": 160,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field_id",
+                "kind",
+                "value"
+              ],
+              "type": "object"
+            },
+            "maxItems": 8,
+            "minItems": 8,
+            "type": "array"
+          },
+          "confirmation_state": {
+            "const": "unconfirmed",
+            "type": "string"
+          },
+          "kind": {
+            "const": "dreamland.world_seed_preparation",
+            "type": "string"
+          },
+          "preparation_digest": {
+            "maxLength": 71,
+            "minLength": 1,
+            "pattern": "^sha256:[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "recipe_id": {
+            "const": "world-recipe:bsides-room:v1",
+            "type": "string"
+          },
+          "recipe_revision": {
+            "const": "1",
+            "type": "string"
+          },
+          "rendered_sentence": {
+            "maxLength": 768,
+            "minLength": 1,
+            "type": "string"
+          },
+          "schema_revision": {
+            "const": "1",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "schema_revision",
+          "recipe_id",
+          "recipe_revision",
+          "answers",
+          "rendered_sentence",
+          "confirmation_state",
+          "preparation_digest"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "privateBearer": {
+        "bearerFormat": "opaque",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Provider-free, loopback-only World Forge browser-integration preview. It provides no Stage, publication, catalog, attendee, or live-Forge authority.",
+    "title": "DREAMLAND Private World Forge Integration Preview",
+    "version": "0.1.0-rc.2"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/forge/v1/builds": {
+      "post": {
+        "operationId": "confirmAndSubmitForgeBuild",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitBuildResponse"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    },
+    "/forge/v1/builds/{reference}": {
+      "get": {
+        "operationId": "getForgeBuild",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/Reference"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildProjection"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    },
+    "/forge/v1/builds/{reference}/cancel": {
+      "post": {
+        "operationId": "cancelForgeBuild",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/Reference"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancelBuildResponse"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    },
+    "/forge/v1/builds/{reference}/events": {
+      "get": {
+        "operationId": "getForgeBuildEvents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/Reference"
+          },
+          {
+            "$ref": "#/components/parameters/AfterCursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventPage"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    },
+    "/forge/v1/identity": {
+      "get": {
+        "operationId": "getForgeIdentity",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgeIdentity"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    },
+    "/forge/v1/preparations": {
+      "post": {
+        "operationId": "prepareForgeSeed",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrepareSeedRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreparationResponse"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    },
+    "/forge/v1/recipes": {
+      "get": {
+        "operationId": "listForgeRecipes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeListResponse"
+                }
+              }
+            },
+            "description": "Success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Safe failure"
+          }
+        },
+        "x-dreamland-private-server-only": true
+      }
+    }
+  },
+  "security": [
+    {
+      "privateBearer": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://127.0.0.1:{port}",
+      "variables": {
+        "port": {
+          "default": "0"
+        }
+      }
+    }
+  ],
+  "x-dreamland-world-forge": {
+    "contract_name": "dreamland-private-world-forge-api",
+    "events_require_snapshot_reconciliation": true,
+    "integration_preview": true,
+    "live_forge_evidence": false,
+    "normal_runtime_composition": false,
+    "provider_calls": false,
+    "publication_authority": false,
+    "stage_authority": false
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "authority_denied",
+    "message": "The requested lifecycle preview resource is unavailable.",
+    "request_id": "request:authority_denied_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

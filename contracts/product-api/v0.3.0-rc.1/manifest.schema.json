@@ -1,0 +1,386 @@
+{
+  "$id": "https://dreamland.invalid/contracts/product-api/v0.3.0-rc.1/manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "publication_status": {
+            "const": "release_candidate"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "backend_commit": {
+            "type": "null"
+          },
+          "published_at": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "publication_status": {
+            "const": "published"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "backend_commit": {
+            "maxLength": 40,
+            "minLength": 40,
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "published_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "type": "string"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "artifacts": {
+      "additionalProperties": false,
+      "properties": {
+        "events_schema_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "generated_client_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "manifest_schema_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "openapi_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "openapi_sha256",
+        "events_schema_sha256",
+        "manifest_schema_sha256",
+        "generated_client_sha256"
+      ],
+      "type": "object"
+    },
+    "backend_commit": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "maxLength": 40,
+          "minLength": 40,
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        }
+      ]
+    },
+    "capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "forge_to_stage_handoff": {
+          "additionalProperties": false,
+          "properties": {
+            "declared_revision": {
+              "const": "0.3.0-rc.1",
+              "type": "string"
+            },
+            "enabled": {
+              "const": false,
+              "type": "boolean"
+            },
+            "enabled_revision": {
+              "type": "null"
+            },
+            "reason": {
+              "const": "integration_preview_only",
+              "type": "string"
+            }
+          },
+          "required": [
+            "declared_revision",
+            "enabled",
+            "enabled_revision",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "presenter_stage_terminal": {
+          "additionalProperties": false,
+          "properties": {
+            "declared_revision": {
+              "const": "0.3.0-rc.1",
+              "type": "string"
+            },
+            "enabled": {
+              "const": false,
+              "type": "boolean"
+            },
+            "enabled_revision": {
+              "type": "null"
+            },
+            "reason": {
+              "const": "integration_preview_only",
+              "type": "string"
+            }
+          },
+          "required": [
+            "declared_revision",
+            "enabled",
+            "enabled_revision",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "product_session_core": {
+          "additionalProperties": false,
+          "properties": {
+            "declared_revision": {
+              "const": "0.3.0-rc.1",
+              "type": "string"
+            },
+            "enabled": {
+              "const": false,
+              "type": "boolean"
+            },
+            "enabled_revision": {
+              "type": "null"
+            },
+            "reason": {
+              "const": "integration_preview_only",
+              "type": "string"
+            }
+          },
+          "required": [
+            "declared_revision",
+            "enabled",
+            "enabled_revision",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "public_attendee_sessions": {
+          "additionalProperties": false,
+          "properties": {
+            "declared_revision": {
+              "const": "0.3.0-rc.1",
+              "type": "string"
+            },
+            "enabled": {
+              "const": false,
+              "type": "boolean"
+            },
+            "enabled_revision": {
+              "type": "null"
+            },
+            "reason": {
+              "const": "integration_preview_only",
+              "type": "string"
+            }
+          },
+          "required": [
+            "declared_revision",
+            "enabled",
+            "enabled_revision",
+            "reason"
+          ],
+          "type": "object"
+        },
+        "stage_xray": {
+          "additionalProperties": false,
+          "properties": {
+            "declared_revision": {
+              "const": "0.3.0-rc.1",
+              "type": "string"
+            },
+            "enabled": {
+              "const": false,
+              "type": "boolean"
+            },
+            "enabled_revision": {
+              "type": "null"
+            },
+            "reason": {
+              "const": "integration_preview_only",
+              "type": "string"
+            }
+          },
+          "required": [
+            "declared_revision",
+            "enabled",
+            "enabled_revision",
+            "reason"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "product_session_core",
+        "presenter_stage_terminal",
+        "public_attendee_sessions",
+        "forge_to_stage_handoff",
+        "stage_xray"
+      ],
+      "type": "object"
+    },
+    "compatibility": {
+      "const": "unfrozen-release-candidate",
+      "type": "string"
+    },
+    "contract_name": {
+      "const": "dreamland-private-product-api",
+      "type": "string"
+    },
+    "contract_revision": {
+      "const": "0.3.0-rc.1",
+      "type": "string"
+    },
+    "event_transport": {
+      "additionalProperties": false,
+      "properties": {
+        "delivery": {
+          "const": "at-least-once",
+          "type": "string"
+        },
+        "json_replay": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sse": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "json_replay",
+        "sse",
+        "delivery"
+      ],
+      "type": "object"
+    },
+    "fixture_set": {
+      "additionalProperties": false,
+      "properties": {
+        "index_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "path": {
+          "const": "fixtures/index.json",
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "index_sha256"
+      ],
+      "type": "object"
+    },
+    "freeze_status": {
+      "const": "pending_ui_tracked_doc_acknowledgement",
+      "type": "string"
+    },
+    "generation": {
+      "additionalProperties": false,
+      "properties": {
+        "client_smoke_command": {
+          "const": ".venv/bin/python tools/product_session_contract.py client-smoke contracts/product-api/v0.3.0-rc.1",
+          "type": "string"
+        },
+        "publish_command": {
+          "const": ".venv/bin/python tools/product_session_contract.py publish contracts/product-api/v0.3.0-rc.1 --backend-commit COMMIT --published-at TIMESTAMP",
+          "type": "string"
+        },
+        "refresh_command": {
+          "const": ".venv/bin/python tools/product_session_contract.py refresh contracts/product-api/v0.3.0-rc.1",
+          "type": "string"
+        },
+        "validate_command": {
+          "const": ".venv/bin/python tools/product_session_contract.py validate contracts/product-api/v0.3.0-rc.1",
+          "type": "string"
+        }
+      },
+      "required": [
+        "validate_command",
+        "refresh_command",
+        "client_smoke_command",
+        "publish_command"
+      ],
+      "type": "object"
+    },
+    "implementation_status": {
+      "const": "integration_preview_only",
+      "type": "string"
+    },
+    "publication_status": {
+      "enum": [
+        "release_candidate",
+        "published"
+      ],
+      "type": "string"
+    },
+    "published_at": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "format": "date-time",
+          "maxLength": 64,
+          "type": "string"
+        }
+      ]
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "transport_status": {
+      "const": "manually_invoked_loopback_preview_only",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_name",
+    "contract_revision",
+    "compatibility",
+    "freeze_status",
+    "implementation_status",
+    "transport_status",
+    "publication_status",
+    "backend_commit",
+    "published_at",
+    "capabilities",
+    "artifacts",
+    "fixture_set",
+    "generation",
+    "event_transport"
+  ],
+  "title": "DREAMLAND Product Session Core Preview Manifest",
+  "type": "object"
+}

@@ -1,0 +1,8 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_code": "outcome_unknown",
+  "expected_outcome": null,
+  "reconcile_with": "fresh_epoch_binding",
+  "same_key_replay": false,
+  "scenario": "epoch_rotated_after_uncertain_mutation"
+}

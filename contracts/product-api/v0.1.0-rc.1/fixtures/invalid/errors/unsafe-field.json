@@ -1,0 +1,13 @@
+{
+  "error": {
+    "code": "internal_failure",
+    "detail": {
+      "capability": "private-bearer-value",
+      "exception": "Traceback (most recent call last)"
+    },
+    "message": "Internal service failure.",
+    "request_id": "request:contract-simulator-unsafe",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.4"
+  },
+  "error": {
+    "code": "command_in_progress",
+    "message": "A product command is already in progress.",
+    "request_id": "request:error_command_in_progress_0001",
+    "retry": "resume_snapshot",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "development-live-attendee-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  }
+}

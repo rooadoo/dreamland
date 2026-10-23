@@ -1,0 +1,48 @@
+{
+  "admission": {
+    "reason": "integration_preview_only",
+    "state": "closed"
+  },
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "product_session_core": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "stage_xray": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    }
+  },
+  "contract": {
+    "compatibility": "exact-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.2.0-rc.2"
+  },
+  "future_metadata": {
+    "safe_label": "additive-consumer-fixture"
+  },
+  "request_id": "request:capabilities_additive_0001",
+  "service_epoch": "epoch:phase1preview0001"
+}

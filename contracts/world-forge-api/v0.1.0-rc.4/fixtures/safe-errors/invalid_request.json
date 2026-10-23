@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "invalid_request",
+    "message": "Safe World Forge fixture for invalid request.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-invalid_request"
+}

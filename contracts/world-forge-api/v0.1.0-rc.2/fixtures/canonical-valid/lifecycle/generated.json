@@ -1,0 +1,81 @@
+{
+  "cancellation": {
+    "state": "available"
+  },
+  "deadline_at": "2026-08-25T12:02:00.000Z",
+  "job_id": "forge-job:fixture-00000003",
+  "kind": "forge_job_projection",
+  "lifecycle": {
+    "changed_at": "2026-08-25T12:00:00.000Z",
+    "state": "generated"
+  },
+  "position": {
+    "cursor": "forge-cursor:fixture-00000012",
+    "last_event_id": "forge-event:fixture-00000013",
+    "sequence": 4,
+    "service_epoch": "forge-epoch:fixture-00000001",
+    "stream_id": "forge-stream:fixture-00000005"
+  },
+  "receipt": null,
+  "reference": "forge-reference:fixture-00000004",
+  "seed": {
+    "answers": [
+      {
+        "field_id": "day-or-date",
+        "kind": "short-text",
+        "value": "Saturday"
+      },
+      {
+        "field_id": "year",
+        "kind": "integer",
+        "value": "+02026"
+      },
+      {
+        "field_id": "adjective",
+        "kind": "short-text",
+        "value": "weathered"
+      },
+      {
+        "field_id": "industry-or-setting",
+        "kind": "short-text",
+        "value": "observatory"
+      },
+      {
+        "field_id": "technology-one",
+        "kind": "short-text",
+        "value": "VAX terminals"
+      },
+      {
+        "field_id": "technology-two",
+        "kind": "short-text",
+        "value": "radio clocks"
+      },
+      {
+        "field_id": "important-job",
+        "kind": "short-text",
+        "value": "track a comet"
+      },
+      {
+        "field_id": "wildcard-event",
+        "kind": "short-text",
+        "value": "the clocks disagree"
+      }
+    ],
+    "confirmation_state": "confirmed",
+    "confirmed_at": "2026-08-25T12:00:00.000Z",
+    "kind": "dreamland.world_seed",
+    "recipe_id": "world-recipe:bsides-room:v1",
+    "recipe_revision": "1",
+    "rendered_sentence": "On Saturday in +02026, inside a weathered observatory, people rely on VAX terminals and radio clocks to track a comet. Today, the clocks disagree.",
+    "schema_revision": "1",
+    "seed_hash": "sha256:4f85627e1c4644b272e8006a12dd5fc8a1fbe28ce5f88eb91247f36fdf801535"
+  },
+  "service_epoch": "forge-epoch:fixture-00000001",
+  "source": {
+    "kind": "provider_free_integration_preview",
+    "label": "Deterministic no-provider World Forge backend integration preview",
+    "live_forge_evidence": false,
+    "provider_calls": false
+  },
+  "terminal": false
+}

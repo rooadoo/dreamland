@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "content_length_required",
+    "message": "A Content-Length header is required.",
+    "request_id": "request:content_length_required_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

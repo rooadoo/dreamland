@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "unauthorized",
+    "message": "Missing or invalid private service authority.",
+    "request_id": "request:contract-simulator-unauthorized",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

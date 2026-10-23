@@ -1,0 +1,36 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-integration-preview",
+    "name": "dreamland-private-world-access-api",
+    "revision": "0.1.0-rc.3"
+  },
+  "grant_expires_at": "2026-08-30T12:20:00Z",
+  "kind": "attendee_launch_selection_granted",
+  "launch_grant": "launch-grant:phase8a_authored_00000001",
+  "preview": {
+    "capabilities_enabled": [],
+    "kind": "provider_free_generated_access_preview",
+    "live_capability_evidence": false,
+    "live_forge_evidence": false,
+    "loopback_only": true,
+    "process_local": true,
+    "provider_calls": false
+  },
+  "replayed": false,
+  "request_id": "request:phase8a-world-access-0001",
+  "selection": {
+    "display": {
+      "revision_label": "Pinned A1",
+      "source_label": "Authored",
+      "title": "Authored baseline"
+    },
+    "expires_at": "2026-08-30T13:00:00Z",
+    "notice_version": "notice:phase8a-world-access-v1",
+    "offering_id": "offering:phase8a-authored",
+    "offering_revision": "offering-revision:authored-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "origin": {
+      "kind": "authored_profile_snapshot"
+    }
+  },
+  "service_epoch": "epoch:phase8a_world_access_0001"
+}

@@ -1,0 +1,13 @@
+{
+  "admission_ready": false,
+  "capabilities": {
+    "attendee_sessions": false,
+    "presenter": false,
+    "world_forge": false,
+    "world_publication": false
+  },
+  "reason": "domain_services_unavailable",
+  "role": "attendee",
+  "service_epoch": "12345678-1234-4123-8123-123456789abc",
+  "transport_ready": true
+}

@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "service_closed",
+    "message": "Attendee admission is closed.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

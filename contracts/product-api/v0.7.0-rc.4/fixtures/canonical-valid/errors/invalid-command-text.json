@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.4"
+  },
+  "error": {
+    "code": "invalid_command_text",
+    "message": "Command text contains unsupported characters.",
+    "request_id": "request:error_invalid_command_text_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "development-live-attendee-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  }
+}

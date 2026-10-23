@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "invalid_json",
+    "message": "The request body is not valid JSON.",
+    "request_id": "request:invalid_json_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

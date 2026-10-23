@@ -1,0 +1,52 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.1"
+  },
+  "kind": "presenter_stage_launch_options",
+  "options": [
+    {
+      "display": {
+        "revision_label": "Immutable A",
+        "source_label": "Authored",
+        "title": "Colony Ship A1"
+      },
+      "expires_at": null,
+      "launch_selection_id": "launch-selection:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "offering_id": "offering:authored-colonyship-a1",
+      "origin": {
+        "kind": "authored_profile_snapshot"
+      },
+      "revision": {
+        "revision_id": "world-revision:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "display": {
+        "revision_label": "Immutable A",
+        "source_label": "Authored",
+        "title": "Colony Ship A1"
+      },
+      "expires_at": null,
+      "launch_selection_id": "launch-selection:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "offering_id": "offering:authored-colonyship-a1",
+      "origin": {
+        "kind": "authored_profile_snapshot"
+      },
+      "revision": {
+        "revision_id": "world-revision:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    }
+  ],
+  "preview": {
+    "executor": "deterministic-launch-selection-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

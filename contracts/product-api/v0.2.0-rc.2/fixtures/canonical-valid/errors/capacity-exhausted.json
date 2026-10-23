@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "capacity_exhausted",
+    "message": "Lifecycle preview capacity is unavailable.",
+    "request_id": "request:capacity_exhausted_0001",
+    "retry": "after_delay",
+    "retry_after_ms": 1000
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifacts": {
+      "additionalProperties": {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "backend_commit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "compatibility": {
+      "const": "unfrozen-release-candidate",
+      "type": "string"
+    },
+    "contract_name": {
+      "const": "dreamland-private-world-forge-api",
+      "type": "string"
+    },
+    "contract_revision": {
+      "const": "0.1.0-rc.4",
+      "type": "string"
+    },
+    "fixture_set": {
+      "type": "object"
+    },
+    "generation": {
+      "type": "object"
+    },
+    "implementation_status": {
+      "const": "integration_preview_only",
+      "type": "string"
+    },
+    "publication_status": {
+      "enum": [
+        "draft",
+        "published"
+      ],
+      "type": "string"
+    },
+    "published_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "source": {
+      "type": "object"
+    },
+    "transport_status": {
+      "const": "manually_invoked_loopback_preview_only",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_name",
+    "contract_revision",
+    "compatibility",
+    "publication_status",
+    "implementation_status",
+    "transport_status",
+    "artifacts",
+    "fixture_set",
+    "generation",
+    "source"
+  ],
+  "type": "object"
+}

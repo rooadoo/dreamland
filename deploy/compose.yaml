@@ -1,0 +1,76 @@
+# Phase 1 private backend checkpoint. Backend HTTP APIs arrive in a later phase.
+# The web UI and its web edge are deployed separately by the UI project.
+name: dreamland
+
+x-backend: &backend
+  image: ${DREAMLAND_BACKEND_IMAGE:-dreamland-backend:phase1-local}
+  platform: linux/amd64
+  build:
+    context: ..
+    dockerfile: deploy/Dockerfile
+    target: runtime
+  user: "10001:10001"
+  init: true
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  volumes:
+    - dreamland-data:/var/lib/dreamland
+  tmpfs:
+    - /tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  init:
+    <<: *backend
+    profiles: [setup]
+    command:
+      - python
+      - -m
+      - dreamland.deployment
+      - init
+      - --root
+      - /var/lib/dreamland
+      - --profile
+      - ${DREAMLAND_DEPLOYMENT_PROFILE:-prerelease}
+    network_mode: none
+    restart: "no"
+    pids_limit: 64
+    mem_limit: 512m
+
+  ssh:
+    <<: *backend
+    profiles: [ssh]
+    command:
+      - python
+      - -m
+      - dreamland.deployment
+      - serve-ssh
+      - --root
+      - /var/lib/dreamland
+      - --console-socket
+      - /run/dreamland/console.sock
+    volumes:
+      - dreamland-data:/var/lib/dreamland
+      # Optional: bind mount auth log to host for security monitoring
+      # Uncomment and set path: - /host/path/to/logs:/var/lib/dreamland/logs:rw
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m,mode=1777
+      - /run/dreamland:rw,noexec,nosuid,nodev,size=1m,mode=0700,uid=10001,gid=10001
+    # Host administration stays on port 22. For beta testing, set
+    # DREAMLAND_SSH_HOST=0.0.0.0 to allow external access.
+    ports:
+      - "${DREAMLAND_SSH_HOST:-127.0.0.1}:2222:2222"
+    restart: unless-stopped
+    stop_signal: SIGINT
+    stop_grace_period: 30s
+    pids_limit: 256
+    # An initial guardrail for the 1-3 user checkpoint, not measured capacity.
+    mem_limit: ${DREAMLAND_SSH_MEMORY_LIMIT:-2g}
+
+volumes:
+  dreamland-data:

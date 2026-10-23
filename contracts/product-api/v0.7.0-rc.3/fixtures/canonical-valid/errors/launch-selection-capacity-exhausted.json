@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.3"
+  },
+  "error": {
+    "code": "launch_selection_capacity_exhausted",
+    "message": "Presenter Stage launch-selection capacity is exhausted.",
+    "request_id": "request:error_launch_selection_capacity_exhausted_0001",
+    "retry": "after_delay",
+    "retry_after_ms": 1000
+  },
+  "preview": {
+    "executor": "deterministic-attendee-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

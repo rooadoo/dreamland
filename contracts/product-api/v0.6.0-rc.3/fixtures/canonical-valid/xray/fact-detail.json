@@ -1,0 +1,49 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.6.0-rc.3"
+  },
+  "kind": "stage_xray_detail",
+  "preview": {
+    "executor": "development-live-forge-stage-xray-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001",
+  "xray": {
+    "accepted_state_revision": 3,
+    "detail": {
+      "accepted": true,
+      "entity_id": "fact:22222222222222222222222222222222",
+      "entity_kind": "fact",
+      "evidence": {
+        "state": "unavailable"
+      },
+      "fields": [
+        {
+          "label": "Statement",
+          "name": "statement",
+          "value": {
+            "clipped": false,
+            "control_marked": false,
+            "text": "The harbor radio link is intermittent."
+          }
+        }
+      ]
+    },
+    "projection_position": {
+      "cursor": "xray-cursor:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:7",
+      "sequence": 7,
+      "stream_id": "xray-stream:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "schema_revision": "stage-xray-v1",
+    "stage_event_watermark": {
+      "event_id": "event:phase2alphaevent:5",
+      "sequence": 5,
+      "stream_id": "stream:phase2alphaevent"
+    }
+  }
+}

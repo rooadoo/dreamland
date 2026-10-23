@@ -1,0 +1,25 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.3"
+  },
+  "error": {
+    "code": "xray_resync_required",
+    "context": {},
+    "message": "The Stage X-ray projection changed; obtain a fresh snapshot.",
+    "request_id": "request:stage-xray-00000001",
+    "retry": "resume_xray_snapshot",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "status": 409,
+  "title": "DREAMLAND product request failed",
+  "type": "urn:dreamland:product:error:xray_resync_required"
+}

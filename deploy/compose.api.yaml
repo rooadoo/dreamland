@@ -1,0 +1,114 @@
+# Phase 2A private metadata API foundation. No Product/Stage/Forge routes yet.
+# Use a distinct backend API project; the existing SSH deployment is independent.
+name: ${DREAMLAND_API_PROJECT:-dreamland-api}
+
+x-api: &api
+  image: ${DREAMLAND_BACKEND_IMAGE:?Set the tested image digest}
+  platform: linux/amd64
+  user: "10001:10001"
+  init: true
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  tmpfs:
+    - /tmp:rw,noexec,nosuid,nodev,size=16m,mode=1777
+  pids_limit: 32
+  mem_limit: 256m
+  stop_signal: SIGTERM
+  stop_grace_period: 10s
+  logging:
+    driver: json-file
+    options:
+      max-size: "5m"
+      max-file: "2"
+
+services:
+  attendee-init:
+    <<: *api
+    profiles: [setup]
+    network_mode: none
+    restart: "no"
+    volumes:
+      - attendee-api-data:/var/lib/dreamland/api
+    command:
+      - python
+      - -m
+      - dreamland.deployment.companion_cli
+      - init
+      - --root
+      - /var/lib/dreamland/api
+      - --role
+      - attendee
+      - --project
+      - ${DREAMLAND_API_PROJECT:-dreamland-api}
+      - --network
+      - ${DREAMLAND_API_NETWORK:-dreamland-api-companion}
+      - --image
+      - ${DREAMLAND_BACKEND_IMAGE:?Set the tested image digest}
+      - --revision
+      - ${DREAMLAND_BACKEND_REVISION:?Set the full source revision}
+
+  operator-init:
+    <<: *api
+    profiles: [setup]
+    network_mode: none
+    restart: "no"
+    volumes:
+      - operator-api-data:/var/lib/dreamland/api
+    command:
+      - python
+      - -m
+      - dreamland.deployment.companion_cli
+      - init
+      - --root
+      - /var/lib/dreamland/api
+      - --role
+      - operator
+      - --project
+      - ${DREAMLAND_API_PROJECT:-dreamland-api}
+      - --network
+      - ${DREAMLAND_API_NETWORK:-dreamland-api-companion}
+      - --image
+      - ${DREAMLAND_BACKEND_IMAGE:?Set the tested image digest}
+      - --revision
+      - ${DREAMLAND_BACKEND_REVISION:?Set the full source revision}
+
+  attendee-api:
+    <<: *api
+    profiles: [attendee]
+    restart: unless-stopped
+    volumes:
+      - attendee-api-data:/var/lib/dreamland/api:ro
+    networks:
+      companion:
+        aliases: ["${DREAMLAND_API_PROJECT:-dreamland-api}-attendee-api"]
+    command: [python, -m, dreamland.deployment.companion_cli, serve, --root, /var/lib/dreamland/api, --role, attendee, --host, 0.0.0.0, --port, "8080", --container-network]
+    healthcheck: &api-health
+      test: [CMD, python, -m, dreamland.deployment.companion_client, --healthcheck-root, /var/lib/dreamland/api]
+      interval: 20s
+      timeout: 6s
+      retries: 3
+      start_period: 5s
+
+  operator-api:
+    <<: *api
+    profiles: [operator]
+    restart: unless-stopped
+    volumes:
+      - operator-api-data:/var/lib/dreamland/api:ro
+    networks:
+      companion:
+        aliases: ["${DREAMLAND_API_PROJECT:-dreamland-api}-operator-api"]
+    command: [python, -m, dreamland.deployment.companion_cli, serve, --root, /var/lib/dreamland/api, --role, operator, --host, 0.0.0.0, --port, "8080", --container-network]
+    healthcheck: *api-health
+
+volumes:
+  attendee-api-data:
+  operator-api-data:
+
+networks:
+  companion:
+    name: ${DREAMLAND_API_NETWORK:-dreamland-api-companion}
+    internal: true
+    labels:
+      org.dreamland.network-purpose: companion-api-foundation

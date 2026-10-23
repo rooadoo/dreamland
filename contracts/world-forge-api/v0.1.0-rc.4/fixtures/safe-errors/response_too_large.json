@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "response_too_large",
+    "message": "Safe World Forge fixture for response too large.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-response_too_large"
+}

@@ -1,0 +1,13 @@
+{
+  "outcome": "failed",
+  "output_clipped": false,
+  "reason": "command_deadline_exceeded",
+  "state_effect": {
+    "kind": "none"
+  },
+  "usage": {
+    "spend_units": 120,
+    "state": "settled",
+    "tokens": 37
+  }
+}

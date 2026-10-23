@@ -1,0 +1,16 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "criticality": "authoritative",
+  "data": {
+    "accepted_state_revision": 1,
+    "outcome": "completed",
+    "output_clipped": false,
+    "slot_generation": 1
+  },
+  "emitted_at_ms": 1777000000007,
+  "event_id": "event:phase2alphaevent:7",
+  "schema_revision": "1",
+  "sequence": 7,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "command.completed"
+}

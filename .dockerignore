@@ -1,0 +1,23 @@
+# Build context allowlist: local keys, configuration, worlds, reports, and
+# diagnostics never enter the Docker build context.
+**
+!pyproject.toml
+!README.md
+!LICENSE
+!src/
+!src/dreamland/
+!src/dreamland/**
+!deploy/
+!deploy/Dockerfile
+!deploy/requirements-runtime.txt
+!deploy/requirements-build.txt
+
+# Exclude local/interpreter artifacts even below the allowed package tree.
+**/__pycache__
+**/*.py[cod]
+**/*.egg-info
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/.DS_Store

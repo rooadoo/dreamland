@@ -1,0 +1,9 @@
+{
+  "condition": "wrong_actor_class",
+  "expected_error_code": "authority_denied",
+  "expected_http_status": 403,
+  "operation_id": "promoteSelectedForgeWorld",
+  "request_actor_class": "attendee",
+  "required_actor_class": "operator",
+  "side_effects_committed": false
+}

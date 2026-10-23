@@ -1,0 +1,70 @@
+{
+  "fixtures": [
+    {
+      "path": "handoff-attendee.json",
+      "schema": "Handoff",
+      "sha256": "628a414279202a5294cb68a6637213884b3ec9a8e0e891d5b0cad03878b5d19b",
+      "valid": true
+    },
+    {
+      "path": "identity.json",
+      "schema": "Identity",
+      "sha256": "782f421112dd991f5316623ec83c95d6ca57fee8c81dc846ac20512c4bde649a",
+      "valid": true
+    },
+    {
+      "path": "health.json",
+      "schema": "Health",
+      "sha256": "efb2d76f25b1183e3f6d7d991e38ce8b566080f7aa0123cc856f3fb2712dc4fd",
+      "valid": true
+    },
+    {
+      "path": "readiness.json",
+      "schema": "Readiness",
+      "sha256": "d02ceeac5c0f530c99336606ed9dcdb917473037b299f5bea41e9bae276cd369",
+      "valid": true
+    },
+    {
+      "path": "unauthorized.json",
+      "schema": "Error",
+      "sha256": "ccd55512ee84ddf7f9de2ad62947f22fa3e899986d0af425b1042a2d03db2241",
+      "valid": true
+    },
+    {
+      "path": "handoff-operator.json",
+      "schema": "Handoff",
+      "sha256": "9b784c0a3da06eb923e6e16cf071608989b6b94ae7c2d0fd96071bfdb75775b2",
+      "valid": true
+    },
+    {
+      "path": "invalid-capability-enabled.json",
+      "schema": "Handoff",
+      "sha256": "a7cc9dd398857ca38d59209c82381005554817b0eeb228533defb70672a9f591",
+      "valid": false
+    },
+    {
+      "path": "invalid-wrong-contract-digest.json",
+      "schema": "Handoff",
+      "sha256": "3c8198dd95720537fcbdfe8afd4ad5b4263db2a18c42a46107fe757d51ab5610",
+      "valid": false
+    },
+    {
+      "path": "invalid-wrong-alias.json",
+      "schema": "Handoff",
+      "sha256": "0176cc7315134e3dbe37b19a04679cb2759b3214afb5a9462353c5222032c9c8",
+      "valid": false
+    },
+    {
+      "path": "invalid-credential-disclosure.json",
+      "schema": "Handoff",
+      "sha256": "1848dc6ffc9adebaa4f2b37287dc6ed202a29ff27eea69f7588d9cbfad189511",
+      "valid": false
+    },
+    {
+      "path": "invalid-unknown-version.json",
+      "schema": "Handoff",
+      "sha256": "e5dcc31436aa89ffb44df73371b9553e25f88159f70ec421c289fdc41468a61e",
+      "valid": false
+    }
+  ]
+}

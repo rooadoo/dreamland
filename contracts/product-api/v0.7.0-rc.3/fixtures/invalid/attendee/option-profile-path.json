@@ -1,0 +1,37 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.3"
+  },
+  "kind": "attendee_launch_options",
+  "options": [
+    {
+      "display": {
+        "revision_label": "Pinned attendee preview",
+        "source_label": "Authored",
+        "title": "Colony Ship A1"
+      },
+      "expires_at": "2026-08-28T14:00:00Z",
+      "launch_selection_id": "launch-selection:cccccccccccccccccccccccccccccccc",
+      "notice_version": "notice:attendee-preview-v1",
+      "offering_id": "offering:authored-colonyship-a1",
+      "origin": {
+        "kind": "authored_profile_snapshot"
+      },
+      "profile_path": "/private/profile.json",
+      "revision": {
+        "revision_id": "world-revision:sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    }
+  ],
+  "preview": {
+    "executor": "deterministic-attendee-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

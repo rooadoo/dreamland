@@ -1,0 +1,1031 @@
+{
+  "contract_revision": "0.4.0-rc.1",
+  "coverage": {
+    "event_types": [
+      "session.created",
+      "command.accepted",
+      "command.running",
+      "command.output",
+      "command.cancel_requested",
+      "state.accepted",
+      "command.completed",
+      "command.interrupted",
+      "command.failed",
+      "session.terminal"
+    ],
+    "operations": [
+      "cancelProductCommand",
+      "closeProductSession",
+      "createProductSession",
+      "getCurrentPresenterStage",
+      "getCurrentProductSession",
+      "getProductCapabilities",
+      "getProductCommandResult",
+      "getProductSessionEvents",
+      "getProductSessionSnapshot",
+      "getProductSessionTranscript",
+      "launchPresenterStage",
+      "replacePresenterStage",
+      "resetProductSession",
+      "submitProductCommand",
+      "switchProductSession"
+    ],
+    "recovery_scenarios": [
+      "cancel_ack_response_lost",
+      "command_accept_response_lost",
+      "create_response_lost_after_commit",
+      "epoch_rotated_after_uncertain_mutation",
+      "event_cursor_evicted",
+      "forced_terminal_usage_settles_late",
+      "promised_terminal_event_withheld"
+    ],
+    "safe_error_codes": [
+      "authority_denied",
+      "capacity_exhausted",
+      "command_in_progress",
+      "command_limit_reached",
+      "command_not_found",
+      "command_slot_conflict",
+      "command_too_large",
+      "compound_syntax_unsupported",
+      "content_length_required",
+      "control_revision_conflict",
+      "current_session_exists",
+      "expected_epoch_required",
+      "hosted_budget_exhausted",
+      "idempotency_conflict",
+      "internal_error",
+      "invalid_command_encoding",
+      "invalid_command_syntax",
+      "invalid_command_text",
+      "invalid_json",
+      "invalid_request",
+      "not_found",
+      "outcome_unknown",
+      "replacement_unavailable",
+      "request_too_large",
+      "resource_unavailable",
+      "session_closed",
+      "session_lost",
+      "snapshot_required",
+      "unauthorized",
+      "unsupported_media_type"
+    ]
+  },
+  "fixtures": [
+    {
+      "case": "authority_alpha",
+      "class": "canonical-valid",
+      "client_action": "server_side_fixture_only",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/authority/actor-alpha.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationAuthorityFixture",
+      "sha256": "f802339bf60fd42b891fbe9754e12638cb772b7776c7444b144795a646e4bcf9"
+    },
+    {
+      "case": "launch_grant_alpha",
+      "class": "canonical-valid",
+      "client_action": "server_side_fixture_only",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/authority/launch-grant-alpha.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationLaunchGrantFixture",
+      "sha256": "25fb924c01804ee90bb5227599039498eea90756450341b6f2389ff237489659"
+    },
+    {
+      "case": "cancel_already_terminal",
+      "class": "canonical-valid",
+      "client_action": "install_terminal_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/cancel/already-terminal.json",
+      "schema_target": "openapi.json#/components/schemas/CancelCommandResponse",
+      "sha256": "305546c422249c11a1ebe1c7452c6bdb4c0ffbff52d1d6c883d17d2136a00115"
+    },
+    {
+      "case": "cancel_request",
+      "class": "canonical-valid",
+      "client_action": "send",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/cancel/request.json",
+      "schema_target": "openapi.json#/components/schemas/CancelCommandRequest",
+      "sha256": "7a41e643356560c41b846760c5361b34223269838e0dbc852ab9bf664999559e"
+    },
+    {
+      "case": "cancel_requested_replay",
+      "class": "canonical-valid",
+      "client_action": "accept_original_ack_before_new_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/cancel/requested-replay.json",
+      "schema_target": "openapi.json#/components/schemas/CancelCommandResponse",
+      "sha256": "9446d4e24665681917775f20504e064a9e21c4ad491361c9b2406a9450be9463"
+    },
+    {
+      "case": "cancel_requested",
+      "class": "canonical-valid",
+      "client_action": "keep_slot_busy_until_terminal",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/cancel/requested.json",
+      "schema_target": "openapi.json#/components/schemas/CancelCommandResponse",
+      "sha256": "b026f97a3585473216851d2200c58c3edb77b8e24a431bf7b7759d75c64616c5"
+    },
+    {
+      "case": "capabilities_all_disabled",
+      "class": "canonical-valid",
+      "client_action": "fail_closed",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/capabilities/all-disabled.json",
+      "schema_target": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "8122866369acec6d25298f9b69b669f9eb4eb5986884f52f7e0a9c2196d523f3"
+    },
+    {
+      "case": "close_request",
+      "class": "canonical-valid",
+      "client_action": "send",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/close/request.json",
+      "schema_target": "openapi.json#/components/schemas/CloseSessionRequest",
+      "sha256": "044923a0e51917c07c5a3aadc253bb01c661e767248df1139667260c8ba61d7a"
+    },
+    {
+      "case": "close_success",
+      "class": "canonical-valid",
+      "client_action": "install_terminal_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/close/success.json",
+      "schema_target": "openapi.json#/components/schemas/CloseSessionResponse",
+      "sha256": "d1936a5bb013e4aa6c92cacf8454ee1a82274c7689a164935ef683cb72fe0607"
+    },
+    {
+      "case": "command_accepted_replay",
+      "class": "canonical-valid",
+      "client_action": "accept_recorded_result",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/accepted-replay.json",
+      "schema_target": "openapi.json#/components/schemas/SubmitCommandResponse",
+      "sha256": "a9fb54ef15fa0ebfbf920f08c96dfd0a05652810f789676812cb81fa96136e21"
+    },
+    {
+      "case": "command_accepted",
+      "class": "canonical-valid",
+      "client_action": "track_exact_command",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/accepted.json",
+      "schema_target": "openapi.json#/components/schemas/SubmitCommandResponse",
+      "sha256": "de265f2fc6a72d5e6af9bf6c9d1b3995395f7c8c2c16269ed2f217a53e6446ba"
+    },
+    {
+      "case": "command_completed_exited_committed",
+      "class": "canonical-valid",
+      "client_action": "install_authoritative_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/completed-exited-committed.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "a0cdc5fdd53afa77b6fda87686146765729adab255f2878de1e59d09b3ae830d"
+    },
+    {
+      "case": "command_completed_exited_none",
+      "class": "canonical-valid",
+      "client_action": "install_authoritative_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/completed-exited-none.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "9fc58f81b71555f3f6d68417bde30f0fa4a061e44ca580a3c086fd316cb04fd1"
+    },
+    {
+      "case": "command_completed_signaled_rejected",
+      "class": "canonical-valid",
+      "client_action": "install_authoritative_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/completed-signaled-rejected.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "5e046f5a3bceb35a6525956d64fa9809b0eac2fdaa39ddaf3f2dc1e3f0704a95"
+    },
+    {
+      "case": "command_failed_pending_usage",
+      "class": "canonical-valid",
+      "client_action": "install_authoritative_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/failed-pending-usage.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "61d10de0dcd3372722614a190dd33eb1c4707be11f875e6020e3218c242f3873"
+    },
+    {
+      "case": "command_failed_settled_usage",
+      "class": "canonical-valid",
+      "client_action": "install_authoritative_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/failed-settled-usage.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "9a4fc9333b36512674dd0e5a10d3f516df594dd488b5f22793cdceea6c173afd"
+    },
+    {
+      "case": "command_interrupted",
+      "class": "canonical-valid",
+      "client_action": "install_authoritative_truth",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/interrupted.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "f0f89d1cb17a82c0b3974fa5454f168d7fe1330891f3a12fff8b67a8ab829783"
+    },
+    {
+      "case": "command_running",
+      "class": "canonical-valid",
+      "client_action": "wait_or_reconcile",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/result-running.json",
+      "schema_target": "openapi.json#/components/schemas/CommandResultResponse",
+      "sha256": "e66fdcf64b979ec2f0bf91297a83bc026234eeccbad158f921f9af5946ba419a"
+    },
+    {
+      "case": "submit_request",
+      "class": "canonical-valid",
+      "client_action": "send_after_server_classifier",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/commands/submit-request.json",
+      "schema_target": "openapi.json#/components/schemas/SubmitCommandRequest",
+      "sha256": "1254c2d32973f164a6681224f5b6daf8888383967529ea20b0b514aaa018e749"
+    },
+    {
+      "case": "current_active",
+      "class": "canonical-valid",
+      "client_action": "accept",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/current/active.json",
+      "schema_target": "openapi.json#/components/schemas/CurrentSessionResponse",
+      "sha256": "fa9e2b036aee4ab5088e032d4dc324b3769d07d5180fc837c893bcbb25cdc176"
+    },
+    {
+      "case": "current_none",
+      "class": "canonical-valid",
+      "client_action": "accept",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/current/none.json",
+      "schema_target": "openapi.json#/components/schemas/CurrentSessionResponse",
+      "sha256": "b9e43bbefc3e3ec837d5e59999f27f883f63c839dfdc14a66297c6fe1c502a37"
+    },
+    {
+      "case": "current_terminal_closed",
+      "class": "canonical-valid",
+      "client_action": "display_tombstone_without_mutation_authority",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/current/terminal-closed.json",
+      "schema_target": "openapi.json#/components/schemas/CurrentSessionResponse",
+      "sha256": "8e953dbb425b4fc4fffbe7cba54a66fbb14292458842f621213116b5895f3274"
+    },
+    {
+      "case": "safe_error_authority_denied",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/authority-denied.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "d8451a202213d9d5db0ec13f1d69c402255a55cc52e8d969f5bead487e705110"
+    },
+    {
+      "case": "safe_error_capacity_exhausted",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/capacity-exhausted.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "a7ffbb213fb73a0d2418d9b211a9a98c337d617bb4fa3a7de0e0fecec2f3b3ff"
+    },
+    {
+      "case": "safe_error_command_in_progress",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/command-in-progress.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "bdb58e7cc385c1b02b7bac58171a66c4706d1f9b1f9eef30ac197274d1226f8d"
+    },
+    {
+      "case": "safe_error_command_limit_reached",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/command-limit-reached.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "77466e7e26460a6e2d420885864ad113a57bbc002674125a55f49e0b4057064b"
+    },
+    {
+      "case": "safe_error_command_not_found",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/command-not-found.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "64109f2da26f612188342148bf276e7ec47c37d509c2b6562c2c42695c333d3c"
+    },
+    {
+      "case": "safe_error_command_slot_conflict",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/command-slot-conflict.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "49d73211068870c9b5d4c704cdda7775324acec13bc433c8f7cce6605ba5f611"
+    },
+    {
+      "case": "safe_error_command_too_large",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/command-too-large.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "ee9d154a0da17945ddda6184cde953b9084451db384d71c5404de67ffd28e4d4"
+    },
+    {
+      "case": "safe_error_compound_syntax_unsupported",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/compound-syntax-unsupported.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "d7508e19c24f519ab6da04863aea751a45666e2920d817d0fbfb60aa211d10f5"
+    },
+    {
+      "case": "safe_error_content_length_required",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/content-length-required.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "89a19ca0b90cd40d4de8c8636360c7dcaa00a615b09165a880e2a7ab03a76eeb"
+    },
+    {
+      "case": "safe_error_control_revision_conflict",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/control-revision-conflict.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "7130fba0f453db54b03d75c1712da965ce64ae2fcb5e11433851c3869e8059fd"
+    },
+    {
+      "case": "safe_error_current_session_exists",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/current-session-exists.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "20dfb6390c57bc4b16865a29e42f2dc48bb9f19027d0c841c2cf409a9f52bc21"
+    },
+    {
+      "case": "safe_error_expected_epoch_required",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/expected-epoch-required.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "f061bed7c731de1ce5c313b4b49ab2441ba7cbad92f7ee2b72fd3de94fabd281"
+    },
+    {
+      "case": "safe_error_hosted_budget_exhausted",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/hosted-budget-exhausted.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "e3908f620b663d5dd24409a4ff8a2f5b71a4946e1edcbff838bb942b3c70662c"
+    },
+    {
+      "case": "safe_error_idempotency_conflict",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/idempotency-conflict.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "f34dbae72f7e53a89fff0d2ad1e583dd727d4785fd8a16b731b025d282e98696"
+    },
+    {
+      "case": "safe_error_internal_error",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/internal-error.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "c00ef8f840a32d07b86bfb2ad6176dc7d49791dfa40986e5b199a73824c3c4ba"
+    },
+    {
+      "case": "safe_error_invalid_command_encoding",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/invalid-command-encoding.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "94f5b56e1c1ecd9723464b01455dc7455ed33cd6f718fd5d36214d1f988feb23"
+    },
+    {
+      "case": "safe_error_invalid_command_syntax",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/invalid-command-syntax.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "69bf6033f03b5359bc46e50a9bde00d2234922970762ff41d25402e05e32b4f8"
+    },
+    {
+      "case": "safe_error_invalid_command_text",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/invalid-command-text.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "d386c023e1bc074718259e3b0b680f18afcaa5a428c3a945f1ff6a62b8ecf978"
+    },
+    {
+      "case": "safe_error_invalid_json",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/invalid-json.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "cd153c6a1b60bec09c814f5c3fcc77b5a37aca309dead8ee90949238f0bebf63"
+    },
+    {
+      "case": "safe_error_invalid_request",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/invalid-request.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "940ef4742b4b682cc4d4e887b2e44cebedee102de9dae2409ec876911630f6cb"
+    },
+    {
+      "case": "safe_error_not_found",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/not-found.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "6310af227361c12c9b6bd5949d7ed2d9a50864c31d6998a5b22084aebff41abe"
+    },
+    {
+      "case": "safe_error_outcome_unknown",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/outcome-unknown.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "393a63f0264d688c2f19b50fbbf78c5358563dd9286e8903d9557d644021f462"
+    },
+    {
+      "case": "safe_error_replacement_unavailable",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/replacement-unavailable.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "bd5f4c8121310cf3d0ac607cfd51f264ba70a67213a70e813d1842396b93eb47"
+    },
+    {
+      "case": "safe_error_request_too_large",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/request-too-large.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "16715c3c43bea2b73042d29fceb9a94da4c370d2f0818cd3598a8c1d299f5f3d"
+    },
+    {
+      "case": "safe_error_resource_unavailable",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/resource-unavailable.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "32d5a0e1316135ecaf923cd9a4dc2e9398f7ed3c55fe018e4cfb4e332e2ef7c9"
+    },
+    {
+      "case": "safe_error_session_closed",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/session-closed.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "44bcac589fffd200adf00de357b3e316073ab315d3823b32cdd2c8375847e0fa"
+    },
+    {
+      "case": "safe_error_session_lost",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/session-lost.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "e67f91b488ce4efa5f16e28f24a66b8ca5e966e76f8207a52e7a6a09b957b447"
+    },
+    {
+      "case": "safe_error_snapshot_required",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/snapshot-required.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "8f7a000d4ce8ea939a6bde5ee0aedf423ec0de7dcb0b5e366ab57e130661271b"
+    },
+    {
+      "case": "safe_error_unauthorized",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/unauthorized.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "25cc763b45e81a6c6ad2aeb85f6c784f00d7a7a5469d1e7882b14d3db31a386d"
+    },
+    {
+      "case": "safe_error_unsupported_media_type",
+      "class": "canonical-valid",
+      "client_action": "follow_retry_category_conservatively",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/unsupported-media-type.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "2ba31c114667c3373f359a52ba5e6e067ea390e3fcb1aa2f538ff94f09c533fe"
+    },
+    {
+      "case": "event_command_accepted",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-accepted.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "5c44e3040acd086578dd027ed72c82965ff30cd4e398dfc0bc68cdb00c2d8a43"
+    },
+    {
+      "case": "event_command_cancel_requested",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-cancel_requested.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "289942e59e8f01feb203b79f5d709fbf265b41994218f7723e75e389b2a17de2"
+    },
+    {
+      "case": "event_command_completed",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-completed.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "857e88bdf6f0e7c9444c0b671aba814a3275473d2bd2817e0fdb79cab8c57e97"
+    },
+    {
+      "case": "event_command_failed",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-failed.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "c2811c42c3155ad95274f1aa471b7b97571e4afb7b29f360f7610e6842c06141"
+    },
+    {
+      "case": "event_command_interrupted",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-interrupted.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "3a8c0a25c30061c6935d49b243e57efb99cf78a78be42a3d11e9843627090683"
+    },
+    {
+      "case": "event_command_output",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-output.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "f08cd79c449a0bf8079470725912ded86a3dc7620b8cf6ecb0350a12b9a30088"
+    },
+    {
+      "case": "event_command_running",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/command-running.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "3ab62e828803f18b6709d10dbf3a555eaf85f4b8798a47024a04679f4344b149"
+    },
+    {
+      "case": "event_page",
+      "class": "canonical-valid",
+      "client_action": "deduplicate_and_apply_in_order",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/page.json",
+      "schema_target": "openapi.json#/components/schemas/EventPageResponse",
+      "sha256": "0b2b62bb4763325936922c140b56d5605d35fad3e7a46a71f252337b88e8823a"
+    },
+    {
+      "case": "event_session_created",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/session-created.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "2a947e55ad7d3d3cf2c1f806da737b61e58aab4b9daa90da45fcee982a199fa7"
+    },
+    {
+      "case": "event_session_terminal",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/session-terminal.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "350076ef6f898b94814e8447436f9bb274823f3dce53854b02a677eb1cdc6167"
+    },
+    {
+      "case": "event_state_accepted",
+      "class": "canonical-valid",
+      "client_action": "apply_or_correlate",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/events/state-accepted.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "a5e01aed7ee1830cf2def6d5c9843c39cc17b32f7167c71ce9242b441ffa1302"
+    },
+    {
+      "case": "recovery_cancel_ack_response_lost",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/cancel-ack-response-lost.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "378bd797fb29445a3757e2300714e1c731fb131342cf8ad232affb73630d7108"
+    },
+    {
+      "case": "recovery_command_accept_response_lost",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/command-accept-response-lost.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "b32430397919144706f487461d9346c539fd0f33e49f127ac8e82916f9bb86e4"
+    },
+    {
+      "case": "recovery_create_response_lost_after_commit",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/create-response-lost-after-commit.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "1ee3135a44ef4f6b96816e32938cd60a5fc82368a3769e97e0fcb83b9f72c796"
+    },
+    {
+      "case": "recovery_epoch_rotated_after_uncertain_mutation",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/epoch-rotated-after-uncertain-mutation.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "c9d6ec715781f63218464e88c0fa9a7ac9dd2bdbbf8c4915da768cb871ee349c"
+    },
+    {
+      "case": "recovery_event_cursor_evicted",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/event-cursor-evicted.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "228609403ddccaeec30f6fd70b039e1fc8c675e0ae19b9f4ce381b8ab416bb02"
+    },
+    {
+      "case": "recovery_forced_terminal_usage_settles_late",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/forced-terminal-usage-settles-late.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "b5e1c93ec935cdc01bb1f184dd22344fe6d9beeb98def0d40e790cd17e6d3cd8"
+    },
+    {
+      "case": "recovery_promised_terminal_event_withheld",
+      "class": "canonical-valid",
+      "client_action": "exercise_deterministic_preview_scenario",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/promised-terminal-event-withheld.json",
+      "schema_target": "openapi.json#/components/schemas/IntegrationRecoveryFixture",
+      "sha256": "3da4de1ac9fe0f32794e39097aae74b0df05632449605e41e166823f2c593dc0"
+    },
+    {
+      "case": "reset_request",
+      "class": "canonical-valid",
+      "client_action": "send",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/replacement/reset-request.json",
+      "schema_target": "openapi.json#/components/schemas/ResetSessionRequest",
+      "sha256": "044923a0e51917c07c5a3aadc253bb01c661e767248df1139667260c8ba61d7a"
+    },
+    {
+      "case": "reset_success",
+      "class": "canonical-valid",
+      "client_action": "atomically_replace_authority",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/replacement/reset-success.json",
+      "schema_target": "openapi.json#/components/schemas/ReplacementResponse",
+      "sha256": "2a861e800bda9631db1e611e7282be1b7539f0e90f250e5e64427b0cd6f29f1d"
+    },
+    {
+      "case": "switch_request",
+      "class": "canonical-valid",
+      "client_action": "send",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/replacement/switch-request.json",
+      "schema_target": "openapi.json#/components/schemas/SwitchSessionRequest",
+      "sha256": "06364946e2549a269702af04ddac8be0fac0456d472b2bc7b516f45d1b1eb8ab"
+    },
+    {
+      "case": "switch_success",
+      "class": "canonical-valid",
+      "client_action": "atomically_replace_authority",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/replacement/switch-success.json",
+      "schema_target": "openapi.json#/components/schemas/ReplacementResponse",
+      "sha256": "22fc845842c835c6afc8034b633ae76c125b65793cd56c3cda8ee47222a854fd"
+    },
+    {
+      "case": "create_replay",
+      "class": "canonical-valid",
+      "client_action": "accept_recorded_result",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/sessions/create-replay.json",
+      "schema_target": "openapi.json#/components/schemas/CreateSessionResponse",
+      "sha256": "33202c5664996c4cb8c028141e3b06d1b9527ca99c4b50268b4b1bdd68d2ebeb"
+    },
+    {
+      "case": "create_request",
+      "class": "canonical-valid",
+      "client_action": "send",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/sessions/create-request.json",
+      "schema_target": "openapi.json#/components/schemas/CreateSessionRequest",
+      "sha256": "90a32d8da12441b04c86dab5b67377df21d349b42ecd91995d47d39b1e3c77be"
+    },
+    {
+      "case": "create_success",
+      "class": "canonical-valid",
+      "client_action": "accept",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/sessions/create-success.json",
+      "schema_target": "openapi.json#/components/schemas/CreateSessionResponse",
+      "sha256": "525fe3a232c0b0a9554e1972319eff34b08b3d5cfbfe40740b9fc11c3606b8b9"
+    },
+    {
+      "case": "snapshot_active",
+      "class": "canonical-valid",
+      "client_action": "replace_local_projection",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/snapshots/active.json",
+      "schema_target": "openapi.json#/components/schemas/SnapshotResponse",
+      "sha256": "5f6e3ab69e20203b084a641ed66a98aab39aa64bd1b09e6da73fbdadca81ea45"
+    },
+    {
+      "case": "transcript_page",
+      "class": "canonical-valid",
+      "client_action": "render_inert_text",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/transcript/page.json",
+      "schema_target": "openapi.json#/components/schemas/TranscriptPageResponse",
+      "sha256": "10a849782f3b676fa46e957e81be118e9cc30ecbbc53ec6fdb168704f7673698"
+    },
+    {
+      "case": "forward_unknown_error",
+      "class": "forward-compat",
+      "client_action": "surface_safe_error_without_retry_inference",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/errors/unknown-code.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "71737ac014eb6907746512e92ad8d0b3dc179d24e997f8b691b6a3a649159d18"
+    },
+    {
+      "case": "forward_unknown_authoritative_event",
+      "class": "forward-compat",
+      "client_action": "stop_incremental_apply_and_resume_snapshot",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/events/unknown-authoritative.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "f90d5e463fdaa28acf060d4b425478616608ddabb54e508c404a4ae4974d841f"
+    },
+    {
+      "case": "forward_unknown_informational_event",
+      "class": "forward-compat",
+      "client_action": "ignore_payload_and_advance_cursor",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/events/unknown-informational.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "722d6b7300f1bb237515803484eccef4d4cf1da9004689c0a29dda8f77e01780"
+    },
+    {
+      "case": "forward_snapshot_additive",
+      "class": "forward-compat",
+      "client_action": "preserve_safe_additive_fields",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/snapshots/additive-fields.json",
+      "schema_target": "openapi.json#/components/schemas/SnapshotResponse",
+      "sha256": "a9ed7e8d39b93259416d68b2dc63186ac5ac6b68ba8ee9ba002489fff7df41d9"
+    },
+    {
+      "case": "forward_transcript_additive",
+      "class": "forward-compat",
+      "client_action": "ignore_safe_additive_rendering_metadata",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/transcript/additive-entry-field.json",
+      "schema_target": "openapi.json#/components/schemas/TranscriptPageResponse",
+      "sha256": "83a97fa090cb13495cfdf966401a0065fad38e6c9f8e0179e7794b55cf0783ee"
+    },
+    {
+      "case": "committed_missing_revision",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/committed-missing-revision.json",
+      "schema_target": "openapi.json#/components/schemas/TerminalCommandResult",
+      "sha256": "6f96a10f937f6fc1c6202f8715b95ed8071cc4b27a5a189f76d5c5f6a594c52c"
+    },
+    {
+      "case": "completed_ambiguous_termination",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/completed-ambiguous-termination.json",
+      "schema_target": "openapi.json#/components/schemas/TerminalCommandResult",
+      "sha256": "1e488fe61d75db5c0777d4bfd3e43d0b321b030530f3b49d07721218506eeb7c"
+    },
+    {
+      "case": "completed_missing_termination",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/completed-missing-termination.json",
+      "schema_target": "openapi.json#/components/schemas/TerminalCommandResult",
+      "sha256": "c8d16a941b075cbeac7f777d05aef4aaa55902f402e182fe5cc04cd192e90b00"
+    },
+    {
+      "case": "submit_compound",
+      "class": "invalid",
+      "client_action": "reject_before_identity_slot_journal_or_budget",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/compound-syntax.json",
+      "schema_target": "classifier:product-single-v1",
+      "sha256": "be4c8a539abb9de9d93101ab82f7665cc889f701934a306e7e167aa5b46243d3"
+    },
+    {
+      "case": "failed_with_state_effect",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/failed-with-state-effect.json",
+      "schema_target": "openapi.json#/components/schemas/TerminalCommandResult",
+      "sha256": "a9654d12ad9bc1d7759bdb8bab25175320fdb52fcd42669c6825db5e636cd987"
+    },
+    {
+      "case": "submit_line_break",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/line-break.json",
+      "schema_target": "openapi.json#/components/schemas/SubmitCommandRequest",
+      "sha256": "b0263d228231ec4d7f62c330917f84810b1d1b9b62c5555681d0626893b09bd8"
+    },
+    {
+      "case": "pending_usage_with_number",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/pending-usage-with-number.json",
+      "schema_target": "openapi.json#/components/schemas/TerminalCommandResult",
+      "sha256": "784d297a9b8dfd4ab7dbce5d15f71dd151412175bbd150d1880b19c0572b95b2"
+    },
+    {
+      "case": "settled_usage_with_null",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/commands/settled-usage-with-null.json",
+      "schema_target": "openapi.json#/components/schemas/TerminalCommandResult",
+      "sha256": "495c7235d808a5ca5997d698eb191c693d1028ea4bb2d75f52377be4e4275b4f"
+    },
+    {
+      "case": "safe_error_unsafe_field",
+      "class": "invalid",
+      "client_action": "reject_fail_closed",
+      "expected": "invalid",
+      "path": "fixtures/invalid/errors/unsafe-field.json",
+      "schema_target": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "8b18918780b1f2b5744963d605aa8823fc9667f0d358a41f00e72f7f0a9a2d83"
+    },
+    {
+      "case": "event_authority_leak",
+      "class": "invalid",
+      "client_action": "reject_fail_closed",
+      "expected": "invalid",
+      "path": "fixtures/invalid/events/session-authority.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "d6a3b6f53e4fac205c8d40fcd89bda9a891c387e2562900bc061f6a613beb984"
+    },
+    {
+      "case": "known_event_wrong_criticality",
+      "class": "invalid",
+      "client_action": "reject_and_snapshot",
+      "expected": "invalid",
+      "path": "fixtures/invalid/events/wrong-criticality.json",
+      "schema_target": "events.schema.json#/$defs/ProductEvent",
+      "sha256": "7a8dd64a5dde5a2d176be434cc0fc574257cc815e86932b6f979e37d72f062df"
+    },
+    {
+      "case": "event_cursor_zero_with_id",
+      "class": "invalid",
+      "client_action": "reject_and_snapshot",
+      "expected": "invalid",
+      "path": "fixtures/invalid/events/zero-sequence-with-id.json",
+      "schema_target": "openapi.json#/components/schemas/EventCursor",
+      "sha256": "c5940d977a3fa284408e292762140ed320cfd45901fdb35b432076cafad74acb"
+    },
+    {
+      "case": "create_offering_not_grant",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/sessions/offering-id-instead-of-grant.json",
+      "schema_target": "openapi.json#/components/schemas/CreateSessionRequest",
+      "sha256": "410a0f7eae6575e9c3aa2c11fddba2ea10b316b2f5b38db2eef3781551e5619f"
+    },
+    {
+      "case": "snapshot_inconsistent_slot",
+      "class": "invalid",
+      "client_action": "reject_fail_closed",
+      "expected": "invalid",
+      "path": "fixtures/invalid/snapshots/available-with-active-command.json",
+      "schema_target": "openapi.json#/components/schemas/SessionSnapshot",
+      "sha256": "e2ac9968641733003f2480b7f0d26cbdb061da1f7faee27b25e216c16096fff6"
+    },
+    {
+      "case": "snapshot_authority_leak",
+      "class": "invalid",
+      "client_action": "reject_fail_closed",
+      "expected": "invalid",
+      "path": "fixtures/invalid/snapshots/session-authority.json",
+      "schema_target": "openapi.json#/components/schemas/SnapshotResponse",
+      "sha256": "dd19980f6134d7f5ca25f69b30735b49e8db8d019f6d398c4c2051606da583a5"
+    },
+    {
+      "case": "stage_launch_request",
+      "class": "canonical-valid",
+      "client_action": "send",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/stage/launch-request.json",
+      "schema_target": "openapi.json#/components/schemas/CreateSessionRequest",
+      "sha256": "3aa753a3e6c025b44d8dd36cec98eae9bc3fd0696a7e51cf1422e3b332f3a733"
+    },
+    {
+      "case": "stage_launch_created",
+      "class": "canonical-valid",
+      "client_action": "store_private_authority_and_render_stage",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/stage/launch-created.json",
+      "schema_target": "openapi.json#/components/schemas/StageLaunchResponse",
+      "sha256": "283b1aedd2c51f41d03727d36d3bfca0cca557d71f50dd2d7be49a23bc35d84e"
+    },
+    {
+      "case": "stage_launch_resumed",
+      "class": "canonical-valid",
+      "client_action": "resume_same_stage_without_redispatch",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/stage/launch-resumed.json",
+      "schema_target": "openapi.json#/components/schemas/StageLaunchResponse",
+      "sha256": "e63eb04fefade5a31b35665e7b9a15216f0f5e29c8ec0c776492482b26a9900a"
+    },
+    {
+      "case": "stage_replace_request",
+      "class": "canonical-valid",
+      "client_action": "send_explicit_replacement",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/stage/replace-request.json",
+      "schema_target": "openapi.json#/components/schemas/SwitchSessionRequest",
+      "sha256": "7dbf9a1f26b7a69806463c1b87a38382077555554997baf878999e90a02cbc5d"
+    },
+    {
+      "case": "stage_replace_success",
+      "class": "canonical-valid",
+      "client_action": "rotate_private_authority_after_atomic_cutover",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/stage/replace-success.json",
+      "schema_target": "openapi.json#/components/schemas/StageReplacementResponse",
+      "sha256": "c1928adde7627fd03aa75394fc28fa14edae1a682c43136eae66ac74027f495c"
+    },
+    {
+      "case": "stage_launch_response_lost",
+      "class": "canonical-valid",
+      "client_action": "retry_identical_stage_launch",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/recovery/stage-launch-response-lost.json",
+      "schema_target": "openapi.json#/components/schemas/StageRecoveryFixture",
+      "sha256": "52083a40ed76096abe3e81529a3eb71a0b76b27dd5f2774a0562e6a6a29ac22a"
+    },
+    {
+      "case": "stage_snapshot_forbidden_raw_state",
+      "class": "invalid",
+      "client_action": "reject",
+      "expected": "invalid",
+      "path": "fixtures/invalid/stage/raw-world-state.json",
+      "schema_target": "openapi.json#/components/schemas/PresenterStageSnapshot",
+      "sha256": "ce31a9df26a5706f2b49d0c12bc6f347c2aa96cb1415bb5581c79e47d5eac502"
+    }
+  ]
+}

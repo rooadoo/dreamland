@@ -1,0 +1,359 @@
+{
+  "contract_revision": "0.1.0-rc.2",
+  "fixtures": [
+    {
+      "case": "recipes",
+      "classification": "canonical-valid",
+      "client_action": "render_recipe",
+      "path": "fixtures/canonical-valid/recipes.json",
+      "sha256": "a3c7706711319b2f790ed09ce5f920c5592739b35574f519a91fe46412855968",
+      "target": "openapi.json#/components/schemas/RecipeListResponse"
+    },
+    {
+      "case": "prepare_request",
+      "classification": "canonical-valid",
+      "client_action": "prepare_review",
+      "path": "fixtures/canonical-valid/prepare-request.json",
+      "sha256": "4bf801601b1f213690d87659a9ed6175d33b367ede1698850ac352bf9b7dcb7c",
+      "target": "openapi.json#/components/schemas/PrepareSeedRequest"
+    },
+    {
+      "case": "prepared",
+      "classification": "canonical-valid",
+      "client_action": "show_unconfirmed_review",
+      "path": "fixtures/canonical-valid/prepared.json",
+      "sha256": "e3cbf5767d5df441d570ea22a97b71ef9ec81e3883344095c93c948233404d71",
+      "target": "openapi.json#/components/schemas/PreparationResponse"
+    },
+    {
+      "case": "submit_request",
+      "classification": "canonical-valid",
+      "client_action": "confirm_and_submit",
+      "path": "fixtures/canonical-valid/submit-request.json",
+      "sha256": "0d2f553d0aa4ce0bdd5549291f3dfed7342260dab4967f3e9be63894561b33a8",
+      "target": "openapi.json#/components/schemas/SubmitBuildRequest"
+    },
+    {
+      "case": "accepted_result",
+      "classification": "canonical-valid",
+      "client_action": "store_reference_and_position",
+      "path": "fixtures/canonical-valid/accepted-result.json",
+      "sha256": "ffa839eedc808868433579ba969f48adf43acc91a77350bd01c67db44aa1e0b9",
+      "target": "openapi.json#/components/schemas/SubmitBuildResponse"
+    },
+    {
+      "case": "events",
+      "classification": "canonical-valid",
+      "client_action": "reconcile_snapshot",
+      "path": "fixtures/canonical-valid/events.json",
+      "sha256": "6ef4420246f8f82a4ab1276472acbdb51842acc24d2755b1a50f2b74ecea4269",
+      "target": "openapi.json#/components/schemas/EventPage"
+    },
+    {
+      "case": "cancel_request",
+      "classification": "canonical-valid",
+      "client_action": "cancel_active_build",
+      "path": "fixtures/canonical-valid/cancel-request.json",
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "target": "openapi.json#/components/schemas/CancelBuildRequest"
+    },
+    {
+      "case": "projection_accepted",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/accepted.json",
+      "sha256": "165781ff2a1f0659149482a4b263c3d1aaed1951e1fefe920ae9cbf36a4f8426",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_queued",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/queued.json",
+      "sha256": "9e87ccd54ba04f0f1e0dc598cc551138ac7f6a866292364108f7513dbf379e56",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_building",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/building.json",
+      "sha256": "7fe536458864d492aa1c6a668a704542d211c314ac7f6d9cc50628514a018f19",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_generated",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/generated.json",
+      "sha256": "e21a6a0b093001c153cdfab73f5c474c004b3af288361670de223cb13c4a19de",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_validating",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/validating.json",
+      "sha256": "0a846aea194f7707469283396b0a600032c718ce07512d6c86ecc85496ba04ca",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_selected",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/selected.json",
+      "sha256": "e46f0d4dc35dbcc9a56e87ea9654c2fa4f9067afc72078faa295be45808fd3bf",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_failed",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/failed.json",
+      "sha256": "7d107d12c3ae05060657fcf2d6bd98977f674bbe5bb5f1af9bbc73d1e5149965",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_cancelled",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/cancelled.json",
+      "sha256": "8834b6988787866e097c60c22bdd461e9b4fca7e9a32431ea271c9b273b82ae4",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "projection_deadline_exceeded",
+      "classification": "canonical-valid",
+      "client_action": "render_projection",
+      "path": "fixtures/canonical-valid/lifecycle/deadline_exceeded.json",
+      "sha256": "8f2fc101f729509ba4deff275ed4ff463fba90e6e9b2a3b9252888e56a892ffd",
+      "target": "openapi.json#/components/schemas/BuildProjection"
+    },
+    {
+      "case": "error_invalid_request",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/invalid_request.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "59be6cb0e19f4626f0078ec17b6afe0abe1e56b8640ba43018ea158ccac07cf0",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_recipe_unknown",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/recipe_unknown.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "9dd7537b5b8b34f32e22cc78dfd3fd868d97ddcb3ec85b7a8ca14d0418ffe96f",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_recipe_revision_mismatch",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/recipe_revision_mismatch.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "5607f6279b7778aabb5938db75e90a1fce9839b60c17a972e4b9dd18c6d0aa7a",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_validation_failed",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/validation_failed.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "d203b73e94c704f793c34927d611c1fb1eb7bc68e42179fe96c5c4705d507177",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_preparation_expired",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/preparation_expired.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "e615a10ca1d25007a1110f3134b2c774b1f237895366114652a9fa659dd5d742",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_preparation_consumed",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/preparation_consumed.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "a1e5bc374701bb12a75871e22d2e92609144757766d665cb2435071444d130b7",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_preparation_not_found",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/preparation_not_found.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "519969979e8e4e125e0e69b56a8720cf151b0778d4520b991186b43e8ff7d8ff",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_preparation_capacity_exhausted",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/preparation_capacity_exhausted.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "7ab6c558e5b241e50e2cb06b32bdb1e1b6953679c13df9f77bb8d4af9629aa9d",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_authority_denied",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/authority_denied.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "a3a422b380287620406ea98df6cf9427b5b07e7fae5b4e542adad375691d2e22",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_service_epoch_changed",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/service_epoch_changed.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "c742a3349d306a0a438b86a42519bebb6dc416bfb0057e4ddb2810cdfbd21752",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_capacity_exhausted",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/capacity_exhausted.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "563ebee3c5e103b4f28c3ee15df6ea6f3d61b58e50149747b04c4905e19eba5b",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_idempotency_capacity_exhausted",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/idempotency_capacity_exhausted.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "c22600c4fd7acb4ccef58a713d7c47e9d3f050dd664a8e34de99f06e1fda2010",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_idempotency_conflict",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/idempotency_conflict.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "a9ac753b3e91aaca207ad5b3eae3728a49c312101b015815792a036a9e46782f",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_idempotency_key_invalid",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/idempotency_key_invalid.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "66a2ccda691b3c86dba5833b0e623c8db24be65f5013fa9f0d916dc39bfa9d83",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_job_not_found",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/job_not_found.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "d799f998f7ef0cb941b29d9b2a32b28bafec5f7f8eda18589337c3e3bfde169c",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_job_terminal",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/job_terminal.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "397e3446798d0ac7b97c168a80ec40e970e68405e5afd70fd3972e52601489bd",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_resync_required",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/resync_required.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "9ec208704076d5b28c2d6dae96d1daf5fed9cb3cfef071b961fc3f58edf045d3",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_request_too_large",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/request_too_large.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "1bb0502fe458fe2603cc3172b5c092f4ba1ec9fb992d884ce99c2b83feaad836",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_response_too_large",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/response_too_large.json",
+      "reachability": "schema-only",
+      "reachability_detail": "Schema-only defensive serializer guard; current bounded responses do not reach it.",
+      "sha256": "1a8c45dc4ad227259902d380a58c32e5f6415eef53a8fea47cd4e22d1b1e0f33",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_unsupported_media_type",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/unsupported_media_type.json",
+      "reachability": "http",
+      "reachability_detail": "Served by a current provider-free preview HTTP condition.",
+      "sha256": "1271513abbe6152d33cb1a90af705b55f7126ebcf10a320ddaa6a3050afc5010",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "error_temporarily_unavailable",
+      "classification": "safe-error",
+      "client_action": "handle_safe_error",
+      "path": "fixtures/safe-errors/temporarily_unavailable.json",
+      "reachability": "schema-only",
+      "reachability_detail": "Schema-only future availability case; the current preview has no emitter.",
+      "sha256": "4dd440e4b79ce1bae19d81146054c62409a34c11af5df282bbe2628571d830d4",
+      "target": "openapi.json#/components/schemas/SafeErrorEnvelope"
+    },
+    {
+      "case": "projection_unknown_additive",
+      "classification": "forward-compatibility",
+      "client_action": "ignore_unknown_response_field",
+      "path": "fixtures/forward-compatibility/projection-unknown-additive.json",
+      "sha256": "e5060037409d73418f0cd0363bcb12f8b3fee93a13f6279f5e81b2aea83965b2",
+      "target": ""
+    },
+    {
+      "case": "projection_unknown_enum",
+      "classification": "invalid",
+      "client_action": "fail_closed_and_resync",
+      "path": "fixtures/invalid/projection-unknown-enum.json",
+      "sha256": "d571ac44eac03da5dc7951f48908bb51ab9857580560e9c3c056e49e061e5fc4",
+      "target": ""
+    }
+  ]
+}

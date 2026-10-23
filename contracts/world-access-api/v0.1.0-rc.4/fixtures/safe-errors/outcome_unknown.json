@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "outcome_unknown",
+    "message": "The prior mutation outcome cannot be reconciled.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

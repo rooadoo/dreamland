@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "unsupported_media_type",
+    "message": "The request content type is unsupported.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

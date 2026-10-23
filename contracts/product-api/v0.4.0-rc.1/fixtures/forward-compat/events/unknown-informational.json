@@ -1,0 +1,13 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "criticality": "informational",
+  "data": {
+    "safe_label": "working"
+  },
+  "emitted_at_ms": 1777000000011,
+  "event_id": "event:phase2alphaevent:11",
+  "schema_revision": "1",
+  "sequence": 11,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "future.progress"
+}

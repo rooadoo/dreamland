@@ -1,0 +1,295 @@
+{
+  "$defs": {
+    "EventPosition": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "service_epoch": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "stream_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "service_epoch",
+        "stream_id",
+        "last_event_id",
+        "sequence",
+        "cursor"
+      ],
+      "type": "object"
+    },
+    "ForgeEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_at": {
+          "maxLength": 40,
+          "minLength": 1,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T",
+          "type": "string"
+        },
+        "cursor": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "event_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "job_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "requires_snapshot_reconciliation": {
+          "const": true,
+          "type": "boolean"
+        },
+        "sequence": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "service_epoch": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "accepted",
+            "queued",
+            "building",
+            "generated",
+            "validating",
+            "selected",
+            "failed",
+            "cancelled",
+            "deadline_exceeded"
+          ],
+          "type": "string"
+        },
+        "stream_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "terminal": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stream_id",
+        "event_id",
+        "sequence",
+        "cursor",
+        "job_id",
+        "state",
+        "changed_at",
+        "terminal",
+        "service_epoch",
+        "requires_snapshot_reconciliation"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://dreamland.invalid/contracts/world-forge/0.1.0-rc.4/events.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "events": {
+      "items": {
+        "$ref": "#/$defs/ForgeEvent"
+      },
+      "maxItems": 32,
+      "type": "array"
+    },
+    "kind": {
+      "const": "forge_events",
+      "type": "string"
+    },
+    "page_complete": {
+      "type": "boolean"
+    },
+    "position": {
+      "additionalProperties": false,
+      "properties": {
+        "cursor": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "last_event_id": {
+          "oneOf": [
+            {
+              "maxLength": 256,
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "service_epoch": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        },
+        "stream_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "service_epoch",
+        "stream_id",
+        "last_event_id",
+        "sequence",
+        "cursor"
+      ],
+      "type": "object"
+    },
+    "requires_snapshot_reconciliation": {
+      "const": true,
+      "type": "boolean"
+    },
+    "service_epoch": {
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+      "type": "string"
+    },
+    "source": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "provider_free_integration_preview",
+              "type": "string"
+            },
+            "label": {
+              "const": "Deterministic no-provider World Forge backend integration preview",
+              "type": "string"
+            },
+            "live_forge_evidence": {
+              "const": false,
+              "type": "boolean"
+            },
+            "provider_calls": {
+              "const": false,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "label",
+            "provider_calls",
+            "live_forge_evidence"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "compiler_revision": {
+              "const": "1",
+              "type": "string"
+            },
+            "kind": {
+              "const": "single_attempt_live_vertical_slice",
+              "type": "string"
+            },
+            "label": {
+              "const": "Single-attempt live World Forge vertical slice",
+              "type": "string"
+            },
+            "live_forge_evidence": {
+              "const": true,
+              "type": "boolean"
+            },
+            "provider_calls": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "kind",
+            "label",
+            "provider_calls",
+            "live_forge_evidence",
+            "compiler_revision"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "stream_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,255}$",
+      "type": "string"
+    },
+    "terminal": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "kind",
+    "service_epoch",
+    "stream_id",
+    "events",
+    "position",
+    "terminal",
+    "page_complete",
+    "requires_snapshot_reconciliation",
+    "source"
+  ],
+  "title": "DREAMLAND World Forge integration-preview event page",
+  "type": "object"
+}

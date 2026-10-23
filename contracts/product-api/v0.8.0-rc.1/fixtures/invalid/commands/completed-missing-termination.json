@@ -1,0 +1,12 @@
+{
+  "outcome": "completed",
+  "output_clipped": false,
+  "state_effect": {
+    "kind": "none"
+  },
+  "usage": {
+    "spend_units": 120,
+    "state": "settled",
+    "tokens": 37
+  }
+}

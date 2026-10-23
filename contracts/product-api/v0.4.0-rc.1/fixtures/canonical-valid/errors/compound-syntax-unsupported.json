@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.4.0-rc.1"
+  },
+  "error": {
+    "code": "compound_syntax_unsupported",
+    "message": "Shell-control syntax is unsupported in the browser terminal; use SSH for compound shell workflows.",
+    "request_id": "request:error_compound_syntax_unsupported_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "deterministic-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

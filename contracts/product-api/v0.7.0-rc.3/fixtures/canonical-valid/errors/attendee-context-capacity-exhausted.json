@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.3"
+  },
+  "error": {
+    "code": "attendee_context_capacity_exhausted",
+    "message": "Attendee context capacity is exhausted for this service epoch.",
+    "request_id": "request:error_attendee_context_capacity_exhausted_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "deterministic-attendee-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

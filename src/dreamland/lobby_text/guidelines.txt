@@ -1,0 +1,23 @@
+Explore the simulation. Take care of the real infrastructure.
+
+Simulated devices are fair game. Break them, challenge the LLM,
+try to escape its role, and look for contradictions in the world.
+We encourage these experiments and reports of what you discover.
+
+Protect the real infrastructure running DREAMLAND and its visitors.
+Don't disrupt the service, interfere with others, or access their data.
+If you reach real infrastructure or data outside your simulation,
+stop there and report what happened.
+
+We collect connection details, including IP address and username,
+plus commands, responses, and diagnostic/model traces to operate,
+troubleshoot, evaluate, and improve DREAMLAND. Commands and world
+context are sent to third-party OpenAI models. Don't enter real
+credentials, confidential information, or personal data.
+
+We will not publish your session activity or use it as excerpts in slides
+or published research. Starting a fresh world does not delete retained
+logs or traces.
+
+Report findings with your simulation ID, the world, approximate time,
+and steps to reproduce.

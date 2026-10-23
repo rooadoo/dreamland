@@ -1,0 +1,41 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "command_result": {
+    "guest_termination": {
+      "exit_status": 0,
+      "kind": "exited"
+    },
+    "outcome": "completed",
+    "output_clipped": false,
+    "state_effect": {
+      "kind": "none"
+    },
+    "usage": {
+      "spend_units": 120,
+      "state": "settled",
+      "tokens": 37
+    }
+  },
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.6.0-rc.3"
+  },
+  "event_cursor": {
+    "event_id": "event:phase2alphaevent:7",
+    "sequence": 7,
+    "stream_id": "stream:phase2alphaevents"
+  },
+  "kind": "command_cancel",
+  "outcome": "already_terminal",
+  "preview": {
+    "executor": "development-live-forge-stage-xray-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "replayed": false,
+  "service_epoch": "epoch:phase2preview0001",
+  "slot_generation": 1
+}

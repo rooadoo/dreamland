@@ -1,0 +1,34 @@
+{
+  "artifacts": {
+    "events_schema_sha256": "07bb0b70431aa15e7eb592b197dde2d382dea3564783d33c644d0d72e4af100e",
+    "generated_client_sha256": "2d9ece2c194f07dd7792de38364f974b06bfef376bf970d1ff2e8e75d8ba2eab",
+    "manifest_schema_sha256": "2ce1c6ec1bbb76f1452ed026d2d66d700f902cc97047712badaf05ee96e62cdc",
+    "openapi_sha256": "0ecf877b1247630e01c1dcd57c51b7c8c02c807db0d8c873add5389a0f2dc9b0"
+  },
+  "backend_commit": "541ac680dd7ea73b4f07e2f4359c7004e2c9ca26",
+  "compatibility": "unfrozen-release-candidate",
+  "contract_name": "dreamland-private-world-forge-api",
+  "contract_revision": "0.1.0-rc.4",
+  "fixture_set": {
+    "index_sha256": "82af5bcec7cf6847bdb2744f172210419e0b8bae153160cd953ab497fc4d9229",
+    "path": "fixtures/index.json"
+  },
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_forge_contract.py client-smoke contracts/world-forge-api/v0.1.0-rc.4",
+    "publish_command": ".venv/bin/python tools/product_forge_contract.py publish contracts/world-forge-api/v0.1.0-rc.4 --backend-commit COMMIT --published-at TIMESTAMP",
+    "refresh_command": ".venv/bin/python tools/product_forge_contract.py refresh contracts/world-forge-api/v0.1.0-rc.4",
+    "validate_command": ".venv/bin/python tools/product_forge_contract.py validate contracts/world-forge-api/v0.1.0-rc.4"
+  },
+  "implementation_status": "integration_preview_only",
+  "publication_status": "published",
+  "published_at": "2026-08-26T00:32:32Z",
+  "schema_version": 1,
+  "source": {
+    "kind": "integration_contract",
+    "supported_runtime_sources": [
+      "provider_free_integration_preview",
+      "single_attempt_live_vertical_slice"
+    ]
+  },
+  "transport_status": "manually_invoked_loopback_preview_only"
+}

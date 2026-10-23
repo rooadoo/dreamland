@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "session_lost",
+    "message": "The lifecycle preview session was lost after service restart.",
+    "request_id": "request:session_lost_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

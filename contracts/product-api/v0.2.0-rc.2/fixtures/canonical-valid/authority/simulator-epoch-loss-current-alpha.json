@@ -1,0 +1,21 @@
+{
+  "actor_context": "actor:preview_alpha_rotated_0001",
+  "allowed_operations": [
+    "create"
+  ],
+  "authority_class": "attendee",
+  "expected_epoch_source": "getProductCapabilities.service_epoch",
+  "fixture_scope": "integration-preview-simulator-only",
+  "immutable_revision": "world-revision:preview_alpha_revision_0001",
+  "launch_context": {
+    "limits": {
+      "absolute_ttl_ms": 1800000,
+      "idle_ttl_ms": 600000
+    },
+    "notice_version": "notice:conference-preview-v1",
+    "policy_id": "policy:conference-preview-v1"
+  },
+  "launch_grant": "launch-grant:preview_alpha_rotated_00000001",
+  "purpose": "exercise-epoch-loss-current-authority",
+  "selected_record_id": "selected-record:preview_alpha_0001"
+}

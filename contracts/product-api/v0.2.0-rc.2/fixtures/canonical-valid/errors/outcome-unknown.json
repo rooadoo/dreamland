@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "outcome_unknown",
+    "message": "The prior lifecycle mutation outcome is unknown after service restart.",
+    "request_id": "request:outcome_unknown_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

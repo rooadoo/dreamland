@@ -1,0 +1,130 @@
+#!/bin/sh
+# Operator access to an existing backend deployment. No Docker socket is mounted
+# in the application container; this wrapper runs on the administrative host.
+set -eu
+script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+project=${DREAMLAND_PROJECT:-}
+project_explicit=${DREAMLAND_PROJECT:+yes}
+compose_file="$script_directory/compose.yaml"
+env_file=${DREAMLAND_DEPLOYMENT_ENV:-/dev/null}
+
+usage() {
+    printf '%s\n' 'Usage: dreamlandctl [--project NAME] [--env-file FILE] console [--command TEXT]'
+    printf '%s\n' '       dreamlandctl [options] status|logs|stop|restart|model-defaults [--apply]'
+    printf '%s\n' '       dreamlandctl list'
+    printf '%s\n' 'Project: --project, then DREAMLAND_PROJECT, otherwise the only existing DREAMLAND SSH deployment.'
+}
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --project|--env-file)
+            if [ "$#" -lt 2 ]; then usage >&2; exit 2; fi
+            case "$1" in
+                --project) project=$2; project_explicit=yes ;;
+                --env-file) env_file=$2 ;;
+            esac
+            shift 2 ;;
+        --help|-h) usage; exit 0 ;;
+        *) break ;;
+    esac
+done
+if [ "$#" -eq 0 ]; then usage >&2; exit 2; fi
+validate_project() {
+    case "$1" in
+        ''|[!a-z0-9]*|*[!a-z0-9_-]*) printf '%s\n' 'Invalid Compose project name.' >&2; exit 2 ;;
+    esac
+}
+action=$1
+shift
+if [ "$action" != list ]; then
+    if [ "$project_explicit" = yes ]; then validate_project "$project"; fi
+    if [ ! -f "$env_file" ] && [ "$env_file" != /dev/null ]; then
+        printf '%s\n' 'Deployment environment file is missing.' >&2
+        exit 2
+    fi
+fi
+discover_projects() {
+    # Include stopped services, but exclude setup/smoke runs and other software.
+    # Capture first: POSIX sh would hide a Docker failure in a sorting pipeline.
+    if ! projects=$(docker ps -a \
+        --filter 'label=com.docker.compose.project' \
+        --filter 'label=com.docker.compose.service=ssh' \
+        --filter 'label=com.docker.compose.oneoff=False' \
+        --filter 'label=org.opencontainers.image.title=DREAMLAND backend' \
+        --format '{{.Label "com.docker.compose.project"}}'); then
+        printf '%s\n' 'Could not discover DREAMLAND projects; check Docker access.' >&2
+        exit 1
+    fi
+    projects=$(printf '%s\n' "$projects" | LC_ALL=C sort -u)
+}
+resolve_project() {
+    if [ "$project_explicit" = yes ]; then return; fi
+    discover_projects
+    case "$projects" in
+        '')
+            printf '%s\n' 'No existing DREAMLAND SSH deployment found; specify --project NAME (or DREAMLAND_PROJECT).' >&2
+            exit 1 ;;
+        *'
+'*)
+            printf '%s\n' 'Multiple DREAMLAND projects found; specify --project NAME (or DREAMLAND_PROJECT):' >&2
+            printf '%s\n' "$projects" >&2
+            exit 1 ;;
+        *) project=$projects ;;
+    esac
+    validate_project "$project"
+    project_explicit=yes
+    printf 'Using DREAMLAND project %s.\n' "$project" >&2
+}
+compose() {
+    docker compose --env-file "$env_file" -f "$compose_file" --project-name "$project" "$@"
+}
+case "$action" in
+    list)
+        if [ "$#" -ne 0 ]; then usage >&2; exit 2; fi
+        discover_projects
+        if [ -n "$projects" ]; then
+            printf '%s\n' "$projects"
+        else
+            printf '%s\n' 'No DREAMLAND SSH deployments found.' >&2
+        fi ;;
+    console)
+        if [ "$#" -eq 0 ]; then
+            if [ ! -t 0 ] || [ ! -t 1 ]; then
+                printf '%s\n' 'Interactive console needs a terminal; use --command for a single command.' >&2
+                exit 2
+            fi
+            resolve_project
+            compose exec --user 10001:10001 ssh python -m dreamland.console_client
+        elif [ "$#" -eq 2 ] && [ "$1" = --command ]; then
+            resolve_project
+            compose exec -T --user 10001:10001 ssh python -m dreamland.console_client "--command=$2"
+        else
+            usage >&2; exit 2
+        fi ;;
+    status|logs|stop|restart)
+        if [ "$#" -ne 0 ]; then usage >&2; exit 2; fi
+        resolve_project
+        case "$action" in
+            status) compose --profile ssh ps -a ssh ;;
+            logs) compose --profile ssh logs --tail 100 ssh ;;
+            stop) compose --profile ssh stop ssh ;;
+            restart) compose --profile ssh restart ssh ;;
+        esac ;;
+    model-defaults)
+        if [ "$#" -gt 1 ] || { [ "$#" -eq 1 ] && [ "$1" != --apply ]; }; then
+            usage >&2; exit 2
+        fi
+        resolve_project
+        if [ "$#" -eq 1 ]; then
+            states=$(compose --profile ssh ps -a --format '{{.State}}' ssh)
+            for state in $states; do
+                case "$state" in
+                    created|exited) ;;
+                    *) printf '%s\n' 'Stop the SSH service before applying model defaults.' >&2; exit 1 ;;
+                esac
+            done
+        fi
+        compose --profile setup run --rm --no-deps --pull never -T init \
+            python -m dreamland.deployment model-defaults --root /var/lib/dreamland "$@" ;;
+    *) usage >&2; exit 2 ;;
+esac

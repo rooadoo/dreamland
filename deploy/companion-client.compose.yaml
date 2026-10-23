@@ -1,0 +1,36 @@
+# Backend-owned API fixture. Run as a separate Compose project from the backend.
+name: dreamland-companion-check
+
+x-client: &client
+  image: ${DREAMLAND_BACKEND_IMAGE:?Set the tested image digest}
+  platform: linux/amd64
+  user: "10001:10001"
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  pids_limit: 16
+  mem_limit: 256m
+  networks: [companion]
+  restart: "no"
+
+services:
+  attendee-check:
+    <<: *client
+    volumes:
+      - ${DREAMLAND_HANDOFF_DIRECTORY:?Set the private exported handoff directory}/attendee.json:/handoff.json:ro
+      - ${DREAMLAND_HANDOFF_DIRECTORY:?Set the private exported handoff directory}/operator.json:/other-handoff.json:ro
+      - ${DREAMLAND_HANDOFF_DIRECTORY:?Set the private exported handoff directory}/attendee.token:/transport.token:ro
+    command: [python, -m, dreamland.deployment.companion_client, --handoff, /handoff.json, --token-file, /transport.token, --deny-handoff, /other-handoff.json]
+
+  operator-check:
+    <<: *client
+    volumes:
+      - ${DREAMLAND_HANDOFF_DIRECTORY:?Set the private exported handoff directory}/operator.json:/handoff.json:ro
+      - ${DREAMLAND_HANDOFF_DIRECTORY:?Set the private exported handoff directory}/attendee.json:/other-handoff.json:ro
+      - ${DREAMLAND_HANDOFF_DIRECTORY:?Set the private exported handoff directory}/operator.token:/transport.token:ro
+    command: [python, -m, dreamland.deployment.companion_client, --handoff, /handoff.json, --token-file, /transport.token, --deny-handoff, /other-handoff.json]
+
+networks:
+  companion:
+    name: ${DREAMLAND_API_NETWORK:-dreamland-api-companion}
+    external: true

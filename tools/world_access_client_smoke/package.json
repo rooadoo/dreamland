@@ -1,0 +1,12 @@
+{
+  "name": "dreamland-world-access-client-smoke",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  }
+}

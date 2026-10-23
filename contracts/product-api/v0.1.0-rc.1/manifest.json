@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "events_schema_sha256": "f4c99517a8110094931905ba364a5d074c21e6013b29ac10891205450c6a2ce9",
+    "manifest_schema_sha256": "cdac02404ec6739cac94eac70c7ec3231f77e803aee8e3c45d71cc530c112277",
+    "openapi_sha256": "eb0882c277d8f3b72adf6e0eff6bd12d3541c43b9b4d93d4dd37347ddcc33090"
+  },
+  "backend_commit": "e0e48809ed3967b5068c55c8b2a2c09c16a461d2",
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "product_session_core": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "stage_xray": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    }
+  },
+  "compatibility": "exact-release-candidate",
+  "contract_name": "dreamland-private-product-api",
+  "contract_revision": "0.1.0-rc.1",
+  "fixture_set": {
+    "index_sha256": "87d7c5c21202599d7da0b61609996c0e47c8ed8e4efee65b9cabc117a135507d",
+    "path": "fixtures/index.json"
+  },
+  "freeze_status": "pending_ui_tracked_doc_acknowledgement",
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_contract.py client-smoke contracts/product-api/v0.1.0-rc.1",
+    "refresh_command": ".venv/bin/python tools/product_contract.py refresh contracts/product-api/v0.1.0-rc.1",
+    "validate_command": ".venv/bin/python tools/product_contract.py validate contracts/product-api/v0.1.0-rc.1"
+  },
+  "publication_status": "published",
+  "published_at": "2026-08-22T00:37:08Z",
+  "schema_version": 1
+}

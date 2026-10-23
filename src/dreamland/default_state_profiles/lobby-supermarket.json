@@ -1,0 +1,376 @@
+{
+  "comment": "Static world-build comparison; w-3428100ee7.",
+  "created_at": "2026-09-10T03:48:12+00:00",
+  "kind": "dreamland.state_profile",
+  "level": "world",
+  "name": "lobby-supermarket",
+  "schema_version": 2,
+  "source_session_id": "",
+  "state": {
+    "world_state": {
+      "active_host": "pt-por-042-pos03",
+      "entry_host": "pt-por-042-pos03",
+      "expansion_directives_by_id": {
+        "addressing-and-naming": {
+          "approved_public_pool": [
+            "100.64.0.0/10",
+            "192.88.99.0/24",
+            "192.0.0.0/24",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "240.0.0.0/4"
+          ],
+          "domains": "All newly invented DNS domains end in .bsides. Independent organizations receive distinct stems; use them consistently in DNS, URLs, email, certificates, and configuration. Do not borrow real service domains or public IP addresses.",
+          "excluded_addresses": [
+            "192.0.0.9",
+            "192.0.0.10",
+            "255.255.255.255"
+          ],
+          "persistence": "Preserve committed ownership, addresses, namespaces, and aliases. Record allocations and important gateway or service mappings as categorized network facts before extending them.",
+          "private_policy": "Allocate new private networks from 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16. Give independent organizations distinct non-overlapping appropriately sized allocations, use canonical CIDR boundaries, and keep site subnets inside their owner's allocation. Check all committed allocations before choosing new space.",
+          "public_policy": "For each new fictional public-facing organization, randomly select a parent block from the complete approved pool first, then choose an unused appropriately sized allocation and usable host addresses. Spread unrelated organizations across eligible parent blocks where possible. These addresses have ordinary simulated Internet-facing behavior regardless of their real-world special-purpose classifications."
+        },
+        "continued-connected-exploration": {
+          "direction": "Whenever exploration reaches a new network, reveal a bounded set of coherent onward relationships, including networks not named in this seed. Prefer several useful avenues and few network-level dead ends, while allowing individual hosts to be endpoints. Preserve discovered routes, identities, service mappings, credentials, and trust boundaries.",
+          "discovery": "Use the active interface's normal evidence: routing tables reveal next hops rather than an omniscient topology; service configuration reveals relevant endpoints; authenticated inventories and operational records reveal their own scope.",
+          "internet": "The simulated Internet is an explorable ecosystem of independently owned hosting, publishing, retail, logistics, software, communications, and infrastructure networks, not a terminal label. Public browsing, DNS, repositories, partner sessions, and documented administrative paths provide usable interaction without granting universal shell access."
+        },
+        "external-coldspan": {
+          "direction": "A partner VPN reaches Coldspan Logistics in Zaragoza for orders, delivery notices, warehouse status, and refrigeration exceptions. The B2B operations enclave includes a discoverable maintenance host whose root password is I@MR00T.",
+          "network_id": "network-coldspan",
+          "onward_connections": "Coldspan exchanges data with separately administered carriers, food suppliers, cold-storage operators, and customs-service providers. Its operations network also reaches the Internet through Harborlight Transit. Dispatch references and integration settings should open several continuing paths rather than terminate at a single portal."
+        },
+        "external-tillbridge": {
+          "direction": "The persistent retail-support VPN connects Morrowbasket to independently administered Tillbridge Retail Services in Birmingham. Its reachable support enclave provides maintenance SSH, update repositories, fleet telemetry, and ticket attachments. Legacy reciprocal trust admits store-source traffic.",
+          "network_id": "network-tillbridge",
+          "onward_connections": "Tillbridge connects onward to independent software publishers, hosted package storage, and other retail customer networks, as well as the Internet through Harborlight Transit. Materialize useful onward service references as support and update workflows are examined. Other customer environments retain distinct ownership and access conditions."
+        },
+        "geographic-continuity": {
+          "direction": "Recorded network-site facts are geographic truth. Colocated hosts inherit an existing site_id; a new SSH session does not imply movement. When a separate significant facility becomes established, persist a network-site- fact with category network, name, owner, role, and country, region, locality, and IANA timezone, then reference it from hosts and network facts.",
+          "discovery": "Expose geography through store codes, receipts, support details, inventory, delivery relationships, and relevant clock settings. Keep unrelated command output ordinary. Civil timezone and UTC logging can coexist.",
+          "expansion": "Choose real localities appropriate to each company's operating territory. Distinguish headquarters, service users, and physical hosting. Distributed networks may reference multiple sites; the Internet has no single site. Synthetic addresses and .bsides names do not establish geography."
+        },
+        "operational-texture": {
+          "direction": "The chain has grown for more than twenty years, while this store and its present POS fleet have several years of ordinary use. Daily trading creates compact journals, reconciliation records, price-feed retries, peripheral faults, and staff support requests. Weekly unattended updates coexist with emergency manual fixes. Shared maintenance identities and acquisition-era scripts leave credible traces of mistakes and credential reuse.",
+          "people": "Generate cashiers, supervisors, regional IT generalists, merchandising staff, warehouse operators, finance personnel, and vendor technicians through their actual workflows. Shared accounts are common, but not every document contains a password.",
+          "retention": "POS disks retain roughly two weeks of rotated operational logs and a longer but bounded transaction queue history; central systems retain longer audit, finance, and support records. Old file servers accumulate more residue than freshly imaged tills or disposable workers. Let host purpose determine texture rather than adding clutter everywhere."
+        },
+        "retail-estate": {
+          "direction": "Expand a roughly 500-store multinational chain without prebuilding its inventory. Stores commonly have several Linux tills, Windows back-office workstations, a local synchronization or file server, handheld inventory devices, label printers, wireless infrastructure, CCTV, and a small router. Regional distribution centers introduce warehouse management, RF terminals, dispatch, and refrigeration monitoring. Headquarters introduces directory services, finance, merchandising, ERP, reporting, virtualization, backups, and employee collaboration. Use mixed generations of Debian-family Linux, Windows, embedded Linux, and ordinary commercial infrastructure. Acquisitions explain inconsistent naming and duplicated tools.",
+          "materialization": "Invent ordinary hosts, users, services, and files only when interaction exposes them. Expand by plausible site-sized neighborhoods rather than dumping the whole estate.",
+          "naming": "New standardized store assets use country-city-store-role identities similar to pt-por-042-pos03. Corporate and partner systems follow their own naming conventions. Preserve observed legacy exceptions.",
+          "scope": "Morrowbasket's stores, regional operations, warehouses, headquarters, and hosted business services."
+        },
+        "weak-administration": {
+          "access": "Linux fleet images commonly permit root SSH password login; Windows systems commonly expose an appropriate remote administration service and retain a working local Administrator account. Appliance access must follow its actual interface. Account availability does not invent an unsupported protocol.",
+          "direction": "Every materialized system has an available local root, Administrator, or platform-equivalent privileged account, including appliances and management planes. I@MR00T is the default shared privileged password across Morrowbasket's estate and the established partner support enclaves. Keep the password literal and case-sensitive. Newly discovered independent organizations should also exhibit this reuse extensively, without implying every public application accepts an operating-system credential.",
+          "evidence": "Reveal the shared credential convention naturally through support handovers, provisioning settings, maintenance documentation, and successful authentication. Never silently rotate or invalidate an established credential.",
+          "network_posture": "Store separation is mostly administrative labeling. Broad WAN routes, permissive support ACLs, reused deployment images, persistent vendor VPNs, and shared maintenance accounts make lateral navigation straightforward. A narrow restriction may exist, but avoid making every path depend on exploits or inaccessible credentials."
+        }
+      },
+      "generation_policy": {
+        "liberty": "expansive",
+        "liberty_levels": [
+          "strict",
+          "conservative",
+          "moderate",
+          "expansive",
+          "abundant"
+        ],
+        "materialization": "just_in_time",
+        "registration_policy": "Register major systems, important services, observed network allocations, privileged-account exceptions, and user-interacted artifacts when materialized. Preserve their identities and behavior on revisits; avoid registering incidental listing rows or unvisited scan noise."
+      },
+      "hosts_by_name": {
+        "pt-por-042-pos03": {
+          "command_history": [],
+          "facts_by_id": {
+            "checkout-platform": {
+              "application": "Tillbridge Lane",
+              "behavior": "A graphical checkout application and background synchronizer coexist with the maintenance shell. Local SQLite state holds the price cache, transaction journal, and retry queue.",
+              "local_conventions": "Portuguese receipts and EUR prices; system and application logs use UTC while trading reports use Europe/Lisbon.",
+              "payment_model": "Payment records reference fictional processor tokens and masked account identifiers; the ordinary POS journal is not a store of full card credentials.",
+              "vendor": "Tillbridge Retail Services"
+            },
+            "maintenance-access": {
+              "maintenance_home": "/home/operator",
+              "maintenance_username": "operator",
+              "privileged_password": "I@MR00T",
+              "privileged_username": "root",
+              "root_account": "Enabled, with working password authentication through su and SSH.",
+              "ssh": "OpenSSH listens on TCP 22. Root password login is permitted from reachable store, corporate, and trusted support networks."
+            },
+            "maintenance-capabilities": {
+              "reason": "A support diagnostic bundle was left installed in the fleet image.",
+              "tools": [
+                "coreutils",
+                "iproute2",
+                "OpenSSH client",
+                "curl",
+                "dig",
+                "getent",
+                "sqlite3",
+                "python3",
+                "netcat",
+                "nmap"
+              ]
+            },
+            "network-identity": {
+              "address": "10.65.42.33/24",
+              "dns_servers": [
+                "10.64.10.53"
+              ],
+              "fqdn": "pt-por-042-pos03.morrowbasket.bsides",
+              "gateway": "10.65.42.1",
+              "interface": "enp1s0",
+              "search_domain": "morrowbasket.bsides"
+            }
+          },
+          "filesystem": {
+            "artifacts_by_path": {}
+          },
+          "hardware": {
+            "architecture": "x86_64",
+            "role": "Touchscreen POS terminal with SSD, barcode scanner, receipt printer, and cash-drawer interface."
+          },
+          "hostname": "pt-por-042-pos03",
+          "login_banner": "Debian GNU/Linux 12\nMorrowbasket Markets - PT-POR-042 - checkout lane 3\nMaintenance console: pt-por-042-pos03\n",
+          "os": {
+            "distribution": "Debian GNU/Linux",
+            "family": "linux",
+            "version": "12"
+          },
+          "purpose": {
+            "description": "Lane 3 at Morrowbasket's Porto store PT-POR-042. The terminal processes ordinary retail work while its maintenance environment provides an accessible starting point into store and company infrastructure.",
+            "theme": "A working supermarket checkout terminal with an exposed maintenance shell."
+          },
+          "services_by_name": {},
+          "shell": {
+            "default": {
+              "argv": [
+                "bash"
+              ],
+              "command": "/bin/bash",
+              "name": "bash"
+            }
+          },
+          "site_id": "network-site-mb-porto-042"
+        }
+      },
+      "name": "morrowbasket-markets",
+      "purpose": {
+        "description": "The starting system is checkout lane 3 at fictional Morrowbasket Markets store PT-POR-042 in Porto, Porto District, Portugal. A maintenance shell on the working POS terminal opens onto a sprawling retail environment spanning stores, warehouses, headquarters, technology suppliers, logistics partners, and the wider Internet. Morrowbasket operates approximately 500 supermarkets across Portugal, Spain, France, the Netherlands, and Germany, with headquarters in Rotterdam.",
+        "roleplay_guidance": [
+          "Present a functioning supermarket business rather than a purpose-built puzzle: checkout traffic, price changes, replenishment, loyalty campaigns, shift handovers, and support work continue around exploration.",
+          "Make navigation unusually accessible through weak segmentation, broad support trust, discoverable configuration, and extensively reused privileged credentials. Do not manufacture sophisticated defenses that contradict this posture.",
+          "Let ordinary commands reveal useful next destinations through routes, DNS, application settings, inventories, support records, and established service relationships.",
+          "Keep authentication, service protocols, ownership, and geographic identity coherent. Network access is not automatically a shell, but meaningful permitted paths should remain plentiful."
+        ],
+        "theme": "An everyday multinational supermarket empire held together by busy staff, inherited systems, and dangerously convenient administration."
+      },
+      "simulation": {
+        "contradiction_policy": "prefer_new_operator_direction",
+        "infrastructure_bias": "physical_systems",
+        "missing_detail_policy": "infer_from_operator_direction",
+        "permissiveness": "moderate"
+      },
+      "world_facts_by_id": {
+        "network-coldspan": {
+          "access_path": "The store gateway forwards 10.112.20.0/24 through the corporate partner VPN. HTTPS integration and SSH maintenance are reachable. The operations host retains root with password I@MR00T.",
+          "category": "network",
+          "discovery": "Store replenishment configuration, delivery manifests, supplier integration records, and split-view DNS reveal the portal and operations relationship.",
+          "domain": "coldspan.bsides",
+          "initial_subnet": "10.112.20.0/24",
+          "name": "Coldspan Logistics Partner Network",
+          "onward_relationships": "Carrier federation networks, supplier ordering systems, independent cold-storage facilities, and Harborlight Internet transit.",
+          "owner": "Coldspan Logistics",
+          "private_allocation": "10.112.0.0/16",
+          "public_allocation": "198.51.100.160/28",
+          "role": "Independent delivery, cold-chain, and replenishment integration partner.",
+          "service_mappings": {
+            "gw.b2b.coldspan.bsides": "10.112.20.1",
+            "ops-zaz01.coldspan.bsides": "10.112.20.10",
+            "portal.coldspan.bsides": {
+              "partner_view": "10.112.20.20",
+              "public_view": "198.51.100.162"
+            }
+          },
+          "site_ids": [
+            "network-site-coldspan-zaragoza"
+          ]
+        },
+        "network-harborlight": {
+          "access_path": "Morrowbasket Internet egress uses 203.0.113.67 through this carrier. Corporate DNS forwards external queries to the carrier resolver. Tillbridge and Coldspan have their own customer connections.",
+          "category": "network",
+          "discovery": "Egress diagnostics, DNS forwarder settings, WAN contracts, carrier support references, and ordinary public service access reveal the carrier and its onward reach.",
+          "domain": "harborlight.bsides",
+          "geographic_scope": "A European carrier network; Lisbon is the initially committed concrete endpoint, not the location of every customer or carrier facility.",
+          "name": "Harborlight Transit",
+          "onward_relationships": "Independent transit peers, Internet exchanges, hosting providers, authoritative DNS networks, and their downstream destinations.",
+          "owner": "Harborlight Transit",
+          "private_allocation": "172.30.208.0/20",
+          "public_allocation": "240.46.80.0/24",
+          "role": "Independent carrier supplying the initial organizations with routed Internet connectivity.",
+          "service_mappings": {
+            "edge.lis.harborlight.bsides": "240.46.80.1",
+            "resolver.lis.harborlight.bsides": "240.46.80.53"
+          },
+          "site_ids": [
+            "network-site-harborlight-lisbon"
+          ]
+        },
+        "network-internet": {
+          "access_path": "Usable from the entry POS through its default gateway, Morrowbasket egress, and Harborlight transit. DNS and ordinary outbound HTTPS work.",
+          "category": "network",
+          "constraints": "All endpoints remain simulated. Public reachability does not automatically provide administrative authorization or an SSH service.",
+          "discovery": "Public service references, resolved names, package sources, partner links, and carrier relationships introduce further independently administered destinations.",
+          "geographic_scope": "Global and distributed, with no single physical site.",
+          "initial_service_target": {
+            "address": "240.46.80.53",
+            "name": "resolver.lis.harborlight.bsides"
+          },
+          "name": "Simulated Internet",
+          "owner": "Many independent organizations",
+          "role": "Continuously explorable external network of networks."
+        },
+        "network-morrowbasket": {
+          "access_path": "The Porto store gateway forwards corporate and partner destinations over a persistent routed WAN. Internet-bound traffic uses corporate egress and Harborlight transit.",
+          "category": "network",
+          "discovery": "Resolver configuration, gateway routing, POS synchronization settings, support records, and WAN status expose these relationships.",
+          "domain": "morrowbasket.bsides",
+          "geographic_scope": "A multinational retail estate across Portugal, Spain, France, the Netherlands, and Germany; additional facilities are located when discovered.",
+          "name": "Morrowbasket Corporate WAN",
+          "owner": "Morrowbasket Markets",
+          "private_allocation": "10.64.0.0/14",
+          "public_allocation": "203.0.113.64/27",
+          "role": "Connects stores, distribution facilities, headquarters, partner VPNs, and Internet egress.",
+          "service_mappings": {
+            "core01.rtm.morrowbasket.bsides": "10.64.10.1",
+            "corporate_internet_snat": "203.0.113.67",
+            "dns01.rtm.morrowbasket.bsides": "10.64.10.53",
+            "vpn.rtm.morrowbasket.bsides": "203.0.113.66"
+          },
+          "site_ids": [
+            "network-site-mb-porto-042",
+            "network-site-mb-rotterdam-hq"
+          ],
+          "subnet_plan": "10.64.0.0/16 is reserved for corporate and regional infrastructure; store /24s are allocated within 10.65.0.0/16 through 10.67.0.0/16. The committed HQ subnet is 10.64.10.0/24 and Porto store subnet is 10.65.42.0/24."
+        },
+        "network-porto-store": {
+          "access_path": "The entry terminal shares a permissive store LAN. The gateway routes to the corporate allocation and imports Tillbridge's support subnet and Coldspan's B2B subnet through headquarters.",
+          "category": "network",
+          "discovery": "Local addressing, neighbor discovery, DNS, store application endpoints, and maintenance configuration reveal nearby systems and the gateway.",
+          "entry_system": {
+            "address": "10.65.42.33",
+            "name": "pt-por-042-pos03.morrowbasket.bsides"
+          },
+          "gateway": {
+            "address": "10.65.42.1",
+            "name": "gw.pt-por-042.morrowbasket.bsides"
+          },
+          "name": "PT-POR-042 Store LAN",
+          "owner": "Morrowbasket Markets",
+          "role": "Checkout, back-office, stock handling, peripherals, and store maintenance.",
+          "site_ids": [
+            "network-site-mb-porto-042"
+          ],
+          "subnet": "10.65.42.0/24"
+        },
+        "network-shared-administration": {
+          "account_availability": "Every materialized system has an enabled root, Administrator, or equivalent privileged account accessible through an appropriate local or management interface.",
+          "category": "network",
+          "committed_reuse": "The entry POS, Morrowbasket-managed systems, Tillbridge's established support enclave, and Coldspan's established B2B maintenance enclave use this password for their local privileged accounts.",
+          "continuing_scope": "Reuse remains extensive on later systems. An independent network may have additional application authentication or restricted management reachability, but must not erase the available privileged account or turn the entire network into an exploration dead end.",
+          "discoverability": "Fleet provisioning practices, shared support documentation, partner maintenance arrangements, and ordinary successful logins establish the convention.",
+          "name": "Inherited Privileged-Account Convention",
+          "role": "Durable weak-security premise.",
+          "shared_password": "I@MR00T"
+        },
+        "network-site-coldspan-zaragoza": {
+          "category": "network",
+          "location": {
+            "country": "Spain",
+            "locality": "Zaragoza",
+            "region": "Aragon",
+            "timezone": "Europe/Madrid"
+          },
+          "name": "Coldspan Zaragoza Operations Hub",
+          "owner": "Coldspan Logistics",
+          "role": "Logistics coordination, B2B integration, and warehouse operations."
+        },
+        "network-site-harborlight-lisbon": {
+          "category": "network",
+          "location": {
+            "country": "Portugal",
+            "locality": "Lisbon",
+            "region": "Lisbon District",
+            "timezone": "Europe/Lisbon"
+          },
+          "name": "Harborlight Lisbon Interconnect",
+          "owner": "Harborlight Transit",
+          "role": "Initial carrier interconnect, recursive DNS, and Internet transit endpoint."
+        },
+        "network-site-mb-porto-042": {
+          "category": "network",
+          "location": {
+            "country": "Portugal",
+            "locality": "Porto",
+            "region": "Porto District",
+            "timezone": "Europe/Lisbon"
+          },
+          "name": "Morrowbasket Porto Store PT-POR-042",
+          "owner": "Morrowbasket Markets",
+          "role": "Neighborhood supermarket and starting facility."
+        },
+        "network-site-mb-rotterdam-hq": {
+          "category": "network",
+          "location": {
+            "country": "Netherlands",
+            "locality": "Rotterdam",
+            "region": "South Holland",
+            "timezone": "Europe/Amsterdam"
+          },
+          "name": "Morrowbasket Rotterdam Headquarters",
+          "owner": "Morrowbasket Markets",
+          "role": "Headquarters and primary corporate WAN services."
+        },
+        "network-site-tillbridge-birmingham": {
+          "category": "network",
+          "location": {
+            "country": "United Kingdom",
+            "locality": "Birmingham",
+            "region": "England",
+            "timezone": "Europe/London"
+          },
+          "name": "Tillbridge Birmingham Service Centre",
+          "owner": "Tillbridge Retail Services",
+          "role": "POS support, software distribution, and partner VPN operations."
+        },
+        "network-tillbridge": {
+          "access_path": "From the POS, traffic to 172.22.64.0/24 follows the store gateway, corporate WAN, and persistent Tillbridge VPN. The support host admits SSH root login with I@MR00T; package services provide another usable interface.",
+          "category": "network",
+          "discovery": "POS updater configuration, remote-support unit settings, corporate DNS, and support-session records expose the service names and partner path.",
+          "domain": "tillbridge.bsides",
+          "initial_subnet": "172.22.64.0/24",
+          "name": "Tillbridge Retail Support Network",
+          "onward_relationships": "Software publishers, hosted package-storage networks, other retail support relationships, and Harborlight Internet transit.",
+          "owner": "Tillbridge Retail Services",
+          "private_allocation": "172.22.64.0/20",
+          "public_allocation": "100.64.48.0/27",
+          "role": "Independent POS maintenance, software distribution, and fleet support partner.",
+          "service_mappings": {
+            "packages.tillbridge.bsides": "172.22.64.20",
+            "support.bhm.tillbridge.bsides": "172.22.64.10",
+            "vpn.bhm.tillbridge.bsides": {
+              "private": "172.22.64.1",
+              "public": "100.64.48.10"
+            }
+          },
+          "site_ids": [
+            "network-site-tillbridge-birmingham"
+          ]
+        }
+      }
+    }
+  }
+}

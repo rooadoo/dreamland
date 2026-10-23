@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "capacity_exhausted",
+    "message": "Safe World Forge fixture for capacity exhausted.",
+    "retry": "same_request",
+    "retry_after_ms": 250
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-capacity_exhausted"
+}

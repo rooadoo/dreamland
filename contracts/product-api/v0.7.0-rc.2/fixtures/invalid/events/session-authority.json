@@ -1,0 +1,13 @@
+{
+  "command_id": null,
+  "criticality": "informational",
+  "data": {
+    "session_authority": "session-cap:phase2_alpha_session_cap_000001"
+  },
+  "emitted_at_ms": 1777000000013,
+  "event_id": "event:phase2alphaevent:13",
+  "schema_revision": "1",
+  "sequence": 13,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "future.progress"
+}

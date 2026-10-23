@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "future_safe_error",
+    "message": "The lifecycle preview request could not be completed.",
+    "request_id": "request:future_error_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

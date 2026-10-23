@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "control_revision_conflict",
+    "message": "The lifecycle control revision has changed.",
+    "request_id": "request:control_conflict_0001",
+    "retry": "resume_snapshot",
+    "retry_after_ms": null
+  }
+}

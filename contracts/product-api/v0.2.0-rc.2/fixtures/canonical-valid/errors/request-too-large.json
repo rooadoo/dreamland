@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "request_too_large",
+    "message": "The request body exceeds the lifecycle preview limit.",
+    "request_id": "request:request_too_large_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

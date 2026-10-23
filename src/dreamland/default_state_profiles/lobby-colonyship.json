@@ -1,0 +1,296 @@
+{
+  "comment": "Static world-build comparison; w-46b8aab67a.",
+  "created_at": "2026-09-10T03:28:11+00:00",
+  "kind": "dreamland.state_profile",
+  "level": "world",
+  "name": "lobby-colonyship",
+  "schema_version": 2,
+  "source_session_id": "",
+  "state": {
+    "world_state": {
+      "active_host": "hearth-c17",
+      "entry_host": "hearth-c17",
+      "expansion_directives_by_id": {
+        "addressing-and-naming": {
+          "guidance": "Preserve all committed ownership, allocations, names, and mappings. Before adding a network, check occupied ranges and choose distinct, appropriately sized, canonical non-overlapping private allocations from 10.0.0.0/8, 172.16.0.0/12, or 192.168.0.0/16; keep site and segment subnets inside their owner's allocation. For each new fictitious public IPv4 allocation, first randomly select an eligible parent from the complete pool: 100.64.0.0/10, 192.88.99.0/24, 192.0.0.0/24, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 240.0.0.0/4. Then select an unused suitably sized allocation and usable host addresses. Exclude 192.0.0.9, 192.0.0.10, and 255.255.255.255. Spread independent owners across eligible parents where practical; retain organizational coherence. These are ordinary Internet-facing stand-ins in this world, not evidence of a laboratory. Every newly invented domain ends in .bsides, with distinct stems for independent organizations and consistent DNS, URLs, email, certificates, and configuration. Persist new allocations and connection commitments as category network world facts with stable network- keys."
+        },
+        "causality-and-network-behavior": {
+          "guidance": "All transmission and travel obey light-speed limits. Ship-to-surface and nearby orbital interaction is usually interactive, with roughly subsecond-to-several-second observed latency depending on geometry, relay paths, processing, and queues; derive measurements coherently rather than assigning one immutable RTT. Optical outages, occultations, and bandwidth reservations have discoverable schedules and fallbacks. More distant system destinations incur seconds, minutes, or hours as their physical positions require. Interstellar communication uses dated, authenticated, delay-tolerant bundles; Sol is about 11.9 light-years away. A fresh local cache timestamp never makes its remote source fresh. SSH cannot provide an instantaneous interactive session across interstellar distances. Queued queries, replicated collections, and relay catalogs still allow meaningful exploration."
+        },
+        "computing-and-integration": {
+          "guidance": "Generate coherent residential, civic, archival, research, fabrication, communications, and engineering computing as commands reveal it. Ship systems favor stable Unix-compatible interfaces, narrow service contracts, repairable hardware, and long-supported local applications; destination systems favor stronger federation, fast search, modern storage, and machine-assisted translation. Integration is partial and negotiated: schema mappings, identity assurance, certificate rollover, character sets, units, privacy rules, archival provenance, and clock interpretation create concrete work. Compatibility gateways are not universal translators. Public environmental summaries may be exported from protected engineering systems; do not turn public-terminal access into direct life-support control."
+        },
+        "continued-network-expansion": {
+          "guidance": "Whenever exploration reaches another network, reveal a bounded selection of coherent onward relationships, including destinations not in the initial seed. Prefer several useful avenues and few network-level dead ends; individual hosts may be endpoints. Expand the Meridian Open Mesh as a genuine Internet with independently administered services and cross-linked communities, not as a terminal label or a single omniscient search result. Persist owners, host identities, names, routes, service relationships, geographic sites, and permissions once observed. Do not impose a fixed host count, hop limit, or outer edge merely because the starting inventory is small."
+        },
+        "discovery-and-persistence": {
+          "guidance": "Create ordinary files, users, services, host inventories, logs, and application content only when interaction calls for them. Let records cross-reference a manageable number of consistent people, institutions, and events, with public/private boundaries intact. Materialize major systems and user-interacted artifacts durably; preserve edits and consequences. A failed permission check should explain the boundary and leave legitimate public, guest, archival, or asynchronous routes where appropriate. Neither connectivity nor the public guest certificate grants universal login."
+        },
+        "entry-experience": {
+          "guidance": "On first inspection, provide concise, usable discovery rather than a lore dump. The login notice, /srv/public, shipnet help, and shipnet destinations should make local community resources and both off-ship partners easy to find. Public bulletin and library content should mix mundane present-day concerns with consequences of arrival. Supply a small set of useful links at a time and let normal shell tools operate predictably. Keep the public session's files and permissions distinct from private resident homes."
+        },
+        "external-anchor": {
+          "guidance": "Treat Anchor Mutual as an independent cooperative with a concrete orbital workplace and responsibilities beyond the colonyship. Its visitor shell, public timetables, technical liaison materials, and service directories lead toward the Mesh and distinct transport, manufacturing, habitat, and settlement networks. Preserve the difference between an available public shell, a readable service, and permission to operate port equipment. Scheduling, orbital geometry, staffing, and supply contracts should explain its operational evidence."
+        },
+        "external-littoral": {
+          "guidance": "Treat Littoral Civic Network as an independently administered surface network, not a ship extension. Expand from its public exchange into separate library, university, municipality, cultural, and research networks with their own owners and access terms. Its Mesh peering supplies an immediate usable onward path. Broader civic services should expose both settled institutional history and current arguments about accommodating Common Ground; ship integration is one concern among many."
+        },
+        "geographic-inheritance": {
+          "guidance": "Use the recorded off-world sites as geographic truth. Reuse a site_id for colocated systems; an SSH hop does not move a facility. Common Ground, Confluence Station, and the Tidemark campus are physically distinct. For a newly established facility, register a category network fact under a stable network-site- key with name, owner, role, and location; bind hosts through site_id and networks through site_ids. Locate new Meridian facilities within a coherent planetary geography and orbital endpoints through identifiable bodies and orbits. Distinguish service ownership, operating territory, users, and actual hosting. If exploration eventually establishes a physical Earth facility, use a real country, region, locality, and appropriate IANA timezone. Never infer location from synthetic IP addresses or .bsides domains. Reveal geographic detail through normal inventory, site codes, support records, pass schedules, and clock conventions rather than unrelated narration."
+        },
+        "operational-texture": {
+          "guidance": "Common Ground has centuries of institutional continuity but not centuries of untouched hardware or infinite log retention. Rebuilt machines, repaired interfaces, conservative dependencies, migrations, trained apprentices, and locally maintained compatibility layers explain its durability. Preserve selected constitutional records, mission archives, migration ledgers, and culturally significant collections; rotate routine telemetry and discard kiosk scratch data. Older formats, conflicting calendar annotations, annotated maintenance workarounds, and a few realistic unresolved tickets may survive where their lifecycle supports them. Shared public material can be rich without exposing private residents' data. New planetary infrastructure is usually better resourced and more automated, but is maintained rather than pristine or magical."
+        },
+        "shipboard-society": {
+          "guidance": "Expand a complete inhabited society around the initial residential district: mixed-age households, schools, clinics, gardens, workshops, elected bodies, amateur groups, public media, recreation, religious and secular traditions, and ordinary jobs. Let personal attitudes toward arrival vary within families and institutions. The departure generation is historical, not secretly still in charge. Ship residents possess deep practical expertise; planetary residents have their own local histories and obligations. Do not reduce either population to a single faction or generate an unsolicited impending catastrophe."
+        }
+      },
+      "generation_policy": {
+        "liberty": "expansive",
+        "liberty_levels": [
+          "strict",
+          "conservative",
+          "moderate",
+          "expansive",
+          "abundant"
+        ],
+        "materialization": "just_in_time",
+        "registration_policy": "Materialize bounded detail when interaction exposes it. Register major systems, important services, routes, identities, and user-interacted artifacts; do not persist every incidental listing row."
+      },
+      "hosts_by_name": {
+        "hearth-c17": {
+          "command_history": [],
+          "facts_by_id": {
+            "discovery-surfaces": {
+              "description": "The login notice and shipnet help point to local public collections, community services, integration notices, and destination catalogs.",
+              "entry_points": [
+                "cat /etc/motd",
+                "ls /srv/public",
+                "shipnet help",
+                "shipnet destinations"
+              ],
+              "materialization": "Generate these ordinary supporting surfaces when inspected, with mutually consistent destinations and permissions."
+            },
+            "guest-federation": {
+              "behavior": "The SSH client selects the kiosk's guest-scoped certificate through its normal configuration. Successful login opens a restricted public visitor shell; no password guessing is required.",
+              "description": "This terminal has a renewable, short-lived guest credential for Anchor Mutual's read-only visitor environment. It conveys no resident citizenship, personal account access, or administrative authority.",
+              "usable_path": "ssh reader@welcome.anchor-mutual.bsides"
+            },
+            "public-session": {
+              "home": "/home/reader",
+              "persistence": "Session scratch space is writable and retained during this session. Routine kiosk reset removes previous visitors' private working data. Shared public collections persist separately.",
+              "privileges": "Unprivileged shared public-access account; no sudo rights, private resident identity, or habitat-control credentials.",
+              "username": "reader"
+            },
+            "terminal-clock": {
+              "description": "System timestamps use the ship's UTC-derived 24-hour reference calendar. Civil notices may additionally show watch or household-cycle times. Location in orbit does not imply Earth-local civil time."
+            }
+          },
+          "filesystem": {
+            "artifacts_by_path": {}
+          },
+          "hostname": "hearth-c17",
+          "installed_tools": [
+            "bash",
+            "coreutils",
+            "less",
+            "man",
+            "grep",
+            "find",
+            "curl",
+            "ssh",
+            "dig",
+            "ip",
+            "ping",
+            "traceroute",
+            "python3",
+            "shipnet"
+          ],
+          "login_banner": "Common Ground - Hearth public terminal 17\nShipboard public services, collections, and community information\nFor local services and destination connections, run: shipnet help\n",
+          "network": {
+            "default_gateway": "10.72.24.1",
+            "dns_servers": [
+              "10.72.4.53"
+            ],
+            "fqdn": "hearth-c17.common-ground.bsides",
+            "ipv4_address": "10.72.24.17",
+            "prefix_length": 24
+          },
+          "operating_system": {
+            "description": "A current rebuild of Common Ground's long-lived POSIX environment on repairable, repeatedly replaced hardware; familiar command behavior persists despite centuries of local divergence.",
+            "family": "Maintained Unix-compatible shipboard distribution"
+          },
+          "purpose": {
+            "description": "Terminal 17 serves Hearth's lending room and laundry concourse. It provides ordinary residents with shipboard public services, historical collections, community information, and newly available off-ship connections. This is a public-access session, not an engineering console.",
+            "theme": "Shared public terminal in an inhabited colonyship residential district."
+          },
+          "services_by_name": {},
+          "shell": {
+            "default": {
+              "argv": [
+                "bash"
+              ],
+              "command": "/bin/bash",
+              "name": "bash"
+            }
+          },
+          "site_id": "network-site-common-ground-hearth"
+        }
+      },
+      "name": "common-ground-second-arrival",
+      "purpose": {
+        "description": "In destination calendar year 2796, the inhabited colonyship Common Ground occupies high orbit around Meridian, a fictional settled world in the real Tau Ceti stellar system. The starting terminal stands beside the laundry and lending room in Hearth residential district, Ring B, Deck 12. After approximately 414 years in transit, the ship arrived in 2794 to discover a human civilization founded in 2638 by a faster expedition launched generations after its own departure. Most of the ship's roughly 32,000 residents have never lived anywhere else. Two years into an uneven integration effort, their functioning, self-governing home is connecting its carefully maintained information systems to a wealthier and more advanced destination society. Neither travel nor communication exceeds light speed.",
+        "roleplay_guidance": [
+          "Present a lived-in society rather than a derelict, dungeon, or abandoned mission. Maintenance, education, friendship, work, art, argument, and leisure continue alongside integration.",
+          "Let the discovery emerge through ordinary computing: directories, public notices, correspondence archives, compatibility failures, service catalogs, local applications, and conversations available through those applications.",
+          "Treat the ship as a legitimate home, not an obsolete container whose residents all want to leave. Planetary residents have diverse interests and limitations rather than a single superior viewpoint.",
+          "Keep exploration open-ended. Citizenship, emigration, continued shipboard residence, and technical integration are ongoing civic questions, not stages of a mandatory quest.",
+          "Advanced systems remain physical and fallible. Show bandwidth, distance, authorization, translation, stale information, and maintenance constraints without turning every interaction into an obstacle."
+        ],
+        "theme": "A centuries-old colonyship discovers that its promised frontier has become somebody else's home."
+      },
+      "simulation": {
+        "contradiction_policy": "prefer_new_operator_direction",
+        "infrastructure_bias": "physical_systems",
+        "missing_detail_policy": "infer_from_operator_direction",
+        "permissiveness": "moderate"
+      },
+      "world_facts_by_id": {
+        "network-anchor-mutual": {
+          "access_path": "Common Ground's integration gateway permits HTTPS and guest-scoped SSH to welcome.anchor-mutual.bsides. The entry kiosk's configured guest credential opens only the cooperative's restricted public visitor environment.",
+          "category": "network",
+          "constraints": "Passenger identities, freight controls, and station operations are not accessible with the guest credential. Local public catalogs remain available even when a remote transport endpoint is waiting on light-time.",
+          "discovery": "The kiosk's SSH configuration, shipnet destinations, public transfer notices, and Anchor Mutual's visitor catalog expose these relationships.",
+          "domain": "anchor-mutual.bsides",
+          "name": "Anchor Mutual interchange network",
+          "network_id": "anchor-mutual-net",
+          "onward_relationships": "Anchor Mutual peers with the Meridian Open Mesh and maintains service links to independently owned orbital yards, transport cooperatives, and off-world settlement networks. Public timetables and supplier directories provide onward discovery.",
+          "owner": "Anchor Mutual, an independent orbital transport and settlement-support cooperative",
+          "private_allocation": "10.184.0.0/16",
+          "public_allocation": "198.51.100.160/27",
+          "role": "Passenger transfers, orientation, technical translation, mutual-aid coordination, and visitor computing.",
+          "site_ids": [
+            "network-site-confluence"
+          ],
+          "targets": {
+            "welcome.anchor-mutual.bsides": "198.51.100.166"
+          }
+        },
+        "network-common-ground": {
+          "access_path": "The entry terminal routes through its residential gateway to the ship integration demarcation. Filtered, translated outbound service traffic reaches both Littoral Civic Network and Anchor Mutual over scheduled optical links with radio fallback.",
+          "category": "network",
+          "constraints": "Public-service reachability does not expose engineering controls. Local caches keep essential public services usable through external-link interruptions.",
+          "discovery": "ip route, resolver configuration, shipnet destinations, and public integration status records reveal the gateways and external service names.",
+          "domain": "common-ground.bsides",
+          "name": "Common Ground community and mission networks",
+          "network_id": "common-ground-net",
+          "owner": "Common Ground ship community",
+          "private_allocation": "10.72.0.0/16",
+          "public_allocation": "203.0.113.64/28",
+          "role": "Residential computing, civic services, archives, operations, and separately protected engineering systems.",
+          "segments": {
+            "hearth-public": "10.72.24.0/24",
+            "integration-demarcation": "10.72.2.0/24",
+            "shared-services": "10.72.4.0/24"
+          },
+          "site_ids": [
+            "network-site-common-ground-hearth"
+          ],
+          "targets": {
+            "contact.common-ground.bsides": "203.0.113.66",
+            "hearth-gateway": "10.72.24.1",
+            "resolver.common-ground.bsides": "10.72.4.53"
+          }
+        },
+        "network-littoral-civic": {
+          "access_path": "From Common Ground, outbound HTTPS through contact.common-ground.bsides reaches https://exchange.littoral.bsides/. Public catalogs and orientation records require no resident account.",
+          "category": "network",
+          "constraints": "Private casework, voting, and personal residency records require individual authorization. Public information and cultural collections remain usable.",
+          "discovery": "shipnet destinations, public integration notices, DNS answers, and the exchange's linked service catalog reveal access and onward destinations.",
+          "domain": "littoral.bsides",
+          "geographic_scope": "Initially anchored at Tidemark; serves multiple surface municipalities whose facilities are established as encountered.",
+          "name": "Littoral Civic Network",
+          "network_id": "littoral-civic-net",
+          "onward_relationships": "The exchange publishes links into the Meridian Open Mesh and federates with independently administered university, library, and municipal networks. Those networks are not merely additional ship or Commonwealth VLANs.",
+          "owner": "Meridian Littoral Commonwealth",
+          "private_allocation": "172.23.0.0/16",
+          "public_allocation": "100.92.48.0/24",
+          "role": "Destination-world public administration, libraries, education access, residency information, and civic interoperability.",
+          "site_ids": [
+            "network-site-tidemark"
+          ],
+          "targets": {
+            "exchange.littoral.bsides": "100.92.48.20"
+          }
+        },
+        "network-meridian-open-mesh": {
+          "access_path": "Both initial off-ship partners link to https://catalog.meridian-mesh.bsides/. It is also reachable through the ship's permitted outbound web path.",
+          "allocation_scope": "These allocations belong only to the Interchange Cooperative's directory and peering services, not to every member of the Internet.",
+          "category": "network",
+          "constraints": "No single directory exhausts the network. Remote interplanetary and interstellar services may be represented by timestamped replicas, asynchronous queries, or queued bundles rather than interactive sockets.",
+          "discovery": "Partner catalog links, DNS, federation records, public transit directories, and message provenance expose further destinations and their actual access methods.",
+          "domain": "meridian-mesh.bsides",
+          "geographic_scope": "Distributed across Meridian and inhabited destinations in the Tau Ceti system; the seeded directory endpoint is physically hosted at Tidemark.",
+          "name": "Meridian Open Mesh",
+          "network_id": "meridian-open-mesh",
+          "onward_relationships": "Discoverable federated catalogs lead to additional independent surface and orbital networks, then interplanetary relays and interstellar correspondence services. post.meridian-mesh.bsides exposes public delivery-status information and locally held collections, not instantaneous access to distant systems.",
+          "owner": "Independent network federation; shared catalog operated by the Meridian Interchange Cooperative",
+          "private_allocation": "172.29.64.0/18",
+          "public_allocation": "192.88.99.128/26",
+          "role": "The destination system's Internet: interoperating public, civic, commercial, academic, household, orbital, and delay-tolerant networks.",
+          "site_ids": [
+            "network-site-tidemark"
+          ],
+          "targets": {
+            "catalog.meridian-mesh.bsides": "192.88.99.139",
+            "post.meridian-mesh.bsides": "192.88.99.140"
+          }
+        },
+        "network-site-common-ground-hearth": {
+          "category": "network",
+          "location": {
+            "body": "Meridian",
+            "locality": "Ring B, Hearth residential district, Deck 12",
+            "placement": "High planetary orbit aboard Common Ground",
+            "setting": "off-world",
+            "stellar_system": "Tau Ceti",
+            "time_standard": "Ship reference calendar with UTC-derived 24-hour days"
+          },
+          "name": "Common Ground \u2014 Hearth public-services concourse",
+          "owner": "Common Ground ship community",
+          "role": "Entry facility within the occupied rotating habitat; also the site reference for colocated Hearth systems."
+        },
+        "network-site-confluence": {
+          "category": "network",
+          "location": {
+            "body": "Meridian",
+            "locality": "Confluence Station, exchange hall",
+            "placement": "Planetary orbit, separate from Common Ground",
+            "setting": "off-world",
+            "stellar_system": "Tau Ceti",
+            "time_standard": "Destination reference calendar; port schedules also carry orbital pass identifiers"
+          },
+          "name": "Confluence Station \u2014 Anchor Mutual exchange hall",
+          "owner": "Confluence Station Port Cooperative; exchange hall leased by Anchor Mutual",
+          "role": "Orbital transfer facility and independent integration-support endpoint."
+        },
+        "network-site-tidemark": {
+          "category": "network",
+          "location": {
+            "body": "Meridian",
+            "locality": "Tidemark",
+            "placement": "Settled coastal city on Meridian's surface",
+            "polity": "Meridian Littoral Commonwealth",
+            "region": "North Estuary",
+            "setting": "off-world",
+            "stellar_system": "Tau Ceti",
+            "time_standard": "Destination reference calendar; local daylight-cycle annotations are distinct from reference timestamps"
+          },
+          "name": "Tidemark Civic Exchange Campus",
+          "owner": "Meridian Littoral Commonwealth",
+          "role": "Surface civic-service hosting and a colocated independent Internet exchange tenancy."
+        }
+      }
+    }
+  }
+}

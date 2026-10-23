@@ -1,0 +1,104 @@
+{
+  "created_at": "2026-07-11T00:00:00+00:00",
+  "kind": "dreamland.state_profile",
+  "level": "world",
+  "name": "default",
+  "schema_version": 2,
+  "state": {
+    "world_state": {
+      "active_host": "ubuntu",
+      "entry_host": "ubuntu",
+      "expansion_directives_by_id": {},
+      "generation_policy": {
+        "liberty": "moderate",
+        "liberty_levels": [
+          "strict",
+          "conservative",
+          "moderate",
+          "expansive",
+          "abundant"
+        ],
+        "materialization": "just_in_time",
+        "registration_policy": "Register major systems, important services, and user-interacted files after they are materialized by command output. Avoid registering incidental listing rows, scan noise, and examples that the user has not acted on.\n"
+      },
+      "hosts_by_name": {
+        "ubuntu": {
+          "command_history": [],
+          "facts_by_id": {},
+          "filesystem": {
+            "artifacts_by_path": {},
+            "notable_paths": [
+              {
+                "description": "Default login home directory.",
+                "path": "/home/{username}"
+              }
+            ]
+          },
+          "hardware": {
+            "default_bias": "physical",
+            "virtualization": "unspecified"
+          },
+          "hostname": "ubuntu",
+          "login_banner": "Welcome to Ubuntu.\n",
+          "network": {
+            "listening_ports": [
+              {
+                "port": 22,
+                "protocol": "tcp",
+                "service": "ssh"
+              }
+            ]
+          },
+          "operating_system": {
+            "distribution": "Ubuntu",
+            "family": "linux"
+          },
+          "purpose": {
+            "description": "Lightly specified default entry host for a neutral DREAMLAND state profile.",
+            "theme": "Neutral Linux entry host."
+          },
+          "services_by_name": {
+            "ssh": {
+              "description": "OpenSSH server for remote shell access.",
+              "protocol": "tcp",
+              "state": "running"
+            }
+          },
+          "shell": {
+            "default": {
+              "argv": [
+                "bash"
+              ],
+              "command": "/bin/bash",
+              "name": "bash"
+            }
+          },
+          "users": {
+            "default_groups": [
+              "users",
+              "sudo"
+            ],
+            "home_root": "/home",
+            "passwordless_sudo": true
+          }
+        }
+      },
+      "name": "default-world",
+      "purpose": {
+        "description": "A neutral boot state containing one lightly specified entry host. Operators can replace it with richer saved state profiles.",
+        "roleplay_guidance": [
+          "Keep the environment grounded, ordinary, and internally consistent.",
+          "Treat sparse host metadata as creative space, not proof that ordinary system features are absent."
+        ],
+        "theme": "Neutral DREAMLAND boot state."
+      },
+      "simulation": {
+        "contradiction_policy": "preserve_established_facts",
+        "infrastructure_bias": "physical_systems",
+        "missing_detail_policy": "infer_plausible_details",
+        "permissiveness": "moderate"
+      },
+      "world_facts_by_id": {}
+    }
+  }
+}

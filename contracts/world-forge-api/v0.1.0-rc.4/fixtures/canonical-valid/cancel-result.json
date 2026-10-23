@@ -1,0 +1,19 @@
+{
+  "job_id": "forge-job:fixture-00000031",
+  "kind": "forge_job_cancelled",
+  "position": {
+    "cursor": "forge-cursor:fixture-00000036",
+    "last_event_id": "forge-event:fixture-00000037",
+    "sequence": 2,
+    "service_epoch": "forge-epoch:fixture-00000001",
+    "stream_id": "forge-stream:fixture-00000033"
+  },
+  "replayed": false,
+  "service_epoch": "forge-epoch:fixture-00000001",
+  "source": {
+    "kind": "provider_free_integration_preview",
+    "label": "Deterministic no-provider World Forge backend integration preview",
+    "live_forge_evidence": false,
+    "provider_calls": false
+  }
+}

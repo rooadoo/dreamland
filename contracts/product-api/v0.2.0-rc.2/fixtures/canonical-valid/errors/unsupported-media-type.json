@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "unsupported_media_type",
+    "message": "The request content type is unsupported.",
+    "request_id": "request:media_type_unsupported_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

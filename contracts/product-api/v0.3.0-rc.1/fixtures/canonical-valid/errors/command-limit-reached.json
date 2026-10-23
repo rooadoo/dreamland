@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.3.0-rc.1"
+  },
+  "error": {
+    "code": "command_limit_reached",
+    "message": "The product session command limit was reached.",
+    "request_id": "request:error_command_limit_reached_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "deterministic-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

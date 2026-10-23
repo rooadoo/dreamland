@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "launch_selection_unavailable",
+    "message": "The attendee launch selection is unavailable.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

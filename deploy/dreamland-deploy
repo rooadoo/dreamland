@@ -1,0 +1,704 @@
+#!/bin/sh
+# Installation, upgrade, backup, and rollback lifecycle for a DREAMLAND backend
+# deployment. Day-to-day operation of a running deployment stays in dreamlandctl.
+#
+# This script runs on the administrative host, from an extracted deployment
+# package. It never mounts the Docker socket into the application and never
+# reads credential values; interactive credential entry stays inside the
+# deployment CLI running in a container.
+#
+# Backups hold the complete deployment volume, including secrets. They are
+# written with owner-only permissions and are never removed by this script.
+set -eu
+
+script_directory=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+package_root=$(CDPATH= cd -- "$script_directory/.." && pwd)
+compose_file="$script_directory/compose.yaml"
+
+project=${DREAMLAND_PROJECT:-dreamland}
+backup_directory=${DREAMLAND_BACKUP_DIR:-$HOME/dreamland-backups}
+env_file=${DREAMLAND_DEPLOYMENT_ENV:-/dev/null}
+profile=${DREAMLAND_DEPLOYMENT_PROFILE:-beta}
+entry_mode=lobby
+assume_yes=no
+skip_backup=no
+backup_label=
+rollback_image=
+rollback_backup=
+restore_source=
+upgrade_tarball=
+
+usage() {
+    cat <<'USAGE'
+Usage: dreamland-deploy COMMAND [options]
+
+Commands:
+  install            Build, initialize, configure, validate, and start a new
+                     deployment. Safe to re-run: existing state is preserved
+                     and only missing credentials are requested.
+  upgrade            Back up, rebuild from this package, validate, and restart.
+  rollback           Return to a previous image (--image) or a previous
+                     point in time (--backup).
+  backup             Archive the complete deployment volume.
+  restore-worlds     Copy only the lobby catalog, provenance, and world
+                     profiles from a backup into the current deployment.
+  uninstall          Stop the deployment and remove its container and volume.
+                     Backups and this package are never removed.
+  status             Report deployment, image, tracing, and backup state.
+
+Options:
+  --project NAME     Compose project name (default: dreamland)
+  --profile NAME     Deployment profile for install: beta, conference,
+                     or prerelease (default: beta)
+  --entry-mode MODE  SSH entry mode for install: lobby or direct (default: lobby)
+  --backup-dir PATH  Backup location (default: $HOME/dreamland-backups)
+  --env-file FILE    Compose environment file
+  --label TEXT       Short label added to a backup name
+  --image ID         Target image for rollback
+  --backup NAME      Target backup for rollback
+  --from NAME        Source backup for restore-worlds
+  --tarball FILE     Extract this package and run its upgrade
+  --no-backup        Skip the automatic backup (upgrade, uninstall)
+  --yes              Do not prompt for confirmation
+  --help             Show this message
+
+Environment:
+  DREAMLAND_SSH_HOST         Published SSH interface. Defaults to 127.0.0.1;
+                             set 0.0.0.0 to accept external connections.
+  DREAMLAND_BACKUP_DIR       Default backup location.
+  DREAMLAND_PROJECT          Default Compose project name.
+  DREAMLAND_DEPLOYMENT_ENV   Default Compose environment file.
+USAGE
+}
+
+fail() {
+    printf '%s\n' "$1" >&2
+    exit 1
+}
+
+note() {
+    printf '  %s\n' "$1"
+}
+
+heading() {
+    printf '\n%s\n' "$1"
+}
+
+confirm() {
+    if [ "$assume_yes" = yes ]; then
+        return 0
+    fi
+    if [ ! -t 0 ]; then
+        fail 'This action needs confirmation; re-run with --yes or from a terminal.'
+    fi
+    printf '%s [y/N]: ' "$1"
+    read -r reply
+    case "$reply" in
+        y | Y | yes | YES) return 0 ;;
+        *) fail 'Cancelled; nothing was changed.' ;;
+    esac
+}
+
+# Backup names reach a shell inside the helper container, so restrict them to a
+# safe character set rather than relying on the caller.
+validate_backup_name() {
+    case "$1" in
+        '' | *[!A-Za-z0-9._-]* | -* | *..*)
+            fail "Invalid backup name: $1"
+            ;;
+    esac
+}
+
+validate_project() {
+    case "$project" in
+        '' | [!a-z0-9]* | *[!a-z0-9_-]*)
+            fail 'Invalid Compose project name.'
+            ;;
+    esac
+    if [ "${#project}" -gt 40 ]; then
+        fail 'Compose project name must be at most 40 characters.'
+    fi
+}
+
+require_docker() {
+    command -v docker >/dev/null 2>&1 ||
+        fail 'Docker is not installed on this host.'
+    docker compose version >/dev/null 2>&1 ||
+        fail 'The Docker Compose plugin is required.'
+    if ! server_version=$(docker version --format '{{.Server.Version}}' 2>/dev/null); then
+        fail 'Cannot reach the Docker daemon; check permissions and that it is running.'
+    fi
+    case "$server_version" in
+        [0-9]*)
+            major=${server_version%%.*}
+            if [ "$major" -lt 28 ]; then
+                fail "Docker Engine 28.0.0 or newer is required; found $server_version."
+            fi
+            ;;
+        *)
+            printf 'Could not read the Docker Engine version; continuing.\n' >&2
+            ;;
+    esac
+}
+
+volume_name() {
+    printf '%s_dreamland-data' "$project"
+}
+
+compose() {
+    docker compose --env-file "$env_file" -f "$compose_file" \
+        --project-name "$project" "$@"
+}
+
+# One-shot offline setup container. Credentials are entered here, inside the
+# container, and never pass through this script's arguments or output.
+run_setup() {
+    compose --profile setup run --rm --no-deps "$@"
+}
+
+run_setup_quiet() {
+    compose --profile setup run --rm --no-deps -T "$@"
+}
+
+deployment_volume_exists() {
+    docker volume inspect "$(volume_name)" >/dev/null 2>&1
+}
+
+ssh_container_id() {
+    compose --profile ssh ps -aq ssh 2>/dev/null || true
+}
+
+ssh_state() {
+    container=$(ssh_container_id)
+    if [ -z "$container" ]; then
+        printf 'absent'
+        return
+    fi
+    docker inspect --format '{{.State.Status}}' "$container" 2>/dev/null ||
+        printf 'unknown'
+}
+
+running_image() {
+    container=$(ssh_container_id)
+    if [ -z "$container" ]; then
+        return 1
+    fi
+    docker inspect --format '{{.Image}}' "$container" 2>/dev/null
+}
+
+backend_image() {
+    # Prefer the image the deployment actually ran; fall back to the image the
+    # current Compose configuration resolves to.
+    if image=$(running_image) && [ -n "$image" ]; then
+        printf '%s' "$image"
+        return 0
+    fi
+    image=$(compose --profile ssh config --images 2>/dev/null | head -n 1 || true)
+    if [ -z "$image" ]; then
+        fail 'Cannot determine the backend image; build the deployment first.'
+    fi
+    docker image inspect --format '{{.Id}}' "$image" 2>/dev/null ||
+        fail "Backend image $image is not present; build the deployment first."
+}
+
+require_deployment() {
+    deployment_volume_exists ||
+        fail "No deployment volume $(volume_name); run 'dreamland-deploy install' first."
+}
+
+prepare_backup_directory() {
+    if [ ! -d "$backup_directory" ]; then
+        mkdir -p "$backup_directory" ||
+            fail "Cannot create the backup directory $backup_directory."
+        chmod 0700 "$backup_directory"
+    fi
+    backup_directory=$(CDPATH= cd -- "$backup_directory" && pwd)
+}
+
+# Read or write the deployment volume with a one-shot container. Networking is
+# disabled; only the volume and the backup directory are mounted. Root is used
+# because the volume is owner-only under UID 10001; the container is one-shot,
+# offline, and never publishes a port.
+volume_helper() {
+    helper_image=$1
+    shift
+    docker run --rm --network none --user 0:0 \
+        --security-opt no-new-privileges:true \
+        -v "$(volume_name)":/data \
+        -v "$backup_directory":/backup \
+        "$helper_image" "$@"
+}
+
+# Restore paths only read archives, so the backup directory holding every
+# point-in-time copy of the deployment secrets is mounted read-only.
+volume_helper_readonly_backup() {
+    helper_image=$1
+    shift
+    docker run --rm --network none --user 0:0 \
+        --security-opt no-new-privileges:true \
+        -v "$(volume_name)":/data \
+        -v "$backup_directory":/backup:ro \
+        "$helper_image" "$@"
+}
+
+create_backup() {
+    require_deployment
+    prepare_backup_directory
+    image=$(backend_image)
+    stamp=$(date -u +%Y%m%dT%H%M%SZ)
+    if [ -n "$backup_label" ]; then
+        case "$backup_label" in
+            *[!A-Za-z0-9._-]*)
+                fail 'Backup labels may use letters, digits, dot, dash, and underscore.'
+                ;;
+        esac
+        backup_name="dreamland-backup-$stamp-$backup_label"
+    else
+        backup_name="dreamland-backup-$stamp"
+    fi
+    archive="$backup_name.tar.gz"
+    manifest="$backup_directory/$backup_name.manifest"
+    if [ -e "$backup_directory/$archive" ]; then
+        fail "Backup $archive already exists; choose a different label."
+    fi
+
+    host_uid=$(id -u)
+    host_gid=$(id -g)
+    volume_helper "$image" sh -ec \
+        "umask 077; tar -czf '/backup/$archive.partial' -C /data .; \
+         chown $host_uid:$host_gid '/backup/$archive.partial'" ||
+        fail 'Backup failed; the deployment was not changed.'
+    mv "$backup_directory/$archive.partial" "$backup_directory/$archive"
+    chmod 0600 "$backup_directory/$archive"
+
+    {
+        printf 'backup: %s\n' "$backup_name"
+        printf 'created: %s\n' "$stamp"
+        printf 'project: %s\n' "$project"
+        printf 'volume: %s\n' "$(volume_name)"
+        printf 'image: %s\n' "$image"
+        printf 'package: %s\n' "$package_root"
+        printf 'contents: complete deployment volume, including secrets\n'
+    } >"$manifest"
+    chmod 0600 "$manifest"
+
+    printf '%s\n' "$backup_name"
+}
+
+restore_backup() {
+    restore_name=$1
+    validate_backup_name "$restore_name"
+    prepare_backup_directory
+    archive="$backup_directory/$restore_name.tar.gz"
+    [ -f "$archive" ] || fail "Backup archive $archive was not found."
+    image=$(backend_image)
+    # Clear the volume before extracting so a restored point in time cannot be
+    # merged with unrelated newer files. The caller takes its own backup first,
+    # so an interrupted restore is recoverable.
+    volume_helper_readonly_backup "$image" sh -ec \
+        "find /data -mindepth 1 -delete; tar -xzf '/backup/$restore_name.tar.gz' -C /data" ||
+        fail 'Restore failed; the volume may be incomplete. Restore again or roll back before starting SSH.'
+}
+
+stop_ssh() {
+    if [ "$(ssh_state)" = running ]; then
+        note 'Stopping the SSH service'
+        compose --profile ssh stop ssh >/dev/null
+    fi
+}
+
+start_ssh() {
+    note "Starting the SSH service on ${DREAMLAND_SSH_HOST:-127.0.0.1}:2222"
+    compose --profile ssh up -d --no-build ssh >/dev/null
+}
+
+report_validation() {
+    run_setup_quiet init \
+        python -m dreamland.deployment validate --root /var/lib/dreamland
+}
+
+command_install() {
+    require_docker
+    heading 'DREAMLAND deployment - install'
+    note "Project: $project"
+    note "Profile: $profile"
+    note "Package: $package_root"
+
+    if deployment_volume_exists; then
+        note "Existing deployment volume $(volume_name) found; state is preserved."
+    fi
+
+    heading 'Building the backend image'
+    compose --profile ssh build
+    note 'Image built'
+
+    heading 'Initializing deployment state'
+    # Initialization preserves existing configuration, worlds, and credentials.
+    run_setup_quiet init \
+        python -m dreamland.deployment init \
+        --root /var/lib/dreamland \
+        --profile "$profile" \
+        --ssh-entry-mode "$entry_mode" >/dev/null
+    note 'Configuration, worlds, and catalog are in place'
+
+    heading 'Collecting missing credentials'
+    note 'Values are entered inside the container and are never echoed here.'
+    run_setup init \
+        python -m dreamland.deployment configure-ssh \
+        --root /var/lib/dreamland --only-missing
+
+    heading 'Validating the deployment'
+    report_validation
+
+    heading 'Starting SSH'
+    start_ssh
+    note "State: $(ssh_state)"
+
+    heading 'Installed'
+    note "Operate with: $script_directory/dreamlandctl --project $project status"
+    note "Back up with: $0 --project $project backup"
+    if [ "${DREAMLAND_SSH_HOST:-127.0.0.1}" = 127.0.0.1 ]; then
+        note 'SSH is bound to localhost. Set DREAMLAND_SSH_HOST=0.0.0.0 for external access.'
+    fi
+}
+
+command_upgrade() {
+    require_docker
+    require_deployment
+
+    if [ -n "$upgrade_tarball" ]; then
+        [ -f "$upgrade_tarball" ] || fail "Package $upgrade_tarball was not found."
+        if [ -n "${DREAMLAND_DEPLOY_REEXEC:-}" ]; then
+            fail 'Refusing to chain --tarball upgrades.'
+        fi
+        tarball_path=$(CDPATH= cd -- "$(dirname -- "$upgrade_tarball")" && pwd)/$(basename -- "$upgrade_tarball")
+        extract_parent=$(dirname -- "$package_root")
+        heading 'Extracting the new deployment package'
+        tar -xzf "$tarball_path" -C "$extract_parent"
+        extracted=$(tar -tzf "$tarball_path" | head -n 1 | cut -d/ -f1)
+        [ -n "$extracted" ] || fail 'Could not determine the extracted package directory.'
+        new_script="$extract_parent/$extracted/deploy/dreamland-deploy"
+        [ -x "$new_script" ] || chmod +x "$new_script" 2>/dev/null || true
+        [ -f "$new_script" ] || fail "Extracted package has no deploy/dreamland-deploy."
+        note "Extracted to $extract_parent/$extracted"
+        note 'Continuing with the new package'
+        DREAMLAND_DEPLOY_REEXEC=1
+        export DREAMLAND_DEPLOY_REEXEC
+        if [ "$assume_yes" = yes ]; then
+            exec "$new_script" --project "$project" \
+                --backup-dir "$backup_directory" --yes upgrade
+        fi
+        exec "$new_script" --project "$project" \
+            --backup-dir "$backup_directory" upgrade
+    fi
+
+    heading 'DREAMLAND deployment - upgrade'
+    note "Project: $project"
+    note "New package: $package_root"
+    if previous_image=$(running_image); then
+        note "Current image: $previous_image"
+    else
+        previous_image=$(backend_image)
+        note "Configured image: $previous_image"
+    fi
+    note "SSH state: $(ssh_state)"
+    if [ "$(ssh_state)" = running ]; then
+        printf '\nActive SSH sessions will be disconnected by this upgrade.\n'
+    fi
+    confirm 'Proceed with the upgrade?'
+
+    if [ "$skip_backup" = no ]; then
+        heading 'Backing up the deployment'
+        backup_label=${backup_label:-preupgrade}
+        created=$(create_backup)
+        note "Backup: $created"
+    else
+        heading 'Skipping the backup as requested'
+    fi
+
+    heading 'Building the new image'
+    compose --profile ssh build
+    new_image=$(docker image inspect --format '{{.Id}}' \
+        "$(compose --profile ssh config --images | head -n 1)")
+    note "New image: $new_image"
+
+    heading 'Stopping SSH'
+    stop_ssh
+
+    heading 'Validating the existing deployment with the new image'
+    report_validation
+
+    heading 'Starting SSH'
+    start_ssh
+    note "State: $(ssh_state)"
+
+    heading 'Upgrade complete'
+    note "Previous image: $previous_image"
+    note "Current image: $new_image"
+    note "Roll back with: $0 --project $project rollback --image $previous_image"
+}
+
+command_rollback() {
+    if [ -n "$rollback_image" ] && [ -n "$rollback_backup" ]; then
+        fail 'Choose either --image or --backup, not both.'
+    fi
+    if [ -z "$rollback_image" ] && [ -z "$rollback_backup" ]; then
+        fail 'Specify --image ID or --backup NAME.'
+    fi
+    [ -z "$rollback_backup" ] || validate_backup_name "$rollback_backup"
+    require_docker
+    require_deployment
+
+    heading 'DREAMLAND deployment - rollback'
+    note "Project: $project"
+
+    if [ -n "$rollback_image" ]; then
+        docker image inspect --format '{{.Id}}' "$rollback_image" >/dev/null 2>&1 ||
+            fail "Image $rollback_image is not present on this host."
+        note "Target image: $rollback_image"
+        note 'Deployment data is not changed by an image rollback.'
+        confirm 'Proceed with the image rollback?'
+        stop_ssh
+        heading 'Starting SSH with the target image'
+        DREAMLAND_BACKEND_IMAGE=$rollback_image
+        export DREAMLAND_BACKEND_IMAGE
+        compose --profile ssh up -d --no-build --force-recreate ssh >/dev/null
+        note "State: $(ssh_state)"
+        heading 'Rollback complete'
+        note "Current image: $rollback_image"
+        note 'Pin DREAMLAND_BACKEND_IMAGE in the Compose environment file to keep it.'
+        return 0
+    fi
+
+    prepare_backup_directory
+    [ -f "$backup_directory/$rollback_backup.tar.gz" ] ||
+        fail "Backup $rollback_backup was not found in $backup_directory."
+    note "Target backup: $rollback_backup"
+    if [ -f "$backup_directory/$rollback_backup.manifest" ]; then
+        sed 's/^/    /' "$backup_directory/$rollback_backup.manifest"
+    fi
+    printf '\nThis replaces the entire deployment volume, including worlds,\n'
+    printf 'configuration, credentials, and SSH host identity.\n'
+    confirm 'Proceed with the point-in-time restore?'
+
+    heading 'Backing up the current state first'
+    backup_label=${backup_label:-prerollback}
+    created=$(create_backup)
+    note "Backup: $created"
+
+    heading 'Stopping SSH'
+    stop_ssh
+
+    heading 'Restoring the deployment volume'
+    restore_backup "$rollback_backup"
+    note 'Volume restored'
+
+    heading 'Validating the restored deployment'
+    report_validation
+
+    heading 'Starting SSH'
+    start_ssh
+    note "State: $(ssh_state)"
+
+    heading 'Rollback complete'
+    note "Restored: $rollback_backup"
+    note "Previous state kept as: $created"
+}
+
+command_backup() {
+    require_docker
+    heading 'DREAMLAND deployment - backup'
+    note "Project: $project"
+    created=$(create_backup)
+    note "Backup: $created"
+    note "Location: $backup_directory"
+    note 'The archive contains deployment secrets; keep it owner-only.'
+}
+
+command_restore_worlds() {
+    [ -n "$restore_source" ] || fail 'Specify --from BACKUP.'
+    validate_backup_name "$restore_source"
+    require_docker
+    require_deployment
+    prepare_backup_directory
+    archive="$backup_directory/$restore_source.tar.gz"
+    [ -f "$archive" ] || fail "Backup $restore_source was not found in $backup_directory."
+
+    heading 'DREAMLAND deployment - restore worlds'
+    note "Project: $project"
+    note "Source backup: $restore_source"
+    note 'Copies the lobby catalog, provenance, and world profiles only.'
+    note 'Credentials, deployment policy, runtime configuration, SSH identity,'
+    note 'and the live visit registry are not copied.'
+    confirm 'Proceed?'
+
+    if [ "$(ssh_state)" = running ]; then
+        fail "Stop SSH first: $script_directory/dreamlandctl --project $project stop"
+    fi
+
+    image=$(backend_image)
+    heading 'Copying world data'
+    volume_helper_readonly_backup "$image" sh -ec \
+        "tar -xzf '/backup/$restore_source.tar.gz' -C /data \
+             ./state_profiles ./lobby/catalog.json ./lobby/provenance.json" ||
+        fail 'World restore failed; validate the deployment before starting it.'
+    note 'Worlds, catalog, and provenance copied'
+
+    heading 'Validating the deployment'
+    report_validation
+
+    heading 'Restore complete'
+    note "Start SSH with: $script_directory/dreamlandctl --project $project restart"
+}
+
+command_uninstall() {
+    require_docker
+    require_deployment
+
+    heading 'DREAMLAND deployment - uninstall'
+    note "Project: $project"
+    note "Volume: $(volume_name)"
+    printf '\nThis removes the deployment container and its volume, including\n'
+    printf 'worlds, configuration, credentials, and SSH host identity.\n'
+    printf 'Backups in %s and this package are not removed.\n' "$backup_directory"
+    confirm 'Remove this deployment?'
+
+    if [ "$skip_backup" = no ]; then
+        heading 'Backing up before removal'
+        backup_label=${backup_label:-preuninstall}
+        created=$(create_backup)
+        note "Backup: $created"
+    else
+        heading 'Skipping the backup as requested'
+    fi
+
+    heading 'Removing deployment containers'
+    compose --profile ssh --profile setup down --remove-orphans >/dev/null 2>&1 || true
+    note 'Containers removed'
+
+    heading 'Removing the deployment volume'
+    docker volume rm "$(volume_name)" >/dev/null ||
+        fail "Could not remove volume $(volume_name); stop any container using it."
+    note 'Volume removed'
+
+    heading 'Uninstalled'
+    if [ "$skip_backup" = no ]; then
+        note "Reinstall from this backup: $0 rollback --backup $created"
+        note "(install first, then roll back to restore that point in time)"
+    fi
+    note "Backups kept in: $backup_directory"
+}
+
+command_status() {
+    require_docker
+    heading 'DREAMLAND deployment - status'
+    note "Project: $project"
+    note "Package: $package_root"
+    note "Backup directory: $backup_directory"
+
+    if ! deployment_volume_exists; then
+        note "Volume: absent (not installed)"
+        return 0
+    fi
+    note "Volume: $(volume_name)"
+    note "SSH state: $(ssh_state)"
+    if image=$(running_image); then
+        note "Running image: $image"
+    fi
+
+    heading 'Deployment validation'
+    if ! report_validation; then
+        printf 'Validation failed; the deployment needs review.\n' >&2
+    fi
+
+    heading 'Backups'
+    if [ -d "$backup_directory" ]; then
+        found=no
+        for archive in "$backup_directory"/dreamland-backup-*.tar.gz; do
+            [ -e "$archive" ] || continue
+            found=yes
+            note "$(basename "$archive" .tar.gz)  $(du -h "$archive" | cut -f1)"
+        done
+        [ "$found" = yes ] || note 'None'
+    else
+        note 'None'
+    fi
+}
+
+# Options are accepted before or after the command, so both
+# "dreamland-deploy --project p rollback --image i" and the reverse order work.
+action=
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --project | --profile | --entry-mode | --backup-dir | --env-file | \
+            --label | --image | --backup | --from | --tarball)
+            [ "$#" -ge 2 ] || fail "Option $1 needs a value."
+            case "$1" in
+                --project) project=$2 ;;
+                --profile) profile=$2 ;;
+                --entry-mode) entry_mode=$2 ;;
+                --backup-dir) backup_directory=$2 ;;
+                --env-file) env_file=$2 ;;
+                --label) backup_label=$2 ;;
+                --image) rollback_image=$2 ;;
+                --backup) rollback_backup=$2 ;;
+                --from) restore_source=$2 ;;
+                --tarball) upgrade_tarball=$2 ;;
+            esac
+            shift 2
+            ;;
+        --yes)
+            assume_yes=yes
+            shift
+            ;;
+        --no-backup)
+            skip_backup=yes
+            shift
+            ;;
+        --help | -h)
+            usage
+            exit 0
+            ;;
+        --*)
+            fail "Unknown option $1"
+            ;;
+        *)
+            [ -z "$action" ] || fail "Unexpected argument: $1"
+            action=$1
+            shift
+            ;;
+    esac
+done
+
+[ -n "$action" ] || {
+    usage >&2
+    exit 2
+}
+
+validate_project
+case "$profile" in
+    beta | conference | prerelease) ;;
+    *) fail 'Profile must be beta, conference, or prerelease.' ;;
+esac
+case "$entry_mode" in
+    lobby | direct) ;;
+    *) fail 'Entry mode must be lobby or direct.' ;;
+esac
+if [ "$env_file" != /dev/null ] && [ ! -f "$env_file" ]; then
+    fail 'Compose environment file is missing.'
+fi
+[ -f "$compose_file" ] || fail "Compose file $compose_file is missing."
+
+case "$action" in
+    install) command_install ;;
+    upgrade) command_upgrade ;;
+    rollback) command_rollback ;;
+    backup) command_backup ;;
+    restore-worlds) command_restore_worlds ;;
+    uninstall) command_uninstall ;;
+    status) command_status ;;
+    *)
+        usage >&2
+        exit 2
+        ;;
+esac

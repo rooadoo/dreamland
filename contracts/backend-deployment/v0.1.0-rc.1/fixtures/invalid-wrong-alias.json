@@ -1,0 +1,33 @@
+{
+  "capabilities": {
+    "attendee_sessions": false,
+    "presenter": false,
+    "world_forge": false,
+    "world_publication": false
+  },
+  "contract": {
+    "name": "dreamland.deployment-control",
+    "openapi_sha256": "9fe5cda9fd751eeec01f609e8434e85a193e9c72bca0e7ad698d168484bc181f",
+    "version": "0.1.0-rc.1"
+  },
+  "credential_id": "credential:12345678-1234-4123-8123-123456789abc",
+  "image": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "kind": "dreamland.backend-handoff",
+  "paths": {
+    "health": "/deployment/v1/health",
+    "identity": "/deployment/v1/identity",
+    "readiness": "/deployment/v1/readiness"
+  },
+  "product_contracts": [],
+  "project": "dreamland-demo",
+  "revision": "2222222222222222222222222222222222222222",
+  "role": "attendee",
+  "schema_version": "0.1.0-rc.1",
+  "transport": {
+    "alias": "other-attendee-api",
+    "base_url": "http://dreamland-demo-attendee-api:8080",
+    "kind": "docker-network",
+    "network": "dreamland-demo-companion",
+    "port": 8080
+  }
+}

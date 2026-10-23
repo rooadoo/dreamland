@@ -1,0 +1,97 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.3.0-rc.1"
+  },
+  "kind": "session_snapshot",
+  "preview": {
+    "executor": "deterministic-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001",
+  "snapshot": {
+    "authority_class": "attendee",
+    "available_controls": [
+      "snapshot",
+      "events",
+      "transcript",
+      "submit",
+      "reset",
+      "switch",
+      "close"
+    ],
+    "command_slot": {
+      "active_command_id": null,
+      "generation": 0,
+      "state": "available"
+    },
+    "coordinates": {
+      "accepted_state_revision": 0,
+      "command_slot_generation": 0,
+      "control_revision": 1,
+      "event": {
+        "event_id": "event:phase2alphaevent:1",
+        "sequence": 1,
+        "stream_id": "stream:phase2alphaevents"
+      },
+      "transcript": {
+        "entry_id": null,
+        "position": 0,
+        "transcript_id": "transcript:phase2alphatranscript"
+      }
+    },
+    "latest_command": null,
+    "launch_binding": {
+      "limits": {
+        "absolute_ttl_ms": 3600000,
+        "command_reserved_spend_units": 1000,
+        "command_reserved_tokens": 2048,
+        "idle_ttl_ms": 1200000,
+        "max_command_bytes": 4096,
+        "max_commands": 16
+      },
+      "notice_version": "preview-notice-v1",
+      "policy_id": "preview-policy-v1",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "lifecycle": {
+      "absolute_expires_at_ms": 1777003600000,
+      "created_at_ms": 1777000000000,
+      "idle_expires_at_ms": 1777001200000,
+      "last_activity_at_ms": 1777000000010,
+      "state": "active"
+    },
+    "recovery": {
+      "retain_until_ms": null,
+      "tombstone": false
+    },
+    "reference": "session-ref:phase2_alpha_0001",
+    "session_id": "session:phase2_alpha_0001",
+    "starting_revision": {
+      "revision_id": "world-revision:phase2_alpha_revision_0001",
+      "selected_record_id": "selected-record:phase2_alpha_0001",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "transcript": {
+      "entries": [],
+      "kind": "transcript_page",
+      "omitted_after_entries": 0,
+      "omitted_before_entries": 0,
+      "position": {
+        "entry_id": null,
+        "position": 0,
+        "transcript_id": "transcript:phase2alphatranscript"
+      },
+      "retained_text_bytes": 0,
+      "retention_floor": {
+        "entry_id": null,
+        "position": 0,
+        "transcript_id": "transcript:phase2alphatranscript"
+      }
+    }
+  }
+}

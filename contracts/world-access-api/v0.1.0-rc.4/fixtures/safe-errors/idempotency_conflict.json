@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "idempotency_conflict",
+    "message": "The idempotency key is already bound to another request.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

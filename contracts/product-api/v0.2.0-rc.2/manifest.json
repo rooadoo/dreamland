@@ -1,0 +1,56 @@
+{
+  "artifacts": {
+    "manifest_schema_sha256": "e8f2d72fbf8f0a1604908de1953c16f9650c888e6ea45bc1598aa98e67c78125",
+    "openapi_sha256": "d786fa12bcc0bbd803da872507f5c424c81a27d358c2ee43cae5884a95c34de8"
+  },
+  "backend_commit": "e711efe72ff4bbe83ff251953c441ae5c9879a84",
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "product_session_core": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    },
+    "stage_xray": {
+      "declared_revision": "0.2.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "incomplete_integration_preview"
+    }
+  },
+  "compatibility": "exact-release-candidate",
+  "contract_name": "dreamland-private-product-api",
+  "contract_revision": "0.2.0-rc.2",
+  "fixture_set": {
+    "index_sha256": "4d039b83de28ad3d15e02c0fd98e8ed322d834731f994deee21b1ef109919ebc",
+    "path": "fixtures/index.json"
+  },
+  "freeze_status": "pending_ui_tracked_doc_acknowledgement",
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_lifecycle_contract.py client-smoke contracts/product-api/v0.2.0-rc.2",
+    "refresh_command": ".venv/bin/python tools/product_lifecycle_contract.py refresh contracts/product-api/v0.2.0-rc.2",
+    "validate_command": ".venv/bin/python tools/product_lifecycle_contract.py validate contracts/product-api/v0.2.0-rc.2"
+  },
+  "implementation_status": "integration_preview_only",
+  "publication_status": "published",
+  "published_at": "2026-08-23T01:03:56Z",
+  "schema_version": 1
+}

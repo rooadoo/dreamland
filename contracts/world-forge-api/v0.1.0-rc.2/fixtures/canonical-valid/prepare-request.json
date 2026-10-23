@@ -1,0 +1,46 @@
+{
+  "answers": [
+    {
+      "field_id": "day-or-date",
+      "kind": "short-text",
+      "value": "Saturday"
+    },
+    {
+      "field_id": "year",
+      "kind": "integer",
+      "value": "+02026"
+    },
+    {
+      "field_id": "adjective",
+      "kind": "short-text",
+      "value": "weathered"
+    },
+    {
+      "field_id": "industry-or-setting",
+      "kind": "short-text",
+      "value": "observatory"
+    },
+    {
+      "field_id": "technology-one",
+      "kind": "short-text",
+      "value": "VAX terminals"
+    },
+    {
+      "field_id": "technology-two",
+      "kind": "short-text",
+      "value": "radio clocks"
+    },
+    {
+      "field_id": "important-job",
+      "kind": "short-text",
+      "value": "track a comet"
+    },
+    {
+      "field_id": "wildcard-event",
+      "kind": "short-text",
+      "value": "the clocks disagree"
+    }
+  ],
+  "recipe_id": "world-recipe:bsides-room:v1",
+  "recipe_revision": "1"
+}

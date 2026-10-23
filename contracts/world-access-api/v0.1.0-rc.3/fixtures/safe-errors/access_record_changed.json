@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "access_record_changed",
+    "message": "The generated-world access record has changed.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

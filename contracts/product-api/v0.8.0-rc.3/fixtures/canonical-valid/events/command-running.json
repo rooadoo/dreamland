@@ -1,0 +1,13 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "criticality": "informational",
+  "data": {
+    "slot_generation": 1
+  },
+  "emitted_at_ms": 1777000000003,
+  "event_id": "event:phase2alphaevent:3",
+  "schema_revision": "1",
+  "sequence": 3,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "command.running"
+}

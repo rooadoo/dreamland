@@ -1,0 +1,12 @@
+{
+  "criticality": "authoritative",
+  "data": {
+    "future_state": "must-resync"
+  },
+  "emitted_at": "2026-08-21T00:00:01Z",
+  "event_id": "event:contract-simulator-0002",
+  "schema_revision": "0.1.0-rc.1",
+  "sequence": 2,
+  "stream_id": "stream:contract-simulator-0001",
+  "type": "future.authoritative_change"
+}

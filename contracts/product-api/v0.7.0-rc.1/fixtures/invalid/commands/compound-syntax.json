@@ -1,0 +1,4 @@
+{
+  "command": "uname | head",
+  "expected_slot_generation": 0
+}

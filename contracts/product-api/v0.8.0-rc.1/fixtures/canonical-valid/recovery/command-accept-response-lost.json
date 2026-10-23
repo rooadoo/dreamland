@@ -1,0 +1,8 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_code": null,
+  "expected_outcome": "command_accepted",
+  "reconcile_with": "same_request",
+  "same_key_replay": true,
+  "scenario": "command_accept_response_lost"
+}

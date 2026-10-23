@@ -1,0 +1,16 @@
+{
+  "command_id": null,
+  "criticality": "authoritative",
+  "data": {
+    "accepted_state_revision": 1,
+    "control_revision": 2,
+    "slot_generation": 1,
+    "terminal_reason": "closed"
+  },
+  "emitted_at_ms": 1777000000010,
+  "event_id": "event:phase2alphaevent:10",
+  "schema_revision": "1",
+  "sequence": 10,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "session.terminal"
+}

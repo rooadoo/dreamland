@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "service_epoch_changed",
+    "message": "Safe World Forge fixture for service epoch changed.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-service_epoch_changed"
+}

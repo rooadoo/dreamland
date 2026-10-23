@@ -1,0 +1,17 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.2"
+  },
+  "kind": "presenter_stage_launch_options",
+  "options": [],
+  "preview": {
+    "executor": "development-live-launch-selection-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

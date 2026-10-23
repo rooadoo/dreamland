@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "expected_epoch_required",
+    "message": "Expected product service epoch evidence is required.",
+    "request_id": "request:expected_epoch_required_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  }
+}

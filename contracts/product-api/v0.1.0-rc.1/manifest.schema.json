@@ -1,0 +1,262 @@
+{
+  "$defs": {
+    "capability": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "else": {
+            "properties": {
+              "enabled_revision": {
+                "type": "null"
+              },
+              "reason": {
+                "maxLength": 96,
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          },
+          "if": {
+            "properties": {
+              "enabled": {
+                "const": true
+              }
+            },
+            "required": [
+              "enabled"
+            ]
+          },
+          "then": {
+            "properties": {
+              "enabled_revision": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "reason": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "declared_revision": {
+          "const": "0.1.0-rc.1"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "enabled_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "declared_revision",
+        "enabled",
+        "enabled_revision",
+        "reason"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://dreamland.invalid/contracts/product-api/manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "else": {
+        "properties": {
+          "backend_commit": {
+            "type": "null"
+          },
+          "published_at": {
+            "type": "null"
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "publication_status": {
+            "const": "published"
+          }
+        },
+        "required": [
+          "publication_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "backend_commit": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "published_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "artifacts": {
+      "additionalProperties": false,
+      "properties": {
+        "events_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "manifest_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "openapi_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "required": [
+        "openapi_sha256",
+        "events_schema_sha256",
+        "manifest_schema_sha256"
+      ],
+      "type": "object"
+    },
+    "backend_commit": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{40}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "forge_to_stage_handoff": {
+          "$ref": "#/$defs/capability"
+        },
+        "presenter_stage_terminal": {
+          "$ref": "#/$defs/capability"
+        },
+        "product_session_core": {
+          "$ref": "#/$defs/capability"
+        },
+        "public_attendee_sessions": {
+          "$ref": "#/$defs/capability"
+        },
+        "stage_xray": {
+          "$ref": "#/$defs/capability"
+        }
+      },
+      "required": [
+        "product_session_core",
+        "presenter_stage_terminal",
+        "public_attendee_sessions",
+        "forge_to_stage_handoff",
+        "stage_xray"
+      ],
+      "type": "object"
+    },
+    "compatibility": {
+      "const": "exact-release-candidate"
+    },
+    "contract_name": {
+      "const": "dreamland-private-product-api"
+    },
+    "contract_revision": {
+      "const": "0.1.0-rc.1"
+    },
+    "fixture_set": {
+      "additionalProperties": false,
+      "properties": {
+        "index_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "path": {
+          "const": "fixtures/index.json"
+        }
+      },
+      "required": [
+        "path",
+        "index_sha256"
+      ],
+      "type": "object"
+    },
+    "freeze_status": {
+      "const": "pending_ui_tracked_doc_acknowledgement"
+    },
+    "generation": {
+      "additionalProperties": false,
+      "properties": {
+        "client_smoke_command": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "refresh_command": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "validate_command": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "validate_command",
+        "refresh_command",
+        "client_smoke_command"
+      ],
+      "type": "object"
+    },
+    "publication_status": {
+      "enum": [
+        "release_candidate",
+        "published"
+      ]
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "schema_version": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_name",
+    "contract_revision",
+    "compatibility",
+    "freeze_status",
+    "publication_status",
+    "backend_commit",
+    "published_at",
+    "artifacts",
+    "fixture_set",
+    "capabilities",
+    "generation"
+  ],
+  "title": "DREAMLAND private product API contract manifest",
+  "type": "object"
+}

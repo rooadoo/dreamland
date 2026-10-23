@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "recipe_revision_mismatch",
+    "message": "Safe World Forge fixture for recipe revision mismatch.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-recipe_revision_mismatch"
+}

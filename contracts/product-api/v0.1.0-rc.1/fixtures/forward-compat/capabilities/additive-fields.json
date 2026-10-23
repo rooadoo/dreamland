@@ -1,0 +1,51 @@
+{
+  "admission": {
+    "future_admission_hint": "ignored",
+    "reason": "no_capability_enabled",
+    "state": "closed"
+  },
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "product_session_core": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "future_detail": "ignored",
+      "reason": "not_implemented"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    },
+    "stage_xray": {
+      "declared_revision": "0.1.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "not_implemented"
+    }
+  },
+  "contract": {
+    "compatibility": "exact-release-candidate",
+    "future_contract_hint": "ignored",
+    "name": "dreamland-private-product-api",
+    "revision": "0.1.0-rc.1"
+  },
+  "future_top_level": {
+    "ignored": true
+  },
+  "request_id": "request:contract-simulator-additive",
+  "service_epoch": "epoch:contract_simulator_0001"
+}

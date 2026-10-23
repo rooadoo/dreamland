@@ -1,0 +1,9 @@
+{
+  "automatic_new_key_redispatch": false,
+  "changed_body_outcome": "idempotency_conflict",
+  "expected_logical_outcome": "forge_stage_session_replaced",
+  "identical_body_required": true,
+  "operation_family": "forge_stage.replace",
+  "same_key_replay": true,
+  "scenario": "forge_stage_replacement_response_lost_after_cutover"
+}

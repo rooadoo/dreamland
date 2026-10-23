@@ -1,0 +1,37 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.3"
+  },
+  "grant_expires_at": "2026-08-28T13:10:00Z",
+  "kind": "attendee_launch_selection_granted",
+  "launch_grant": "launch-grant:0000000000000003_cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "replayed": true,
+  "selection": {
+    "display": {
+      "revision_label": "Pinned attendee preview",
+      "source_label": "Authored",
+      "title": "Colony Ship A1"
+    },
+    "expires_at": "2026-08-28T14:00:00Z",
+    "launch_selection_id": "launch-selection:cccccccccccccccccccccccccccccccc",
+    "notice_version": "notice:attendee-live-development-v1",
+    "offering_id": "offering:authored-colonyship-a1",
+    "origin": {
+      "kind": "authored_profile_snapshot"
+    },
+    "revision": {
+      "revision_id": "world-revision:sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

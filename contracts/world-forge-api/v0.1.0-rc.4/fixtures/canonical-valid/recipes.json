@@ -1,0 +1,162 @@
+{
+  "kind": "forge_recipes",
+  "recipes": [
+    {
+      "description": {
+        "clipped": false,
+        "controls_marked": false,
+        "text": "Collect one compact audience seed, then let DREAMLAND construct and validate a candidate revision."
+      },
+      "fields": [
+        {
+          "field_id": "day-or-date",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Day or date"
+          },
+          "maximum_characters": 40,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "On what day or date does this world begin?"
+          }
+        },
+        {
+          "accepted_pattern": "^[+-]?[0-9]+$",
+          "field_id": "year",
+          "kind": "integer",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Year"
+          },
+          "maximum": 9999,
+          "maximum_input_characters": 16,
+          "minimum": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What year is it?"
+          }
+        },
+        {
+          "field_id": "adjective",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Adjective"
+          },
+          "maximum_characters": 40,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What adjective describes the setting?"
+          }
+        },
+        {
+          "field_id": "industry-or-setting",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Industry or setting"
+          },
+          "maximum_characters": 80,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What industry or setting are we inside?"
+          }
+        },
+        {
+          "field_id": "technology-one",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "First technology"
+          },
+          "maximum_characters": 80,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What is the first technology people rely on?"
+          }
+        },
+        {
+          "field_id": "technology-two",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Second technology"
+          },
+          "maximum_characters": 80,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What is the second technology people rely on?"
+          }
+        },
+        {
+          "field_id": "important-job",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Important job"
+          },
+          "maximum_characters": 120,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What important job do those technologies help people do?"
+          }
+        },
+        {
+          "field_id": "wildcard-event",
+          "kind": "short-text",
+          "label": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "Wildcard event or constraint"
+          },
+          "maximum_characters": 160,
+          "minimum_characters": 1,
+          "prompt": {
+            "clipped": false,
+            "controls_marked": false,
+            "text": "What unexpected event or constraint changes today?"
+          }
+        }
+      ],
+      "kind": "forge_recipe",
+      "preparation": {
+        "state": "available"
+      },
+      "recipe_id": "world-recipe:bsides-room:v1",
+      "recipe_revision": "1",
+      "title": {
+        "clipped": false,
+        "controls_marked": false,
+        "text": "Build a world with the room"
+      }
+    }
+  ],
+  "service_epoch": "forge-epoch:fixture-00000001",
+  "source": {
+    "kind": "provider_free_integration_preview",
+    "label": "Deterministic no-provider World Forge backend integration preview",
+    "live_forge_evidence": false,
+    "provider_calls": false
+  }
+}

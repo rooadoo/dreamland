@@ -1,0 +1,23 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "criticality": "informational",
+  "data": {
+    "chunk_index": 0,
+    "clipped": false,
+    "encoding": "utf-8",
+    "final": false,
+    "omitted_after_bytes": 0,
+    "omitted_before_bytes": 0,
+    "projection": "inert-text-v1",
+    "stream": "stdout",
+    "text": "Linux dreamland\n",
+    "transcript_position": 2,
+    "transformed": false
+  },
+  "emitted_at_ms": 1777000000004,
+  "event_id": "event:phase2alphaevent:4",
+  "schema_revision": "1",
+  "sequence": 4,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "command.output"
+}

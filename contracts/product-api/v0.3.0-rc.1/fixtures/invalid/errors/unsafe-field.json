@@ -1,0 +1,22 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.3.0-rc.1"
+  },
+  "error": {
+    "code": "internal_error",
+    "message": "Traceback at /srv/dreamland",
+    "request_id": "request:unsafe_error_0001",
+    "retry": "none",
+    "retry_after_ms": null,
+    "stack_trace": "secret"
+  },
+  "preview": {
+    "executor": "deterministic-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

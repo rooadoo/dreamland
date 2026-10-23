@@ -1,0 +1,7 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_outcome": "stage_session_created",
+  "reconcile_with": "same_request",
+  "same_key_replay": true,
+  "scenario": "stage_launch_response_lost_after_commit"
+}

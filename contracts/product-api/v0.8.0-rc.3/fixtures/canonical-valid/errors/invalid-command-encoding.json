@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.3"
+  },
+  "error": {
+    "code": "invalid_command_encoding",
+    "message": "Command input must be well-formed UTF-8.",
+    "request_id": "request:error_invalid_command_encoding_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  }
+}

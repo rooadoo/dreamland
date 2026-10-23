@@ -1,0 +1,97 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.4"
+  },
+  "kind": "stage_xray_snapshot",
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001",
+  "xray": {
+    "accepted_state_revision": 3,
+    "activity": {
+      "enrichment": {
+        "state": "idle"
+      },
+      "foreground": {
+        "state": "idle"
+      }
+    },
+    "completeness": {
+      "clipped_field_count": 0,
+      "complete": true,
+      "control_marked_field_count": 0,
+      "facts": {
+        "included_count": 1,
+        "omitted_count": 0
+      },
+      "hosts": {
+        "included_count": 1,
+        "omitted_count": 0
+      }
+    },
+    "facts": [
+      {
+        "entity_id": "fact:22222222222222222222222222222222",
+        "entity_kind": "fact",
+        "label": {
+          "clipped": false,
+          "control_marked": false,
+          "text": "radio-link"
+        },
+        "related_host_id": null,
+        "scope": "world",
+        "statement": {
+          "clipped": false,
+          "control_marked": false,
+          "text": "The harbor radio link is intermittent."
+        }
+      }
+    ],
+    "hosts": [
+      {
+        "accepted_fact_count": 1,
+        "active": true,
+        "entity_id": "host:11111111111111111111111111111111",
+        "entity_kind": "host",
+        "entry": true,
+        "hostname": {
+          "clipped": false,
+          "control_marked": false,
+          "text": "console"
+        },
+        "service_count": 2
+      }
+    ],
+    "overview": {
+      "active_host_id": "host:11111111111111111111111111111111",
+      "theme": {
+        "clipped": false,
+        "control_marked": false,
+        "text": "Harbor control during a radio outage"
+      },
+      "world_name": {
+        "clipped": false,
+        "control_marked": false,
+        "text": "harbor-control"
+      }
+    },
+    "projection_position": {
+      "cursor": "xray-cursor:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:7",
+      "sequence": 7,
+      "stream_id": "xray-stream:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "schema_revision": "stage-xray-v1",
+    "stage_event_watermark": {
+      "event_id": "event:phase2alphaevent:5",
+      "sequence": 5,
+      "stream_id": "stream:phase2alphaevent"
+    }
+  }
+}

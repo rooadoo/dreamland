@@ -1,0 +1,65 @@
+{
+  "artifacts": {
+    "events_schema_sha256": "381d66fbd8f2cf8ab47a5bfdd23f3b492be809810b28e1a3ea739ddfd5ae9f7c",
+    "generated_client_sha256": "327095cd644272b59b7df68dc7ec989919e25c7767025f1af57cf03bbba64ac1",
+    "manifest_schema_sha256": "756bcfa74233c0f821729a66e71ab7f8a3b067d1e48803adeb28d76a7ed3e95c",
+    "openapi_sha256": "f7cfad66c87b201c97822362b619122a4192a66c1caa4c1d87d5fd5169a839f9"
+  },
+  "backend_commit": "712dd271cf39ecb1f9cddbec3c438fd68036a6be",
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.4.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.4.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "product_session_core": {
+      "declared_revision": "0.4.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.4.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "stage_xray": {
+      "declared_revision": "0.4.0-rc.1",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    }
+  },
+  "compatibility": "unfrozen-release-candidate",
+  "contract_name": "dreamland-private-product-api",
+  "contract_revision": "0.4.0-rc.1",
+  "event_transport": {
+    "delivery": "at-least-once",
+    "json_replay": true,
+    "sse": true
+  },
+  "fixture_set": {
+    "index_sha256": "7f524e8115c205aa9a08ad39341384abd7f7769ce86ad5613b1116eb395e0ad3",
+    "path": "fixtures/index.json"
+  },
+  "freeze_status": "pending_ui_tracked_doc_acknowledgement",
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_stage_contract.py client-smoke contracts/product-api/v0.4.0-rc.1",
+    "publish_command": ".venv/bin/python tools/product_stage_contract.py publish contracts/product-api/v0.4.0-rc.1 --backend-commit COMMIT --published-at TIMESTAMP",
+    "refresh_command": ".venv/bin/python tools/product_stage_contract.py refresh contracts/product-api/v0.4.0-rc.1",
+    "validate_command": ".venv/bin/python tools/product_stage_contract.py validate contracts/product-api/v0.4.0-rc.1"
+  },
+  "implementation_status": "integration_preview_only",
+  "publication_status": "published",
+  "published_at": "2026-08-23T23:56:55Z",
+  "schema_version": 1,
+  "transport_status": "manually_invoked_loopback_preview_only"
+}

@@ -1,0 +1,8 @@
+{
+  "actor_context": "actor:preview_alpha_0001",
+  "authority_class": "attendee",
+  "expected_epoch_source": "getProductCapabilities.service_epoch",
+  "immutable_revision": "world-revision:preview_alpha_revision_0001",
+  "launch_grant": "launch-grant:preview_alpha_grant_00000001",
+  "selected_record_id": "selected-record:preview_alpha_0001"
+}

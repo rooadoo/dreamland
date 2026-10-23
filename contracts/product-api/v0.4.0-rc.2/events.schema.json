@@ -1,0 +1,730 @@
+{
+  "$defs": {
+    "CommandAcceptedData": {
+      "additionalProperties": true,
+      "properties": {
+        "accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "slot_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "transcript_position": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "slot_generation",
+        "accepted_state_revision",
+        "transcript_position"
+      ],
+      "type": "object"
+    },
+    "CommandCancelRequestedData": {
+      "additionalProperties": true,
+      "properties": {
+        "slot_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "slot_generation"
+      ],
+      "type": "object"
+    },
+    "CommandOutputData": {
+      "additionalProperties": true,
+      "properties": {
+        "chunk_index": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "clipped": {
+          "type": "boolean"
+        },
+        "encoding": {
+          "const": "utf-8",
+          "type": "string"
+        },
+        "final": {
+          "type": "boolean"
+        },
+        "omitted_after_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "omitted_before_bytes": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "projection": {
+          "const": "inert-text-v1",
+          "type": "string"
+        },
+        "stream": {
+          "enum": [
+            "stdout",
+            "stderr"
+          ],
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 16384,
+          "type": "string"
+        },
+        "transcript_position": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "transformed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "stream",
+        "chunk_index",
+        "text",
+        "encoding",
+        "final",
+        "clipped",
+        "omitted_before_bytes",
+        "omitted_after_bytes",
+        "transformed",
+        "projection",
+        "transcript_position"
+      ],
+      "type": "object"
+    },
+    "CommandRunningData": {
+      "additionalProperties": true,
+      "properties": {
+        "slot_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "slot_generation"
+      ],
+      "type": "object"
+    },
+    "CommandTerminalData": {
+      "additionalProperties": true,
+      "properties": {
+        "accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "outcome": {
+          "enum": [
+            "completed",
+            "interrupted",
+            "failed"
+          ],
+          "type": "string"
+        },
+        "output_clipped": {
+          "type": "boolean"
+        },
+        "slot_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "slot_generation",
+        "accepted_state_revision",
+        "outcome",
+        "output_clipped"
+      ],
+      "type": "object"
+    },
+    "EnrichmentStateAcceptedData": {
+      "additionalProperties": true,
+      "properties": {
+        "accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "previous_accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "proposal_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$",
+          "type": "string"
+        },
+        "replacement_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "source": {
+          "const": "enrichment",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "proposal_id",
+        "previous_accepted_state_revision",
+        "accepted_state_revision",
+        "replacement_sha256"
+      ],
+      "type": "object"
+    },
+    "EventEnvelope": {
+      "additionalProperties": true,
+      "properties": {
+        "command_id": {
+          "oneOf": [
+            {
+              "maxLength": 136,
+              "minLength": 1,
+              "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "criticality": {
+          "enum": [
+            "authoritative",
+            "informational"
+          ],
+          "type": "string"
+        },
+        "data": {
+          "additionalProperties": true,
+          "maxProperties": 256,
+          "propertyNames": {
+            "not": {
+              "enum": [
+                "admin",
+                "admin_payload",
+                "api_key",
+                "authorization",
+                "credential",
+                "credentials",
+                "environment",
+                "internal_path",
+                "launch_grant",
+                "model_prompt",
+                "password",
+                "private_key",
+                "prompt",
+                "provider_envelope",
+                "provider_payload",
+                "provider_request",
+                "provider_response",
+                "raw_state",
+                "reasoning",
+                "runtime_document",
+                "runtime_state",
+                "secret",
+                "session_authority",
+                "stack_trace",
+                "state_profile",
+                "system_prompt",
+                "token",
+                "traceback",
+                "world_state"
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "emitted_at_ms": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "event_id": {
+          "maxLength": 119,
+          "minLength": 1,
+          "pattern": "^event:[A-Za-z0-9_-]{8,96}:[1-9][0-9]{0,15}$",
+          "type": "string"
+        },
+        "schema_revision": {
+          "const": "1",
+          "type": "string"
+        },
+        "sequence": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "stream_id": {
+          "maxLength": 103,
+          "minLength": 1,
+          "pattern": "^stream:[A-Za-z0-9_-]{8,96}$",
+          "type": "string"
+        },
+        "type": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_revision",
+        "stream_id",
+        "sequence",
+        "event_id",
+        "type",
+        "criticality",
+        "emitted_at_ms",
+        "command_id",
+        "data"
+      ],
+      "type": "object"
+    },
+    "ForegroundStateAcceptedData": {
+      "additionalProperties": true,
+      "properties": {
+        "accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "previous_accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "replacement_sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "slot_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "source": {
+          "const": "foreground_command",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "slot_generation",
+        "previous_accepted_state_revision",
+        "accepted_state_revision",
+        "replacement_sha256"
+      ],
+      "type": "object"
+    },
+    "ProductEvent": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/EventEnvelope"
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "session.created"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "type": "null"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "$ref": "#/$defs/SessionCreatedData"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.accepted"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "$ref": "#/$defs/CommandAcceptedData"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.running"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "informational"
+              },
+              "data": {
+                "$ref": "#/$defs/CommandRunningData"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.output"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "informational"
+              },
+              "data": {
+                "$ref": "#/$defs/CommandOutputData"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.cancel_requested"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "$ref": "#/$defs/CommandCancelRequestedData"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "session.terminal"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "type": "null"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "$ref": "#/$defs/SessionTerminalData"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "state.accepted"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/ForegroundStateAcceptedData"
+                  },
+                  {
+                    "$ref": "#/$defs/EnrichmentStateAcceptedData"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.completed"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/CommandTerminalData"
+                  },
+                  {
+                    "properties": {
+                      "outcome": {
+                        "const": "completed"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.interrupted"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/CommandTerminalData"
+                  },
+                  {
+                    "properties": {
+                      "outcome": {
+                        "const": "interrupted"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command.failed"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "command_id": {
+                "maxLength": 136,
+                "minLength": 1,
+                "pattern": "^command:[A-Za-z0-9_-]{16,128}$",
+                "type": "string"
+              },
+              "criticality": {
+                "const": "authoritative"
+              },
+              "data": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/CommandTerminalData"
+                  },
+                  {
+                    "properties": {
+                      "outcome": {
+                        "const": "failed"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "SessionCreatedData": {
+      "additionalProperties": true,
+      "properties": {
+        "accepted_state_revision": {
+          "const": 0,
+          "type": "integer"
+        },
+        "control_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "slot_generation": {
+          "const": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "control_revision",
+        "slot_generation",
+        "accepted_state_revision"
+      ],
+      "type": "object"
+    },
+    "SessionTerminalData": {
+      "additionalProperties": true,
+      "properties": {
+        "accepted_state_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "control_revision": {
+          "maximum": 9007199254740991,
+          "minimum": 2,
+          "type": "integer"
+        },
+        "slot_generation": {
+          "maximum": 9007199254740991,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "terminal_reason": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[a-z][a-z0-9_]{0,63}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "control_revision",
+        "terminal_reason",
+        "slot_generation",
+        "accepted_state_revision"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://dreamland.invalid/contracts/product-api/v0.4.0-rc.2/events.schema.json",
+  "$ref": "#/$defs/ProductEvent",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Unfrozen bounded event envelope for JSON replay and SSE data frames.",
+  "title": "DREAMLAND Product Session Core Preview Event",
+  "x-dreamland-retention": {
+    "maximum_event_payload_bytes": 16384,
+    "maximum_events": 256,
+    "maximum_retained_payload_bytes": 262144
+  },
+  "x-dreamland-unknown-event-policy": {
+    "authoritative": "stop_incremental_apply_and_resume_snapshot",
+    "informational": "ignore_payload_and_advance_cursor"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "artifacts": {
+    "events_schema_sha256": "e8f7e94165b2fd03dc59937d3381f6a7ff80996bd1bf3b96e9e1b473f248e22f",
+    "generated_client_sha256": "706b93de26c8cf91a24f465398ef71d8d93fc368a2cc56de02f73b29835f14e2",
+    "manifest_schema_sha256": "5cb9c647c00e1e8deaace5ba9ef0753dbfa9db6e800db2ba6a8fce479bf5f796",
+    "openapi_sha256": "d9973f6d568cceb1a06bf351ec6a9ba4987f93a1f85477f22ccba9d17019fcae"
+  },
+  "backend_commit": "3d1e14e750f1975bd77aa6316c1fc3af568864a4",
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "product_session_core": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "stage_xray": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    }
+  },
+  "compatibility": "unfrozen-release-candidate",
+  "contract_name": "dreamland-private-product-api",
+  "contract_revision": "0.5.0-rc.2",
+  "dependencies": {
+    "world_forge": {
+      "compatibility": "exact",
+      "contract_name": "dreamland-private-world-forge-api",
+      "contract_revision": "0.1.0-rc.4",
+      "manifest_path": "contracts/world-forge-api/v0.1.0-rc.4/manifest.json",
+      "manifest_sha256": "0824a9d7f8ea1b1ed264a5f6cd76dd6831054b44932973278b60db1c384baa09"
+    }
+  },
+  "event_transport": {
+    "delivery": "at-least-once",
+    "json_replay": true,
+    "sse": true
+  },
+  "fixture_set": {
+    "index_sha256": "98f32b5726141eb271ab446a63f49e06a9160c35d0c0ea0825935d06d7ca9d27",
+    "path": "fixtures/index.json"
+  },
+  "freeze_status": "pending_ui_tracked_doc_acknowledgement",
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_forge_stage_contract.py client-smoke contracts/product-api/v0.5.0-rc.2",
+    "publish_command": ".venv/bin/python tools/product_forge_stage_contract.py publish contracts/product-api/v0.5.0-rc.2 --backend-commit COMMIT --published-at TIMESTAMP",
+    "refresh_command": ".venv/bin/python tools/product_forge_stage_contract.py refresh contracts/product-api/v0.5.0-rc.2",
+    "validate_command": ".venv/bin/python tools/product_forge_stage_contract.py validate contracts/product-api/v0.5.0-rc.2"
+  },
+  "implementation_status": "integration_preview_only",
+  "publication_status": "published",
+  "published_at": "2026-08-26T21:29:18Z",
+  "schema_version": 1,
+  "transport_status": "manually_invoked_loopback_preview_only"
+}

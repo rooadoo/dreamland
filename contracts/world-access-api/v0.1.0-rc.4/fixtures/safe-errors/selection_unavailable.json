@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "selection_unavailable",
+    "message": "The selected World Forge revision is unavailable for promotion.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

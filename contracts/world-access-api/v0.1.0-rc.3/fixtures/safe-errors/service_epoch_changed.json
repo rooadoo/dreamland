@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "service_epoch_changed",
+    "message": "The World Access service epoch has changed.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

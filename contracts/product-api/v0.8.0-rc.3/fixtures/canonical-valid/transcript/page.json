@@ -1,0 +1,82 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.3"
+  },
+  "entries": [
+    {
+      "chunk_index": null,
+      "clipped": false,
+      "command_id": "command:11111111111111111111111111111111",
+      "encoding": "utf-8",
+      "entry_id": "entry:phase2alphaentry:1",
+      "final": null,
+      "kind": "command",
+      "omitted_after_bytes": 0,
+      "omitted_before_bytes": 0,
+      "position": 1,
+      "projection": "inert-text-v1",
+      "recorded_at_ms": 1777000000001,
+      "text": "uname -a",
+      "transcript_id": "transcript:phase2alphatranscript",
+      "transformed": false
+    },
+    {
+      "chunk_index": 0,
+      "clipped": false,
+      "command_id": "command:11111111111111111111111111111111",
+      "encoding": "utf-8",
+      "entry_id": "entry:phase2alphaentry:2",
+      "final": false,
+      "kind": "stdout",
+      "omitted_after_bytes": 0,
+      "omitted_before_bytes": 0,
+      "position": 2,
+      "projection": "inert-text-v1",
+      "recorded_at_ms": 1777000000002,
+      "text": "Linux dreamland\n",
+      "transcript_id": "transcript:phase2alphatranscript",
+      "transformed": false
+    },
+    {
+      "chunk_index": 1,
+      "clipped": false,
+      "command_id": "command:11111111111111111111111111111111",
+      "encoding": "utf-8",
+      "entry_id": "entry:phase2alphaentry:3",
+      "final": true,
+      "kind": "stdout",
+      "omitted_after_bytes": 0,
+      "omitted_before_bytes": 0,
+      "position": 3,
+      "projection": "inert-text-v1",
+      "recorded_at_ms": 1777000000003,
+      "text": "",
+      "transcript_id": "transcript:phase2alphatranscript",
+      "transformed": false
+    }
+  ],
+  "kind": "transcript_page",
+  "omitted_after_entries": 0,
+  "omitted_before_entries": 0,
+  "position": {
+    "entry_id": "entry:phase2alphaentry:3",
+    "position": 3,
+    "transcript_id": "transcript:phase2alphatranscript"
+  },
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "retained_text_bytes": 24,
+  "retention_floor": {
+    "entry_id": null,
+    "position": 0,
+    "transcript_id": "transcript:phase2alphatranscript"
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

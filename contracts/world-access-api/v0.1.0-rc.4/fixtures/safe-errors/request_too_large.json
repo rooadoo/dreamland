@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "request_too_large",
+    "message": "The request body exceeds the World Access preview limit.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

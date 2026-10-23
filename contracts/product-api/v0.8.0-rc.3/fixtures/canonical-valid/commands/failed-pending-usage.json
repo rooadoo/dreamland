@@ -1,0 +1,46 @@
+{
+  "command": {
+    "accepted_at_ms": 1777000000010,
+    "command_id": "command:11111111111111111111111111111111",
+    "deadline_at_ms": 1777000030010,
+    "output": {
+      "bytes": 16,
+      "chunks": 1,
+      "clipped": false
+    },
+    "result": {
+      "outcome": "failed",
+      "output_clipped": false,
+      "reason": "command_deadline_exceeded",
+      "usage": {
+        "spend_units": null,
+        "state": "pending",
+        "tokens": null
+      }
+    },
+    "slot_generation": 1,
+    "status": "failed",
+    "terminal_at_ms": 1777000000300
+  },
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.3"
+  },
+  "event_cursor": {
+    "event_id": "event:phase2alphaevent:7",
+    "sequence": 7,
+    "stream_id": "stream:phase2alphaevents"
+  },
+  "kind": "command_result",
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001",
+  "session_id": "session:phase2_alpha_0001",
+  "terminal": true
+}

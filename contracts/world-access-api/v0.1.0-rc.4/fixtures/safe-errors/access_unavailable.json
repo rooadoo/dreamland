@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "access_unavailable",
+    "message": "The generated-world access record is unavailable.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

@@ -1,0 +1,74 @@
+{
+  "artifacts": {
+    "events_schema_sha256": "9ceecb87a3e9b9a825a1278dc01689b20ab8e8e43b132725c84b7ede4cb0df56",
+    "generated_client_sha256": "e09c85eae3bec242880cefe34acb77beee8a7693937dfd1db8bea389c97faedc",
+    "manifest_schema_sha256": "8245a86cca3e67001790f2c1f7c2379d35de92d25a9ce6044497fd69a739e4fa",
+    "openapi_sha256": "cb52dd2ecea2d8ceae2dc9d7984f433d6f48198a7774fc2ff8f717c706efcc3a"
+  },
+  "backend_commit": "a6674bd3c43eda6e1c72403c136a5a69160ca7f6",
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.6.0-rc.3",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.6.0-rc.3",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "product_session_core": {
+      "declared_revision": "0.6.0-rc.3",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.6.0-rc.3",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "stage_xray": {
+      "declared_revision": "0.6.0-rc.3",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    }
+  },
+  "compatibility": "unfrozen-release-candidate",
+  "contract_name": "dreamland-private-product-api",
+  "contract_revision": "0.6.0-rc.3",
+  "dependencies": {
+    "world_forge": {
+      "compatibility": "exact",
+      "contract_name": "dreamland-private-world-forge-api",
+      "contract_revision": "0.1.0-rc.4",
+      "manifest_path": "contracts/world-forge-api/v0.1.0-rc.4/manifest.json",
+      "manifest_sha256": "0824a9d7f8ea1b1ed264a5f6cd76dd6831054b44932973278b60db1c384baa09"
+    }
+  },
+  "event_transport": {
+    "delivery": "at-least-once",
+    "json_replay": true,
+    "sse": true
+  },
+  "fixture_set": {
+    "index_sha256": "8346bde57ef4b8bcd6dd52da229d9bf0d2a60801558a0dbbc3d5af48b135f766",
+    "path": "fixtures/index.json"
+  },
+  "freeze_status": "pending_ui_tracked_doc_acknowledgement",
+  "generation": {
+    "client_smoke_command": ".venv/bin/python tools/product_xray_contract.py client-smoke contracts/product-api/v0.6.0-rc.3",
+    "publish_command": ".venv/bin/python tools/product_xray_contract.py publish contracts/product-api/v0.6.0-rc.3 --backend-commit COMMIT --published-at TIMESTAMP",
+    "refresh_command": ".venv/bin/python tools/product_xray_contract.py refresh contracts/product-api/v0.6.0-rc.3",
+    "validate_command": ".venv/bin/python tools/product_xray_contract.py validate contracts/product-api/v0.6.0-rc.3"
+  },
+  "implementation_status": "integration_preview_only",
+  "publication_status": "published",
+  "published_at": "2026-08-27T11:22:16Z",
+  "schema_version": 1,
+  "transport_status": "manually_invoked_loopback_preview_only"
+}

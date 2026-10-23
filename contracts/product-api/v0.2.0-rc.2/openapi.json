@@ -1,0 +1,1471 @@
+{
+  "components": {
+    "headers": {
+      "BearerChallenge": {
+        "required": true,
+        "schema": {
+          "const": "Bearer",
+          "type": "string"
+        }
+      },
+      "CacheControl": {
+        "required": true,
+        "schema": {
+          "const": "no-store",
+          "type": "string"
+        }
+      },
+      "NoSniff": {
+        "required": true,
+        "schema": {
+          "const": "nosniff",
+          "type": "string"
+        }
+      }
+    },
+    "parameters": {
+      "ActorContext": {
+        "in": "header",
+        "name": "X-Dreamland-Actor-Context",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ActorContext"
+        }
+      },
+      "ExpectedEpoch": {
+        "description": "Freshness evidence for the running service instance. Obtain this value from getProductCapabilities.service_epoch; never copy an epoch from an example payload or fixture.",
+        "in": "header",
+        "name": "X-Dreamland-Expected-Epoch",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ServiceEpoch"
+        }
+      },
+      "IdempotencyKey": {
+        "description": "Mutation idempotency key governed by x-dreamland-idempotency-policy. Pre-claim and capacity failures leave it unbound; a claimed deterministic outcome binds its first canonical semantic body for replay and changed-body conflict detection.",
+        "in": "header",
+        "name": "Idempotency-Key",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/IdempotencyKey"
+        }
+      },
+      "SessionCapability": {
+        "in": "header",
+        "name": "X-Dreamland-Session-Capability",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/SessionCapability"
+        }
+      },
+      "SessionReference": {
+        "in": "path",
+        "name": "reference",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/SessionReference"
+        }
+      }
+    },
+    "responses": {
+      "SafeError": {
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/SafeErrorEnvelope"
+            }
+          }
+        },
+        "description": "Bounded private lifecycle error.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "X-Content-Type-Options": {
+            "$ref": "#/components/headers/NoSniff"
+          }
+        }
+      },
+      "Unauthorized": {
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/SafeErrorEnvelope"
+            }
+          }
+        },
+        "description": "Private service authentication failed.",
+        "headers": {
+          "Cache-Control": {
+            "$ref": "#/components/headers/CacheControl"
+          },
+          "WWW-Authenticate": {
+            "$ref": "#/components/headers/BearerChallenge"
+          },
+          "X-Content-Type-Options": {
+            "$ref": "#/components/headers/NoSniff"
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ActiveLifecycle": {
+        "additionalProperties": false,
+        "properties": {
+          "state": {
+            "const": "active",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "type": "object"
+      },
+      "ActiveLifecycleSnapshot": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LifecycleSnapshot"
+          },
+          {
+            "properties": {
+              "lifecycle": {
+                "$ref": "#/components/schemas/ActiveLifecycle"
+              }
+            },
+            "required": [
+              "lifecycle"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ActorContext": {
+        "maxLength": 134,
+        "pattern": "^actor:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "CapabilityState": {
+        "additionalProperties": false,
+        "properties": {
+          "declared_revision": {
+            "const": "0.2.0-rc.2",
+            "type": "string"
+          },
+          "enabled": {
+            "const": false,
+            "type": "boolean"
+          },
+          "enabled_revision": {
+            "type": "null"
+          },
+          "reason": {
+            "const": "incomplete_integration_preview",
+            "type": "string"
+          }
+        },
+        "required": [
+          "declared_revision",
+          "enabled",
+          "enabled_revision",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "CloseLifecyclePreviewRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_control_revision": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "expected_control_revision"
+        ],
+        "type": "object"
+      },
+      "CloseLifecyclePreviewResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "replayed": {
+            "type": "boolean"
+          },
+          "result": {
+            "const": "closed",
+            "type": "string"
+          },
+          "snapshot": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LifecycleSnapshot"
+              },
+              {
+                "properties": {
+                  "lifecycle": {
+                    "$ref": "#/components/schemas/ClosedLifecycle"
+                  }
+                },
+                "required": [
+                  "lifecycle"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "result",
+          "replayed",
+          "snapshot"
+        ],
+        "type": "object"
+      },
+      "ClosedLifecycle": {
+        "additionalProperties": false,
+        "properties": {
+          "changed_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "reason_code": {
+            "enum": [
+              "user_closed",
+              "service_closed"
+            ],
+            "type": "string"
+          },
+          "safe_message": {
+            "maxLength": 160,
+            "minLength": 1,
+            "pattern": "^[^\\u0000-\\u001F\\u007F-\\u009F]{1,160}$",
+            "type": "string"
+          },
+          "state": {
+            "const": "closed",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state",
+          "changed_at",
+          "reason_code",
+          "safe_message"
+        ],
+        "type": "object"
+      },
+      "ContractIdentity": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "const": "exact-release-candidate",
+            "type": "string"
+          },
+          "name": {
+            "const": "dreamland-private-product-api",
+            "type": "string"
+          },
+          "revision": {
+            "const": "0.2.0-rc.2",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "revision",
+          "compatibility"
+        ],
+        "type": "object"
+      },
+      "CreateLifecyclePreviewRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "launch_grant": {
+            "$ref": "#/components/schemas/LaunchGrant"
+          }
+        },
+        "required": [
+          "launch_grant"
+        ],
+        "type": "object"
+      },
+      "CreateLifecyclePreviewResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "replayed": {
+            "type": "boolean"
+          },
+          "result": {
+            "const": "created",
+            "type": "string"
+          },
+          "session_capability": {
+            "$ref": "#/components/schemas/SessionCapability"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/ActiveLifecycleSnapshot"
+          }
+        },
+        "required": [
+          "result",
+          "replayed",
+          "session_capability",
+          "snapshot"
+        ],
+        "type": "object"
+      },
+      "CurrentActiveResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "result": {
+            "const": "current_active",
+            "type": "string"
+          },
+          "session_capability": {
+            "$ref": "#/components/schemas/SessionCapability"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/ActiveLifecycleSnapshot"
+          }
+        },
+        "required": [
+          "result",
+          "session_capability",
+          "snapshot"
+        ],
+        "type": "object"
+      },
+      "CurrentLifecyclePreviewResponse": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CurrentNoneResponse"
+          },
+          {
+            "$ref": "#/components/schemas/CurrentActiveResponse"
+          },
+          {
+            "$ref": "#/components/schemas/CurrentTerminalResponse"
+          }
+        ]
+      },
+      "CurrentNoneResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "result": {
+            "const": "none",
+            "type": "string"
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "type": "object"
+      },
+      "CurrentTerminalResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "result": {
+            "const": "current_terminal",
+            "type": "string"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/TerminalLifecycleSnapshot"
+          }
+        },
+        "required": [
+          "result",
+          "snapshot"
+        ],
+        "type": "object"
+      },
+      "ExpiredLifecycle": {
+        "additionalProperties": false,
+        "properties": {
+          "changed_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "reason_code": {
+            "enum": [
+              "absolute_expired",
+              "idle_expired",
+              "service_window_ended"
+            ],
+            "type": "string"
+          },
+          "safe_message": {
+            "maxLength": 160,
+            "minLength": 1,
+            "pattern": "^[^\\u0000-\\u001F\\u007F-\\u009F]{1,160}$",
+            "type": "string"
+          },
+          "state": {
+            "const": "expired",
+            "type": "string"
+          }
+        },
+        "required": [
+          "state",
+          "changed_at",
+          "reason_code",
+          "safe_message"
+        ],
+        "type": "object"
+      },
+      "IdempotencyKey": {
+        "maxLength": 128,
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{15,127}$",
+        "type": "string"
+      },
+      "ImmutableRevision": {
+        "maxLength": 143,
+        "pattern": "^world-revision:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "IntegrationAuthorityFixture": {
+        "additionalProperties": false,
+        "description": "Synthetic loopback-simulator authority metadata. Resolve expected_epoch from getProductCapabilities.service_epoch for each process start; this fixture is not a directly runnable request bundle.",
+        "properties": {
+          "actor_context": {
+            "$ref": "#/components/schemas/ActorContext"
+          },
+          "authority_class": {
+            "enum": [
+              "attendee",
+              "presenter"
+            ],
+            "type": "string"
+          },
+          "expected_epoch_source": {
+            "const": "getProductCapabilities.service_epoch",
+            "type": "string"
+          },
+          "immutable_revision": {
+            "$ref": "#/components/schemas/ImmutableRevision"
+          },
+          "launch_grant": {
+            "$ref": "#/components/schemas/LaunchGrant"
+          },
+          "selected_record_id": {
+            "$ref": "#/components/schemas/SelectedRecordId"
+          }
+        },
+        "required": [
+          "actor_context",
+          "launch_grant",
+          "expected_epoch_source",
+          "authority_class",
+          "selected_record_id",
+          "immutable_revision"
+        ],
+        "type": "object"
+      },
+      "IntegrationSimulatorGrantFixture": {
+        "additionalProperties": false,
+        "description": "Fixture metadata for a synthetic grant seeded only by the opt-in loopback integration simulator. This is not an API request or production grant-minting shape.",
+        "properties": {
+          "actor_context": {
+            "$ref": "#/components/schemas/ActorContext"
+          },
+          "allowed_operations": {
+            "items": {
+              "const": "create",
+              "type": "string"
+            },
+            "maxItems": 1,
+            "minItems": 1,
+            "type": "array"
+          },
+          "authority_class": {
+            "const": "attendee",
+            "type": "string"
+          },
+          "expected_epoch_source": {
+            "const": "getProductCapabilities.service_epoch",
+            "type": "string"
+          },
+          "fixture_scope": {
+            "const": "integration-preview-simulator-only",
+            "type": "string"
+          },
+          "immutable_revision": {
+            "$ref": "#/components/schemas/ImmutableRevision"
+          },
+          "launch_context": {
+            "$ref": "#/components/schemas/LaunchContext"
+          },
+          "launch_grant": {
+            "$ref": "#/components/schemas/LaunchGrant"
+          },
+          "purpose": {
+            "enum": [
+              "exercise-current-session-exists",
+              "exercise-epoch-loss-current-authority"
+            ],
+            "type": "string"
+          },
+          "selected_record_id": {
+            "$ref": "#/components/schemas/SelectedRecordId"
+          }
+        },
+        "required": [
+          "fixture_scope",
+          "purpose",
+          "actor_context",
+          "launch_grant",
+          "expected_epoch_source",
+          "authority_class",
+          "selected_record_id",
+          "immutable_revision",
+          "allowed_operations",
+          "launch_context"
+        ],
+        "type": "object"
+      },
+      "LaunchContext": {
+        "additionalProperties": false,
+        "properties": {
+          "limits": {
+            "additionalProperties": false,
+            "properties": {
+              "absolute_ttl_ms": {
+                "maximum": 86400000,
+                "minimum": 1000,
+                "type": "integer"
+              },
+              "idle_ttl_ms": {
+                "maximum": 86400000,
+                "minimum": 1000,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "absolute_ttl_ms",
+              "idle_ttl_ms"
+            ],
+            "type": "object"
+          },
+          "notice_version": {
+            "maxLength": 127,
+            "pattern": "^notice:[A-Za-z0-9._:-]{4,120}$",
+            "type": "string"
+          },
+          "policy_id": {
+            "maxLength": 127,
+            "pattern": "^policy:[A-Za-z0-9._:-]{4,120}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "policy_id",
+          "notice_version",
+          "limits"
+        ],
+        "type": "object"
+      },
+      "LaunchGrant": {
+        "maxLength": 493,
+        "pattern": "^launch-grant:[A-Za-z0-9_-]{24,480}$",
+        "type": "string"
+      },
+      "LifecyclePreviewSnapshotResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "result": {
+            "const": "snapshot",
+            "type": "string"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/ActiveLifecycleSnapshot"
+          }
+        },
+        "required": [
+          "result",
+          "snapshot"
+        ],
+        "type": "object"
+      },
+      "LifecycleSnapshot": {
+        "additionalProperties": true,
+        "properties": {
+          "authority_class": {
+            "enum": [
+              "attendee",
+              "presenter"
+            ],
+            "type": "string"
+          },
+          "available_controls": {
+            "items": {
+              "enum": [
+                "snapshot",
+                "close"
+              ],
+              "type": "string"
+            },
+            "maxItems": 2,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "contract": {
+            "$ref": "#/components/schemas/ContractIdentity"
+          },
+          "control_revision": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "idle_expires_at": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "format": "date-time",
+                "maxLength": 64,
+                "type": "string"
+              }
+            ]
+          },
+          "launch_context": {
+            "$ref": "#/components/schemas/LaunchContext"
+          },
+          "lifecycle": {
+            "$ref": "#/components/schemas/LifecycleState"
+          },
+          "model": {
+            "const": "product-session-lifecycle-preview",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "type": "string"
+          },
+          "reference": {
+            "$ref": "#/components/schemas/SessionReference"
+          },
+          "service_epoch": {
+            "$ref": "#/components/schemas/ServiceEpoch"
+          },
+          "session_id": {
+            "$ref": "#/components/schemas/SessionId"
+          },
+          "starting_world": {
+            "$ref": "#/components/schemas/StartingWorld"
+          }
+        },
+        "required": [
+          "model",
+          "contract",
+          "service_epoch",
+          "session_id",
+          "reference",
+          "authority_class",
+          "starting_world",
+          "launch_context",
+          "lifecycle",
+          "available_controls",
+          "control_revision",
+          "created_at",
+          "observed_at",
+          "expires_at",
+          "idle_expires_at"
+        ],
+        "type": "object"
+      },
+      "LifecycleState": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/ActiveLifecycle"
+          },
+          {
+            "$ref": "#/components/schemas/ClosedLifecycle"
+          },
+          {
+            "$ref": "#/components/schemas/ExpiredLifecycle"
+          }
+        ]
+      },
+      "ProductCapabilitiesResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "admission": {
+            "additionalProperties": false,
+            "properties": {
+              "reason": {
+                "const": "integration_preview_only",
+                "type": "string"
+              },
+              "state": {
+                "const": "closed",
+                "type": "string"
+              }
+            },
+            "required": [
+              "state",
+              "reason"
+            ],
+            "type": "object"
+          },
+          "capabilities": {
+            "additionalProperties": false,
+            "properties": {
+              "forge_to_stage_handoff": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "presenter_stage_terminal": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "product_session_core": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "public_attendee_sessions": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "stage_xray": {
+                "$ref": "#/components/schemas/CapabilityState"
+              }
+            },
+            "required": [
+              "product_session_core",
+              "presenter_stage_terminal",
+              "public_attendee_sessions",
+              "forge_to_stage_handoff",
+              "stage_xray"
+            ],
+            "type": "object"
+          },
+          "contract": {
+            "$ref": "#/components/schemas/ContractIdentity"
+          },
+          "request_id": {
+            "maxLength": 136,
+            "pattern": "^request:[A-Za-z0-9_-]{8,128}$",
+            "type": "string"
+          },
+          "service_epoch": {
+            "$ref": "#/components/schemas/ServiceEpoch"
+          }
+        },
+        "required": [
+          "contract",
+          "service_epoch",
+          "request_id",
+          "admission",
+          "capabilities"
+        ],
+        "type": "object"
+      },
+      "RetryCategory": {
+        "enum": [
+          "none",
+          "same_request",
+          "resume_snapshot",
+          "after_delay"
+        ],
+        "type": "string"
+      },
+      "SafeError": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "else": {
+              "properties": {
+                "retry_after_ms": {
+                  "type": "null"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "retry": {
+                  "const": "after_delay"
+                }
+              },
+              "required": [
+                "retry"
+              ]
+            },
+            "then": {
+              "properties": {
+                "retry_after_ms": {
+                  "maximum": 60000,
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "code": {
+            "maxLength": 64,
+            "pattern": "^[a-z][a-z0-9_]{0,63}$",
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 160,
+            "minLength": 1,
+            "pattern": "^[^\\u0000-\\u001F\\u007F-\\u009F]{1,160}$",
+            "type": "string"
+          },
+          "request_id": {
+            "maxLength": 136,
+            "pattern": "^request:[A-Za-z0-9_-]{8,128}$",
+            "type": "string"
+          },
+          "retry": {
+            "$ref": "#/components/schemas/RetryCategory"
+          },
+          "retry_after_ms": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "maximum": 60000,
+                "minimum": 0,
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "retry",
+          "retry_after_ms",
+          "request_id"
+        ],
+        "type": "object"
+      },
+      "SafeErrorEnvelope": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/SafeError"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "type": "object"
+      },
+      "SelectedRecordId": {
+        "maxLength": 144,
+        "pattern": "^selected-record:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "ServiceEpoch": {
+        "maxLength": 134,
+        "pattern": "^epoch:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "SessionCapability": {
+        "maxLength": 268,
+        "pattern": "^session-cap:[A-Za-z0-9_-]{24,256}$",
+        "type": "string"
+      },
+      "SessionId": {
+        "maxLength": 136,
+        "pattern": "^session:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "SessionReference": {
+        "maxLength": 140,
+        "pattern": "^session-ref:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "StartingWorld": {
+        "additionalProperties": true,
+        "properties": {
+          "immutable_revision": {
+            "$ref": "#/components/schemas/ImmutableRevision"
+          },
+          "selected_record_id": {
+            "$ref": "#/components/schemas/SelectedRecordId"
+          }
+        },
+        "required": [
+          "selected_record_id",
+          "immutable_revision"
+        ],
+        "type": "object"
+      },
+      "TerminalLifecycleSnapshot": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LifecycleSnapshot"
+          },
+          {
+            "properties": {
+              "lifecycle": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ClosedLifecycle"
+                  },
+                  {
+                    "$ref": "#/components/schemas/ExpiredLifecycle"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "lifecycle"
+            ],
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "ProductServiceBearer": {
+        "bearerFormat": "opaque-private-service-authority",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Unfrozen, private, integration-only lifecycle and authority preview. No capability is enabled by this artifact. Mutation claim, replay, conflict, retention, capacity-retry, and epoch-rotation semantics are declared by x-dreamland-idempotency-policy.",
+    "title": "DREAMLAND Private Product Lifecycle Preview",
+    "version": "0.2.0-rc.2"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "openapi": "3.1.0",
+  "paths": {
+    "/product/v1/capabilities": {
+      "get": {
+        "operationId": "getProductCapabilities",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductCapabilitiesResponse"
+                }
+              }
+            },
+            "description": "Fail-closed capability projection.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/CacheControl"
+              },
+              "X-Content-Type-Options": {
+                "$ref": "#/components/headers/NoSniff"
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "500": {
+            "$ref": "#/components/responses/SafeError"
+          }
+        },
+        "security": [
+          {
+            "ProductServiceBearer": []
+          }
+        ],
+        "x-dreamland-availability": "integration-preview-only"
+      }
+    },
+    "/product/v1/sessions": {
+      "post": {
+        "description": "Create-session idempotency claims deterministic launch-grant rejection, current-session conflict, and success after canonical pre-claim validation. Capacity exhaustion remains transient and unclaimed.",
+        "operationId": "createLifecyclePreview",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLifecyclePreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateLifecyclePreviewResponse"
+                }
+              }
+            },
+            "description": "Lifecycle preview session created or replayed.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/CacheControl"
+              },
+              "X-Content-Type-Options": {
+                "$ref": "#/components/headers/NoSniff"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "409": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "410": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "411": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "413": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "415": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "500": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "503": {
+            "$ref": "#/components/responses/SafeError"
+          }
+        },
+        "security": [
+          {
+            "ProductServiceBearer": []
+          }
+        ],
+        "x-dreamland-availability": "integration-preview-only",
+        "x-dreamland-idempotency": {
+          "operation_family": "create_lifecycle_preview",
+          "policy": "#/x-dreamland-idempotency-policy",
+          "resource_authority_kind": "launch_grant"
+        }
+      }
+    },
+    "/product/v1/sessions/current": {
+      "get": {
+        "operationId": "getCurrentLifecyclePreview",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentLifecyclePreviewResponse"
+                }
+              }
+            },
+            "description": "Current lifecycle state for the actor context.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/CacheControl"
+              },
+              "X-Content-Type-Options": {
+                "$ref": "#/components/headers/NoSniff"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "404": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "409": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "410": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "500": {
+            "$ref": "#/components/responses/SafeError"
+          }
+        },
+        "security": [
+          {
+            "ProductServiceBearer": []
+          }
+        ],
+        "x-dreamland-availability": "integration-preview-only"
+      }
+    },
+    "/product/v1/sessions/{reference}": {
+      "get": {
+        "operationId": "getLifecyclePreviewSnapshot",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SessionReference"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/SessionCapability"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LifecyclePreviewSnapshotResponse"
+                }
+              }
+            },
+            "description": "Authoritative lifecycle-only snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/CacheControl"
+              },
+              "X-Content-Type-Options": {
+                "$ref": "#/components/headers/NoSniff"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "404": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "409": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "410": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "500": {
+            "$ref": "#/components/responses/SafeError"
+          }
+        },
+        "security": [
+          {
+            "ProductServiceBearer": []
+          }
+        ],
+        "x-dreamland-availability": "integration-preview-only"
+      }
+    },
+    "/product/v1/sessions/{reference}/close": {
+      "post": {
+        "description": "Close-session idempotency claims deterministic session-authority rejection, control-revision conflict, and success after canonical pre-claim validation.",
+        "operationId": "closeLifecyclePreview",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SessionReference"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/SessionCapability"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseLifecyclePreviewRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloseLifecyclePreviewResponse"
+                }
+              }
+            },
+            "description": "Lifecycle preview session closed or replayed.",
+            "headers": {
+              "Cache-Control": {
+                "$ref": "#/components/headers/CacheControl"
+              },
+              "X-Content-Type-Options": {
+                "$ref": "#/components/headers/NoSniff"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "404": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "409": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "410": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "411": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "413": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "415": {
+            "$ref": "#/components/responses/SafeError"
+          },
+          "500": {
+            "$ref": "#/components/responses/SafeError"
+          }
+        },
+        "security": [
+          {
+            "ProductServiceBearer": []
+          }
+        ],
+        "x-dreamland-availability": "integration-preview-only",
+        "x-dreamland-idempotency": {
+          "operation_family": "close_lifecycle_preview",
+          "policy": "#/x-dreamland-idempotency-policy",
+          "resource_authority_kind": "session_capability"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ProductServiceBearer": []
+    }
+  ],
+  "servers": [],
+  "x-dreamland-idempotency-policy": {
+    "claim_boundary": {
+      "claimed": {
+        "deterministic_rejections": [
+          {
+            "category": "launch_grant_rejected",
+            "operation_families": [
+              "create_lifecycle_preview"
+            ],
+            "wire_codes": [
+              "authority_denied"
+            ]
+          },
+          {
+            "category": "current_session_already_exists",
+            "operation_families": [
+              "create_lifecycle_preview"
+            ],
+            "wire_codes": [
+              "current_session_exists"
+            ]
+          },
+          {
+            "category": "session_reference_or_capability_rejected",
+            "operation_families": [
+              "close_lifecycle_preview"
+            ],
+            "wire_codes": [
+              "authority_denied"
+            ]
+          },
+          {
+            "category": "control_revision_changed",
+            "operation_families": [
+              "close_lifecycle_preview"
+            ],
+            "wire_codes": [
+              "control_revision_conflict"
+            ]
+          },
+          {
+            "category": "key_already_bound_to_another_body",
+            "operation_families": [
+              "close_lifecycle_preview",
+              "create_lifecycle_preview"
+            ],
+            "wire_codes": [
+              "idempotency_conflict"
+            ]
+          }
+        ],
+        "different_body": "return_idempotency_conflict_without_mutation",
+        "fresh_metadata_may_differ": [
+          "observed_at",
+          "replayed",
+          "request_id"
+        ],
+        "postclaim_terminal_default": "record_and_replay_before_response",
+        "same_body": "replay_recorded_logical_outcome_and_status",
+        "successful_results": [
+          "closed",
+          "created"
+        ]
+      },
+      "preclaim": {
+        "binds_key": false,
+        "reservation_point": "after private service authentication, current expected epoch, authorized actor context, valid idempotency key, and canonical semantic body; before resource-authority and deterministic business checks",
+        "same_key_changed_body": "permitted_because_no_binding_exists",
+        "wire_error_categories": [
+          {
+            "category": "private_service_authentication_or_route_availability",
+            "wire_codes": [
+              "unauthorized",
+              "not_found"
+            ]
+          },
+          {
+            "category": "missing_malformed_or_stale_expected_epoch",
+            "wire_codes": [
+              "expected_epoch_required",
+              "invalid_request",
+              "outcome_unknown"
+            ]
+          },
+          {
+            "category": "actor_context_rejected_before_resource_authority",
+            "wire_codes": [
+              "authority_denied",
+              "invalid_request"
+            ]
+          },
+          {
+            "category": "malformed_key_headers_media_or_body_before_canonicalization",
+            "wire_codes": [
+              "content_length_required",
+              "invalid_json",
+              "invalid_request",
+              "request_too_large",
+              "unsupported_media_type"
+            ]
+          },
+          {
+            "category": "internal_failure_before_reservation",
+            "wire_codes": [
+              "internal_error"
+            ]
+          }
+        ]
+      },
+      "transient_unclaimed": [
+        {
+          "category": "capacity_check_before_work",
+          "client_guidance": "retry_only_the_identical_key_and_body_after_retry_delay",
+          "key_binding": "none",
+          "same_key_changed_body": "permitted_because_no_binding_exists_but_a_fresh_key_is_recommended",
+          "wire_codes": [
+            "capacity_exhausted"
+          ]
+        }
+      ]
+    },
+    "epoch_namespace": {
+      "deliberate_fresh_work_requires": [
+        "current_epoch_evidence",
+        "current_epoch_authority",
+        "new_idempotency_key"
+      ],
+      "prior_epoch_records": "not_replayed_in_the_new_epoch",
+      "rotation": "terminates_the_prior_in_memory_namespace",
+      "stale_mutation_claims_current_epoch_key": false,
+      "stale_mutation_wire_code": "outcome_unknown"
+    },
+    "retention": {
+      "cleanup_rule": "remove_only_after_the_applicable_retention_scope_expires; a removed failed-operation binding may be claimed again within the live epoch",
+      "session_related_records": "at_least_through_related_session_and_tombstone_cleanup",
+      "unrelated_claimed_failures": {
+        "scope": "bounded_failed_operation_retention",
+        "ttl_configuration": "failed_operation_ttl_ms"
+      }
+    },
+    "scope": {
+      "authority_class_definition": "stable_authenticated_actor_role_not_resource_authority_evidence",
+      "coordinates": [
+        "service_epoch",
+        "actor_context",
+        "authority_class",
+        "operation_family",
+        "idempotency_key"
+      ],
+      "first_body_binding": "canonical_semantic_request_body",
+      "operation_families": [
+        "close_lifecycle_preview",
+        "create_lifecycle_preview"
+      ],
+      "request_authority_storage": {
+        "comparison_material": "sha256_digest",
+        "raw_request_authority_in_scope_body_or_failure_records": "forbidden",
+        "successful_result_authority": "a bounded generated session capability may be retained in active session state for current recovery and in its successful create replay result; terminalization removes the active-state copy and related tombstone cleanup removes the replay-result copy"
+      }
+    },
+    "version": 1,
+    "wire_code_resolution": {
+      "close_resource_authority_rejection": "authority_denied",
+      "create_resource_authority_rejection": "authority_denied",
+      "grant_unavailable": "declared_safe_error_code_not_emitted_by_rc2_mutations",
+      "not_found": "preclaim_route_or_nonmutation_code_not_emitted_for_postclaim_close_resource_rejection"
+    }
+  }
+}

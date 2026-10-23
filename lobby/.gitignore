@@ -1,0 +1,2 @@
+# Local visit references and SQLite transaction files contain runtime metadata.
+public_visits.sqlite3*

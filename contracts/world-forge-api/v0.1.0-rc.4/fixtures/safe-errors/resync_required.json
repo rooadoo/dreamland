@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "resync_required",
+    "message": "Safe World Forge fixture for resync required.",
+    "retry": "resume",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-resync_required"
+}

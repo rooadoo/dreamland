@@ -1,0 +1,16 @@
+{
+  "artifacts": {
+    "descriptor_schema_sha256": "d4e4b9211513830bf673ab247849c2aab14af13e4082ada3c8775279a8beac47",
+    "openapi_sha256": "9fe5cda9fd751eeec01f609e8434e85a193e9c72bca0e7ad698d168484bc181f"
+  },
+  "compatibility": "unfrozen-release-candidate",
+  "contract_name": "dreamland.deployment-control",
+  "contract_version": "0.1.0-rc.1",
+  "domain_capabilities_enabled": false,
+  "fixture_index_sha256": "987b381b2cb0261a2b866de4b3015710abbaf4f27c9a25b4226b0330eccab82b",
+  "freeze_status": "pending_ui_tracked_doc_acknowledgement",
+  "implementation_status": "deployment_control_only",
+  "product_contracts": [],
+  "publication_status": "review_candidate",
+  "schema_version": 1
+}

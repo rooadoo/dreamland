@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "current_session_exists",
+    "message": "A current lifecycle preview session already exists.",
+    "request_id": "request:current_exists_0001",
+    "retry": "resume_snapshot",
+    "retry_after_ms": null
+  }
+}

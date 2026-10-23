@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.1"
+  },
+  "error": {
+    "code": "command_in_progress",
+    "message": "A product command is already in progress.",
+    "request_id": "request:error_command_in_progress_0001",
+    "retry": "resume_snapshot",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "private-attendee-security-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

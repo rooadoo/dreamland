@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "idempotency_conflict",
+    "message": "Safe World Forge fixture for idempotency conflict.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-idempotency_conflict"
+}

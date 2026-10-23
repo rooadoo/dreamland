@@ -1,0 +1,12 @@
+{
+  "criticality": "informational",
+  "data": {
+    "future_hint": "ignore-payload"
+  },
+  "emitted_at": "2026-08-21T00:00:00Z",
+  "event_id": "event:contract-simulator-0001",
+  "schema_revision": "0.1.0-rc.1",
+  "sequence": 1,
+  "stream_id": "stream:contract-simulator-0001",
+  "type": "future.telemetry"
+}

@@ -1,0 +1,96 @@
+{
+  "fixtures": [
+    {
+      "class": "canonical-valid",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/capabilities/all-disabled.json",
+      "schema": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "8544a593058d9b27fea85598505c08a96ad13f74a54f6f5d3a4b2e5db53ac06e"
+    },
+    {
+      "class": "canonical-valid",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/unauthorized.json",
+      "schema": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "7b9e33b3aa889a01a1e0a0ec748f44b310565b2f004a2750d67bae3c534a0922"
+    },
+    {
+      "class": "canonical-valid",
+      "expected": "valid",
+      "path": "fixtures/canonical-valid/errors/safe-error.json",
+      "schema": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "79586f5404f7b4a22596a1313b5d3ab774a3fe561cf861360fdd097edbf7a1b2"
+    },
+    {
+      "class": "forward-compat",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/capabilities/additive-fields.json",
+      "schema": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "b4234bacd4dc454174c704a2987ca3bcf69555cafebd21a6eb2d854ac939e73d"
+    },
+    {
+      "class": "forward-compat",
+      "expected": "consumer_resync",
+      "path": "fixtures/forward-compat/capabilities/incompatible-revision.json",
+      "schema": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "6d2fc35fc0e4da304aab123d7ed00dcd216c0611949060fcd5fde5d8ef910c72"
+    },
+    {
+      "class": "forward-compat",
+      "expected": "valid",
+      "path": "fixtures/forward-compat/events/unknown-informational.json",
+      "schema": "events.schema.json#",
+      "sha256": "209c0f97ebaa2e4f4b423179aed035cf3c1f93f1c19fb95f67c196dcbbcd5d63"
+    },
+    {
+      "class": "forward-compat",
+      "expected": "consumer_resync",
+      "path": "fixtures/forward-compat/events/unknown-authoritative.json",
+      "schema": "events.schema.json#",
+      "sha256": "880de2501d973fe8633ba96ab53e6fcbc54ad6200a9eb1bfd690859ad374cede"
+    },
+    {
+      "class": "invalid",
+      "expected": "reject",
+      "path": "fixtures/invalid/capabilities/missing-required-capability.json",
+      "schema": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "1823fe74d8b9783cb870317933c7b055ef3b62fa912bad55a6837f747ae624bc"
+    },
+    {
+      "class": "invalid",
+      "expected": "reject",
+      "path": "fixtures/invalid/capabilities/enabled-without-revision.json",
+      "schema": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "571ed984582a843a6733ecd81d0876aa2ee924dd33fd098b0622bd7d51695906"
+    },
+    {
+      "class": "invalid",
+      "expected": "reject_phase0_policy",
+      "path": "fixtures/invalid/capabilities/phase0-enabled.json",
+      "schema": "openapi.json#/components/schemas/ProductCapabilitiesResponse",
+      "sha256": "7b4eeb059e6a8cf1dd7fe718f794e2a860f2fdc8327b7baa90aef6610b0d9b3f"
+    },
+    {
+      "class": "invalid",
+      "expected": "reject",
+      "path": "fixtures/invalid/errors/unsafe-field.json",
+      "schema": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "cc575dd605790c54a91f59425bb81951f23f65e4c018035aa564e96a93f43348"
+    },
+    {
+      "class": "invalid",
+      "expected": "reject",
+      "path": "fixtures/invalid/errors/malformed-retry.json",
+      "schema": "openapi.json#/components/schemas/SafeErrorEnvelope",
+      "sha256": "25c6ba50cbae73018f676f4ebd2d1595b7789b135c2a13f08f9d508c3c83dd72"
+    },
+    {
+      "class": "invalid",
+      "expected": "reject",
+      "path": "fixtures/invalid/events/zero-sequence.json",
+      "schema": "events.schema.json#",
+      "sha256": "4ce98380a7b32e8df50f6d43ef0c13bddb3cc25cb63ff454eb395207cbce6c33"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.2"
+  },
+  "error": {
+    "code": "replacement_unavailable",
+    "message": "The replacement product session could not be provisioned.",
+    "request_id": "request:error_replacement_unavailable_0001",
+    "retry": "same_request",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "development-live-launch-selection-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  }
+}

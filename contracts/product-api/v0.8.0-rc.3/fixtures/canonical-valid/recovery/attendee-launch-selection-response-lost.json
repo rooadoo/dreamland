@@ -1,0 +1,10 @@
+{
+  "automatic_new_key_redispatch": false,
+  "changed_body_outcome": "idempotency_conflict",
+  "expired_grant_replay": "return_original_expired_grant",
+  "identical_body_required": true,
+  "old_epoch_outcome": "outcome_unknown",
+  "operation_family": "attendee.launch_selection.exchange",
+  "same_key_replay": true,
+  "scenario": "attendee_launch_selection_response_lost_after_commit"
+}

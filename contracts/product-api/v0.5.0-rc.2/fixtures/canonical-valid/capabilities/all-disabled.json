@@ -1,0 +1,52 @@
+{
+  "admission": {
+    "reason": "integration_preview_only",
+    "state": "closed"
+  },
+  "capabilities": {
+    "forge_to_stage_handoff": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "presenter_stage_terminal": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "product_session_core": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "public_attendee_sessions": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    },
+    "stage_xray": {
+      "declared_revision": "0.5.0-rc.2",
+      "enabled": false,
+      "enabled_revision": null,
+      "reason": "integration_preview_only"
+    }
+  },
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.5.0-rc.2"
+  },
+  "preview": {
+    "executor": "development-live-forge-stage-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "request_id": "request:phase2_capabilities_0001",
+  "service_epoch": "epoch:phase2preview0001"
+}

@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "capacity_exhausted",
+    "message": "Retry later.",
+    "retry": "after_delay",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

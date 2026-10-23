@@ -1,0 +1,15 @@
+{
+  "command_id": null,
+  "criticality": "authoritative",
+  "data": {
+    "accepted_state_revision": 0,
+    "control_revision": 1,
+    "slot_generation": 0
+  },
+  "emitted_at_ms": 1777000000001,
+  "event_id": "event:phase2alphaevent:1",
+  "schema_revision": "1",
+  "sequence": 1,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "session.created"
+}

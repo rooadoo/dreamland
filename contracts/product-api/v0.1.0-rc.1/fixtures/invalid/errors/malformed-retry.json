@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "capacity_exhausted",
+    "message": "Product admission is currently unavailable.",
+    "request_id": "request:contract-simulator-malformed-retry",
+    "retry": "none",
+    "retry_after_ms": 1000
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.1"
+  },
+  "error": {
+    "code": "launch_selection_unavailable",
+    "message": "The Presenter Stage launch selection is unavailable.",
+    "request_id": "request:error_launch_selection_unavailable_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "deterministic-launch-selection-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

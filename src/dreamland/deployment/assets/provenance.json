@@ -1,0 +1,32 @@
+{
+  "purpose": "Integrity metadata for the bundled starter worlds. Research evidence is published separately.",
+  "worlds": [
+    {
+      "profile": "lobby-supermarket",
+      "local_profile": "state_profiles/lobby-supermarket.json",
+      "local_profile_sha256": "536fc6515ae2b326b878e07d3f4c6ee0d018d9a60e7605a0fda8570646941d0d",
+      "packaged_profile": "src/dreamland/default_state_profiles/lobby-supermarket.json",
+      "packaged_profile_sha256": "536fc6515ae2b326b878e07d3f4c6ee0d018d9a60e7605a0fda8570646941d0d",
+      "local_world_state_sha256": "0d0bbd28aea194448d568e59fa7897a92eac8421fb1468b2d3bc460ba4024f1d",
+      "packaged_world_state_sha256": "0d0bbd28aea194448d568e59fa7897a92eac8421fb1468b2d3bc460ba4024f1d"
+    },
+    {
+      "profile": "lobby-colonyship",
+      "local_profile": "state_profiles/lobby-colonyship.json",
+      "local_profile_sha256": "21ede72fdee9ba716b361ae0f82cf5032084db97665b150ef8c12ed0328053e8",
+      "packaged_profile": "src/dreamland/default_state_profiles/lobby-colonyship.json",
+      "packaged_profile_sha256": "21ede72fdee9ba716b361ae0f82cf5032084db97665b150ef8c12ed0328053e8",
+      "local_world_state_sha256": "6404f3c755827081450e7f19eede78f1cd8af9d7d21b1475eac9d8dcdd617aae",
+      "packaged_world_state_sha256": "6404f3c755827081450e7f19eede78f1cd8af9d7d21b1475eac9d8dcdd617aae"
+    },
+    {
+      "profile": "lobby-offshore",
+      "local_profile": "state_profiles/lobby-offshore.json",
+      "local_profile_sha256": "5b7e15c5f5c935f52b61f81ea7e483f15c13882333c4bb39b7efad01f9298311",
+      "packaged_profile": "src/dreamland/default_state_profiles/lobby-offshore.json",
+      "packaged_profile_sha256": "5b7e15c5f5c935f52b61f81ea7e483f15c13882333c4bb39b7efad01f9298311",
+      "local_world_state_sha256": "272c790278c784f5a37a7fdca1cd6c190de1327a015b3e648e505da6051b1122",
+      "packaged_world_state_sha256": "272c790278c784f5a37a7fdca1cd6c190de1327a015b3e648e505da6051b1122"
+    }
+  ]
+}

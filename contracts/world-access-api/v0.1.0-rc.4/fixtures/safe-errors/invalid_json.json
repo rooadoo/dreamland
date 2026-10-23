@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "invalid_json",
+    "message": "The request body is not valid JSON.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

@@ -1,0 +1,11 @@
+{
+  "automatic_new_key_redispatch": false,
+  "changed_request_outcome": "idempotency_conflict",
+  "fresh_key_after_revocation": "authority_denied",
+  "old_epoch_outcome": "outcome_unknown",
+  "operation_family": "attendee.context.revoke",
+  "prebinding_authority_denial_claimed": false,
+  "replay_after_revocation": "return_original_success",
+  "same_key_replay": true,
+  "scenario": "attendee_context_revocation_response_lost_after_commit"
+}

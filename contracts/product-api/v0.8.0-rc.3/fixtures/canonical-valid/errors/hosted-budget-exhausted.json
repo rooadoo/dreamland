@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.3"
+  },
+  "error": {
+    "code": "hosted_budget_exhausted",
+    "message": "Product hosted-work budget is temporarily unavailable.",
+    "request_id": "request:error_hosted_budget_exhausted_0001",
+    "retry": "after_delay",
+    "retry_after_ms": 1000
+  },
+  "preview": {
+    "executor": "private-attendee-live-provider-pool-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "authority_denied",
+    "message": "The request is unavailable.",
+    "retry": "none",
+    "retry_after_ms": 250
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

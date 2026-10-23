@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "source_temporarily_unavailable",
+    "message": "The selected World Forge revision is temporarily unavailable.",
+    "retry": "after_delay",
+    "retry_after_ms": 250
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

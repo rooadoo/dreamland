@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "content_length_required",
+    "message": "A Content-Length header is required.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

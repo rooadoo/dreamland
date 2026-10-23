@@ -1,0 +1,25 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.1"
+  },
+  "event_cursor": {
+    "event_id": "event:phase2alphaevent:5",
+    "sequence": 5,
+    "stream_id": "stream:phase2alphaevents"
+  },
+  "kind": "command_cancel",
+  "outcome": "cancel_requested",
+  "preview": {
+    "executor": "deterministic-launch-selection-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  },
+  "replayed": false,
+  "service_epoch": "epoch:phase2preview0001",
+  "slot_generation": 1
+}

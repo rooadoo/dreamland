@@ -1,0 +1,13 @@
+{
+  "command_id": "command:11111111111111111111111111111111",
+  "criticality": "authoritative",
+  "data": {
+    "slot_generation": 1
+  },
+  "emitted_at_ms": 1777000000005,
+  "event_id": "event:phase2alphaevent:5",
+  "schema_revision": "1",
+  "sequence": 5,
+  "stream_id": "stream:phase2alphaevents",
+  "type": "command.cancel_requested"
+}

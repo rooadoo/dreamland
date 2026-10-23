@@ -1,0 +1,474 @@
+{
+  "components": {
+    "schemas": {
+      "AdmissionState": {
+        "additionalProperties": true,
+        "properties": {
+          "reason": {
+            "maxLength": 96,
+            "minLength": 1,
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "closed"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "state",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "CapabilityState": {
+        "additionalProperties": true,
+        "allOf": [
+          {
+            "else": {
+              "properties": {
+                "enabled_revision": {
+                  "type": "null"
+                },
+                "reason": {
+                  "maxLength": 96,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "enabled": {
+                  "const": true
+                }
+              },
+              "required": [
+                "enabled"
+              ]
+            },
+            "then": {
+              "properties": {
+                "enabled_revision": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        ],
+        "properties": {
+          "declared_revision": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "enabled_revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "declared_revision",
+          "enabled",
+          "enabled_revision",
+          "reason"
+        ],
+        "type": "object"
+      },
+      "ContractIdentity": {
+        "additionalProperties": true,
+        "properties": {
+          "compatibility": {
+            "const": "exact-release-candidate"
+          },
+          "name": {
+            "const": "dreamland-private-product-api"
+          },
+          "revision": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "revision",
+          "compatibility"
+        ],
+        "type": "object"
+      },
+      "EventPosition": {
+        "additionalProperties": true,
+        "properties": {
+          "cursor": {
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string"
+          },
+          "event_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sequence": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "stream_id": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "stream_id",
+          "sequence",
+          "event_id",
+          "cursor"
+        ],
+        "type": "object"
+      },
+      "GuestTermination": {
+        "discriminator": {
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "exit_status": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "kind": {
+                "const": "exited"
+              }
+            },
+            "required": [
+              "kind",
+              "exit_status"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "signaled"
+              },
+              "signal": {
+                "pattern": "^SIG[A-Z0-9]+$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "signal"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "ProductCapabilitiesResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "admission": {
+            "$ref": "#/components/schemas/AdmissionState"
+          },
+          "capabilities": {
+            "additionalProperties": false,
+            "properties": {
+              "forge_to_stage_handoff": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "presenter_stage_terminal": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "product_session_core": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "public_attendee_sessions": {
+                "$ref": "#/components/schemas/CapabilityState"
+              },
+              "stage_xray": {
+                "$ref": "#/components/schemas/CapabilityState"
+              }
+            },
+            "required": [
+              "product_session_core",
+              "presenter_stage_terminal",
+              "public_attendee_sessions",
+              "forge_to_stage_handoff",
+              "stage_xray"
+            ],
+            "type": "object"
+          },
+          "contract": {
+            "$ref": "#/components/schemas/ContractIdentity"
+          },
+          "request_id": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "service_epoch": {
+            "pattern": "^epoch:[A-Za-z0-9_-]{16,}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "contract",
+          "service_epoch",
+          "admission",
+          "capabilities",
+          "request_id"
+        ],
+        "type": "object"
+      },
+      "RetryCategory": {
+        "enum": [
+          "none",
+          "same_request",
+          "query",
+          "resume",
+          "after_delay"
+        ],
+        "type": "string"
+      },
+      "SafeErrorEnvelope": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "else": {
+                  "properties": {
+                    "retry_after_ms": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "if": {
+                  "properties": {
+                    "retry": {
+                      "const": "after_delay"
+                    }
+                  },
+                  "required": [
+                    "retry"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "retry_after_ms": {
+                      "maximum": 3600000,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            ],
+            "properties": {
+              "code": {
+                "maxLength": 64,
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "type": "string"
+              },
+              "message": {
+                "maxLength": 256,
+                "minLength": 1,
+                "type": "string"
+              },
+              "request_id": {
+                "maxLength": 128,
+                "minLength": 1,
+                "type": "string"
+              },
+              "retry": {
+                "$ref": "#/components/schemas/RetryCategory"
+              },
+              "retry_after_ms": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "message",
+              "retry",
+              "retry_after_ms",
+              "request_id"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "type": "object"
+      },
+      "StateEffect": {
+        "discriminator": {
+          "propertyName": "state"
+        },
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "state": {
+                "const": "none"
+              }
+            },
+            "required": [
+              "state"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_state_revision": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "state": {
+                "const": "committed"
+              }
+            },
+            "required": [
+              "state",
+              "accepted_state_revision"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "reason": {
+                "enum": [
+                  "validation",
+                  "state_conflict",
+                  "policy"
+                ],
+                "type": "string"
+              },
+              "state": {
+                "const": "rejected"
+              }
+            },
+            "required": [
+              "state",
+              "reason"
+            ],
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "securitySchemes": {
+      "ProductServiceBearer": {
+        "bearerFormat": "opaque private service credential",
+        "description": "Private BFF service authority. This credential must never be exposed to a browser.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Phase 0 release candidate. Only capability discovery is represented; DREAMLAND runtime exposes no product listener in this phase. All five capabilities are unavailable.",
+    "title": "DREAMLAND Private Product API",
+    "version": "0.1.0-rc.1"
+  },
+  "jsonSchemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "openapi": "3.1.0",
+  "paths": {
+    "/product/v1/capabilities": {
+      "get": {
+        "description": "Returns exact independently gated capability revisions. The Phase 0 simulator reports every capability unavailable.",
+        "operationId": "getProductCapabilities",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductCapabilitiesResponse"
+                }
+              }
+            },
+            "description": "Capability projection",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Missing or invalid private service authority",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "WWW-Authenticate": {
+                "schema": {
+                  "const": "Bearer",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ProductServiceBearer": []
+          }
+        ],
+        "summary": "Get private product capabilities",
+        "tags": [
+          "capabilities"
+        ],
+        "x-dreamland-availability": "contract-simulator-only"
+      }
+    }
+  },
+  "servers": [],
+  "tags": [
+    {
+      "description": "Private fail-closed capability discovery.",
+      "name": "capabilities"
+    }
+  ]
+}

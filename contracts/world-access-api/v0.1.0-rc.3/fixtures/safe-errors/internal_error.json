@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "internal_error",
+    "message": "The World Access preview could not complete the request.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

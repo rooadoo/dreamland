@@ -1,0 +1,10 @@
+{
+  "outcome": "failed",
+  "output_clipped": false,
+  "reason": "command_deadline_exceeded",
+  "usage": {
+    "spend_units": 120,
+    "state": "settled",
+    "tokens": null
+  }
+}

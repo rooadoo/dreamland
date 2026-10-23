@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "temporarily_unavailable",
+    "message": "Safe World Forge fixture for temporarily unavailable.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-temporarily_unavailable"
+}

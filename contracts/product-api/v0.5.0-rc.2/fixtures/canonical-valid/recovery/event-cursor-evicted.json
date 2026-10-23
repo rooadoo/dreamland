@@ -1,0 +1,8 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_code": "snapshot_required",
+  "expected_outcome": null,
+  "reconcile_with": "snapshot",
+  "same_key_replay": false,
+  "scenario": "event_cursor_evicted"
+}

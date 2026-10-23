@@ -1,0 +1,4 @@
+{
+  "command": "uname\nid",
+  "expected_slot_generation": 0
+}

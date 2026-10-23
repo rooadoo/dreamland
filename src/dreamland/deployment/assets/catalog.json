@@ -1,0 +1,27 @@
+{
+  "kind": "dreamland.ssh_lobby_catalog",
+  "schema_version": 2,
+  "worlds": [
+    {
+      "profile": "lobby-supermarket",
+      "title": "Morrowbasket Markets",
+      "description": "Start at a supermarket checkout terminal in Porto and explore a sprawling retail network of stores, warehouses, suppliers, and support systems.",
+      "order": 1,
+      "entry_username": "operator"
+    },
+    {
+      "profile": "lobby-colonyship",
+      "title": "Common Ground Colonyship",
+      "description": "Explore a public terminal aboard a centuries-old colonyship connecting to a destination already settled by a later, faster expedition.",
+      "order": 2,
+      "entry_username": "reader"
+    },
+    {
+      "profile": "lobby-offshore",
+      "title": "Muirbank Alpha",
+      "description": "Start on an instrument technician's laptop aboard a North Sea oil platform and follow connections through crew life, shore support, and industrial systems.",
+      "order": 3,
+      "entry_username": "leah"
+    }
+  ]
+}

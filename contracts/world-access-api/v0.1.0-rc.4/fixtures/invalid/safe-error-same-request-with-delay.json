@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "outcome_unknown",
+    "message": "Reconcile the same request.",
+    "retry": "same_request",
+    "retry_after_ms": 250
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

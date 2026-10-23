@@ -1,0 +1,17 @@
+{
+  "error": {
+    "code": "validation_failed",
+    "issues": [
+      {
+        "code": "text_length_invalid",
+        "field_id": "adjective",
+        "message": "The answer is outside the configured character limits."
+      }
+    ],
+    "message": "Safe World Forge fixture for validation failed.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-validation_failed"
+}

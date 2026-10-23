@@ -1,0 +1,36 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.2"
+  },
+  "grant_expires_at": "2026-08-27T13:10:00Z",
+  "kind": "presenter_stage_launch_selection_granted",
+  "launch_grant": "launch-grant:0000000000000002_bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "preview": {
+    "executor": "development-live-launch-selection-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "replayed": false,
+  "selection": {
+    "display": {
+      "revision_label": "Selected B",
+      "source_label": "World Forge",
+      "title": "Harbor Control"
+    },
+    "expires_at": "2026-08-27T14:00:00Z",
+    "launch_selection_id": "launch-selection:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "offering_id": "offering:forge-harbor-control",
+    "origin": {
+      "kind": "world_forge_selection"
+    },
+    "revision": {
+      "revision_id": "world-revision:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

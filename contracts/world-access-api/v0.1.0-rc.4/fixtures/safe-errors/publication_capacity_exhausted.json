@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "publication_capacity_exhausted",
+    "message": "Generated-world publication capacity is temporarily exhausted.",
+    "retry": "after_delay",
+    "retry_after_ms": 250
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

@@ -1,0 +1,5 @@
+{
+  "launch_grant": "launch-grant:caller_supplied_attendee_authority",
+  "launch_selection_id": "launch-selection:cccccccccccccccccccccccccccccccc",
+  "notice_version_presented": "notice:attendee-live-development-v1"
+}

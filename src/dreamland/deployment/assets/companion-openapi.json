@@ -1,0 +1,515 @@
+{
+  "components": {
+    "schemas": {
+      "Error": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "pattern": "^[a-z][a-z0-9_]{0,63}$",
+                "type": "string"
+              },
+              "message": {
+                "maxLength": 160,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "code",
+              "message"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "type": "object"
+      },
+      "Handoff": {
+        "additionalProperties": false,
+        "properties": {
+          "capabilities": {
+            "additionalProperties": false,
+            "properties": {
+              "attendee_sessions": {
+                "const": false
+              },
+              "presenter": {
+                "const": false
+              },
+              "world_forge": {
+                "const": false
+              },
+              "world_publication": {
+                "const": false
+              }
+            },
+            "required": [
+              "attendee_sessions",
+              "presenter",
+              "world_forge",
+              "world_publication"
+            ],
+            "type": "object"
+          },
+          "contract": {
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "const": "dreamland.deployment-control"
+              },
+              "openapi_sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "version": {
+                "const": "0.1.0-rc.1"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "openapi_sha256"
+            ],
+            "type": "object"
+          },
+          "credential_id": {
+            "pattern": "^credential:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "image": {
+            "pattern": "^sha256:[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "kind": {
+            "const": "dreamland.backend-handoff"
+          },
+          "paths": {
+            "additionalProperties": false,
+            "properties": {
+              "health": {
+                "const": "/deployment/v1/health"
+              },
+              "identity": {
+                "const": "/deployment/v1/identity"
+              },
+              "readiness": {
+                "const": "/deployment/v1/readiness"
+              }
+            },
+            "required": [
+              "identity",
+              "health",
+              "readiness"
+            ],
+            "type": "object"
+          },
+          "product_contracts": {
+            "maxItems": 0,
+            "type": "array"
+          },
+          "project": {
+            "pattern": "^[a-z0-9](?:[a-z0-9-]{0,38}[a-z0-9])?$",
+            "type": "string"
+          },
+          "revision": {
+            "pattern": "^[0-9a-f]{40}$",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "attendee",
+              "operator"
+            ],
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "0.1.0-rc.1"
+          },
+          "transport": {
+            "additionalProperties": false,
+            "properties": {
+              "alias": {
+                "pattern": "^[a-z0-9][a-z0-9-]{0,39}-(attendee|operator)-api$",
+                "type": "string"
+              },
+              "base_url": {
+                "pattern": "^http://[a-z0-9][a-z0-9-]{0,39}-(attendee|operator)-api:8080$",
+                "type": "string"
+              },
+              "kind": {
+                "const": "docker-network"
+              },
+              "network": {
+                "pattern": "^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$",
+                "type": "string"
+              },
+              "port": {
+                "const": 8080,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "kind",
+              "network",
+              "alias",
+              "port",
+              "base_url"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "schema_version",
+          "project",
+          "role",
+          "image",
+          "revision",
+          "credential_id",
+          "transport",
+          "contract",
+          "paths",
+          "capabilities",
+          "product_contracts"
+        ],
+        "type": "object"
+      },
+      "Health": {
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "enum": [
+              "attendee",
+              "operator"
+            ],
+            "type": "string"
+          },
+          "service_epoch": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "status": {
+            "const": "healthy"
+          }
+        },
+        "required": [
+          "status",
+          "role",
+          "service_epoch"
+        ],
+        "type": "object"
+      },
+      "Identity": {
+        "additionalProperties": false,
+        "properties": {
+          "handoff": {
+            "$ref": "#/components/schemas/Handoff"
+          },
+          "service_epoch": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "handoff",
+          "service_epoch"
+        ],
+        "type": "object"
+      },
+      "Readiness": {
+        "additionalProperties": false,
+        "properties": {
+          "admission_ready": {
+            "const": false
+          },
+          "capabilities": {
+            "additionalProperties": false,
+            "properties": {
+              "attendee_sessions": {
+                "const": false
+              },
+              "presenter": {
+                "const": false
+              },
+              "world_forge": {
+                "const": false
+              },
+              "world_publication": {
+                "const": false
+              }
+            },
+            "required": [
+              "attendee_sessions",
+              "presenter",
+              "world_forge",
+              "world_publication"
+            ],
+            "type": "object"
+          },
+          "reason": {
+            "const": "domain_services_unavailable"
+          },
+          "role": {
+            "enum": [
+              "attendee",
+              "operator"
+            ],
+            "type": "string"
+          },
+          "service_epoch": {
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+            "type": "string"
+          },
+          "transport_ready": {
+            "const": true
+          }
+        },
+        "required": [
+          "transport_ready",
+          "admission_ready",
+          "reason",
+          "role",
+          "service_epoch",
+          "capabilities"
+        ],
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "roleBearer": {
+        "description": "Server-side metadata role credential. Distinct attendee and operator role instances never accept each other's bearer. No Product/session/actor authority.",
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Authenticated private metadata services only. All attendee, presenter, Forge and publication services remain unavailable. One independent bearer and state root per role. HTTP on an explicitly managed private Docker network; no public host HTTP listener.",
+    "title": "DREAMLAND Deployment Control",
+    "version": "0.1.0-rc.1"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/deployment/v1/health": {
+      "get": {
+        "operationId": "deployment_health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            },
+            "description": "Authenticated metadata response."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Malformed request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Missing or wrong role bearer."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unavailable route or method."
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Authenticated unsupported HTTP method."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Sanitized service error."
+          }
+        }
+      }
+    },
+    "/deployment/v1/identity": {
+      "get": {
+        "operationId": "deployment_identity",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Identity"
+                }
+              }
+            },
+            "description": "Authenticated metadata response."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Malformed request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Missing or wrong role bearer."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unavailable route or method."
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Authenticated unsupported HTTP method."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Sanitized service error."
+          }
+        }
+      }
+    },
+    "/deployment/v1/readiness": {
+      "get": {
+        "operationId": "deployment_readiness",
+        "responses": {
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Malformed request."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Missing or wrong role bearer."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Unavailable route or method."
+          },
+          "405": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Authenticated unsupported HTTP method."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            },
+            "description": "Sanitized service error."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Readiness"
+                }
+              }
+            },
+            "description": "Metadata is available; domain admission remains unavailable."
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "roleBearer": []
+    }
+  ],
+  "x-dreamland-credential-delivery": {
+    "browser_supported": false,
+    "file_format": "single ASCII role-prefixed bearer with one trailing newline",
+    "file_mode": "0600",
+    "owner": "service effective UID",
+    "root_mode": "0700",
+    "rotation": "explicit replacement deployment; no implicit rotation or hot reload"
+  },
+  "x-dreamland-product-capabilities-enabled": false,
+  "x-dreamland-scope": "deployment_control_only"
+}

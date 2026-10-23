@@ -1,0 +1,9 @@
+{
+  "condition": "wrong_actor_class",
+  "expected_error_code": "authority_denied",
+  "expected_http_status": 403,
+  "operation_id": "getWorldAccessCatalog",
+  "request_actor_class": "operator",
+  "required_actor_class": "attendee",
+  "side_effects_committed": false
+}

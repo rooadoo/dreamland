@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "authority_denied",
+    "message": "Safe World Forge fixture for authority denied.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-authority_denied"
+}

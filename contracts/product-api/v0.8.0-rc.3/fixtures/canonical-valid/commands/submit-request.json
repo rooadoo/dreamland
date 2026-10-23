@@ -1,0 +1,4 @@
+{
+  "command": "uname -a",
+  "expected_slot_generation": 0
+}

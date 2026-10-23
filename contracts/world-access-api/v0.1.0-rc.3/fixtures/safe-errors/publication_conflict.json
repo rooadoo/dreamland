@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "publication_conflict",
+    "message": "The generated-world publication conflicts with current state.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

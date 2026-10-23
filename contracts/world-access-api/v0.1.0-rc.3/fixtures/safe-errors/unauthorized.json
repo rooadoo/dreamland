@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "unauthorized",
+    "message": "Missing or invalid private World Access authority.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

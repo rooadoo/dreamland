@@ -1,0 +1,8 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_code": null,
+  "expected_outcome": "completed",
+  "reconcile_with": "command_result",
+  "same_key_replay": false,
+  "scenario": "promised_terminal_event_withheld"
+}

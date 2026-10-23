@@ -1,0 +1,8 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_code": null,
+  "expected_outcome": "session_created",
+  "reconcile_with": "same_request",
+  "same_key_replay": true,
+  "scenario": "create_response_lost_after_commit"
+}

@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "job_terminal",
+    "message": "Safe World Forge fixture for job terminal.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-job_terminal"
+}

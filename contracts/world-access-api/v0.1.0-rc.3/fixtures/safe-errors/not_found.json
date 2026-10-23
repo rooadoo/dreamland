@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "not_found",
+    "message": "The requested World Access resource is unavailable.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

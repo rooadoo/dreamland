@@ -1,0 +1,21 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.1"
+  },
+  "error": {
+    "code": "handoff_capacity_exhausted",
+    "message": "Forge-to-Stage selection capacity is exhausted.",
+    "request_id": "request:error_handoff_capacity_exhausted_0001",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "preview": {
+    "executor": "private-attendee-security-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  }
+}

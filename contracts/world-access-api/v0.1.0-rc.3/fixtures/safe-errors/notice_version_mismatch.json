@@ -1,0 +1,9 @@
+{
+  "error": {
+    "code": "notice_version_mismatch",
+    "message": "The presented privacy notice version does not match this offering.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "request_id": "request:phase8a-world-access-error"
+}

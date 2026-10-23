@@ -1,0 +1,88 @@
+
+  o---o   _   _   __                           _ 
+  |      | \ |_) |_   /\  |\/| |     /\  |\ | | \
+  o---o  |_/ | \ |__ /--\ |  | |___ /--\ | \| |_/
+  Welcome! DREAMLAND is an AI-emulated computing network.
+  Explore its machines, files, services, and connections.
+  Experiment, follow a hunch, and see how well the world holds together.
+
+  Every world selection starts a fresh, isolated session.
+  Your changes do not affect other visitors or carry into your next visit,
+  even if you choose the same world again.
+
+  At shell prompts, use exit or Ctrl-D to work your way back.
+  SSH connections inside the simulation behave normally.
+  Leaving your starting shell returns you to the world menu.
+  Choose Q at that menu to disconnect.
+
+  Agree once per SSH connection. Each world visit gets a public simulation ID,
+  shown at its start and end. Include it in reports.
+  -- Page 1 of 1 -------------------------------------------------------------
+  Press any key to continue, or Q to quit.
+
+
+  +--[ ]--[ ]--[ ]-----------------------------------------------------------+
+  | GUIDELINES | DREAMLAND                                                   |
+  +--------------------------------------------------------------------------+
+  Explore the simulation. Take care of the real infrastructure.
+
+  Simulated devices are fair game. Break them, challenge the LLM,
+  try to escape its role, and look for contradictions in the world.
+  We encourage these experiments and reports of what you discover.
+
+  Protect the real infrastructure running DREAMLAND and its visitors.
+  Don't disrupt the service, interfere with others, or access their data.
+  If you reach real infrastructure or data outside your simulation,
+  stop there and report what happened.
+
+  We collect connection details, including IP address and username,
+  plus commands, responses, and diagnostic/model traces to operate,
+  troubleshoot, evaluate, and improve DREAMLAND. Commands and world
+  context are sent to third-party OpenAI models. Don't enter real
+  credentials, confidential information, or personal data.
+  -- Page 1 of 2 -------------------------------------------------------------
+  Press any key to continue, or Q to quit.
+
+
+  +--[ ]--[ ]--[ ]-----------------------------------------------------------+
+  | GUIDELINES | DREAMLAND                                                   |
+  +--------------------------------------------------------------------------+
+  We will not publish your session activity or use it as excerpts in slides
+  or published research. Starting a fresh world does not delete retained
+  logs or traces.
+
+  Report findings with your simulation ID, the world, approximate time,
+  and steps to reproduce.
+
+  Diagnostic/model traces are also stored in the configured Langfuse tracing
+  service.
+
+  Report findings to admin@boxisalie.com.
+  -- Page 2 of 2 -------------------------------------------------------------
+  Type i agree and press Enter to accept the guidelines and choose a world.
+  Type Q and press Enter to disconnect.
+  >
+
+
+  +--[ ]--[ ]--[ ]-----------------------------------------------------------+
+  | CHOOSE A WORLD | DREAMLAND                                               |
+  +--------------------------------------------------------------------------+
+  Every selection starts a fresh, isolated session.
+
+  [1] Morrowbasket Markets
+      Start at a supermarket checkout terminal in Porto and explore a
+      sprawling retail network of stores, warehouses, suppliers, and support
+      systems.
+
+  [2] Common Ground Colonyship
+      Explore a public terminal aboard a centuries-old colonyship connecting
+      to a destination already settled by a later, faster expedition.
+
+  [3] Muirbank Alpha
+      Start on an instrument technician's laptop aboard a North Sea oil
+      platform and follow connections through crew life, shore support, and
+      industrial systems.
+  -- Page 1 of 1 -------------------------------------------------------------
+  Enter a number and press Enter to start that world.
+  Type R and press Enter to refresh, or Q and Enter to disconnect.
+  >

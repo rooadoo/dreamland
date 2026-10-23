@@ -1,0 +1,1765 @@
+{
+  "components": {
+    "parameters": {
+      "ActorContext": {
+        "in": "header",
+        "name": "X-Dreamland-Actor-Context",
+        "required": true,
+        "schema": {
+          "maxLength": 512,
+          "minLength": 16,
+          "pattern": "^[\\x21-\\x7e]+$",
+          "type": "string"
+        }
+      },
+      "ExpectedEpoch": {
+        "in": "header",
+        "name": "X-Dreamland-Expected-Epoch",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ServiceEpoch"
+        }
+      },
+      "IdempotencyKey": {
+        "in": "header",
+        "name": "Idempotency-Key",
+        "required": true,
+        "schema": {
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[\\x21-\\x7e]+$",
+          "type": "string"
+        }
+      },
+      "RequestId": {
+        "in": "header",
+        "name": "X-Request-Id",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/RequestId"
+        }
+      }
+    },
+    "schemas": {
+      "AccessRecordId": {
+        "pattern": "^generated-access-record:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "CatalogOffering": {
+        "additionalProperties": false,
+        "properties": {
+          "display": {
+            "additionalProperties": false,
+            "properties": {
+              "revision_label": {
+                "maxLength": 120,
+                "minLength": 1,
+                "type": "string"
+              },
+              "source_label": {
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              },
+              "title": {
+                "maxLength": 120,
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "title",
+              "source_label",
+              "revision_label"
+            ],
+            "type": "object"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "minLength": 20,
+            "type": "string"
+          },
+          "notice_version": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "offering_id": {
+            "$ref": "#/components/schemas/OfferingId"
+          },
+          "offering_revision": {
+            "$ref": "#/components/schemas/OfferingRevision"
+          },
+          "origin": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "authored_profile_snapshot",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "world_forge_selection",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "kind"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "offering_id",
+          "offering_revision",
+          "origin",
+          "display",
+          "notice_version",
+          "expires_at"
+        ],
+        "type": "object"
+      },
+      "CatalogResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "catalog_position": {
+            "pattern": "^catalog-position:[a-f0-9]{40}$",
+            "type": "string"
+          },
+          "contract": {
+            "additionalProperties": false,
+            "properties": {
+              "compatibility": {
+                "const": "unfrozen-integration-preview",
+                "type": "string"
+              },
+              "name": {
+                "const": "dreamland-private-world-access-api",
+                "type": "string"
+              },
+              "revision": {
+                "const": "0.1.0-rc.4",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "revision",
+              "compatibility"
+            ],
+            "type": "object"
+          },
+          "kind": {
+            "const": "world_access_catalog",
+            "type": "string"
+          },
+          "offerings": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "display": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "revision_label": {
+                      "maxLength": 120,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "source_label": {
+                      "maxLength": 64,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "title": {
+                      "maxLength": 120,
+                      "minLength": 1,
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "source_label",
+                    "revision_label"
+                  ],
+                  "type": "object"
+                },
+                "expires_at": {
+                  "format": "date-time",
+                  "maxLength": 64,
+                  "minLength": 20,
+                  "type": "string"
+                },
+                "notice_version": {
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+                  "type": "string"
+                },
+                "offering_id": {
+                  "$ref": "#/components/schemas/OfferingId"
+                },
+                "offering_revision": {
+                  "$ref": "#/components/schemas/OfferingRevision"
+                },
+                "origin": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "authored_profile_snapshot",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "world_forge_selection",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "offering_id",
+                "offering_revision",
+                "origin",
+                "display",
+                "notice_version",
+                "expires_at"
+              ],
+              "type": "object"
+            },
+            "maxItems": 128,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "preview": {
+            "additionalProperties": false,
+            "properties": {
+              "capabilities_enabled": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 0,
+                "type": "array"
+              },
+              "kind": {
+                "const": "live_generated_world_access_development",
+                "type": "string"
+              },
+              "live_attendee_execution": {
+                "const": true,
+                "type": "boolean"
+              },
+              "live_capability_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "live_forge_evidence": {
+                "const": true,
+                "type": "boolean"
+              },
+              "loopback_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "process_local": {
+                "const": true,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "provider_calls",
+              "live_forge_evidence",
+              "live_attendee_execution",
+              "live_capability_evidence",
+              "loopback_only",
+              "process_local",
+              "capabilities_enabled"
+            ],
+            "type": "object"
+          },
+          "request_id": {
+            "$ref": "#/components/schemas/RequestId"
+          },
+          "service_epoch": {
+            "$ref": "#/components/schemas/ServiceEpoch"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "catalog_position",
+          "offerings",
+          "request_id",
+          "contract",
+          "preview"
+        ],
+        "type": "object"
+      },
+      "ContractIdentity": {
+        "additionalProperties": false,
+        "properties": {
+          "compatibility": {
+            "const": "unfrozen-integration-preview",
+            "type": "string"
+          },
+          "name": {
+            "const": "dreamland-private-world-access-api",
+            "type": "string"
+          },
+          "revision": {
+            "const": "0.1.0-rc.4",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "revision",
+          "compatibility"
+        ],
+        "type": "object"
+      },
+      "IdentityResponse": {
+        "additionalProperties": true,
+        "properties": {
+          "contract": {
+            "additionalProperties": false,
+            "properties": {
+              "compatibility": {
+                "const": "unfrozen-integration-preview",
+                "type": "string"
+              },
+              "name": {
+                "const": "dreamland-private-world-access-api",
+                "type": "string"
+              },
+              "revision": {
+                "const": "0.1.0-rc.4",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "revision",
+              "compatibility"
+            ],
+            "type": "object"
+          },
+          "dependencies": {
+            "additionalProperties": false,
+            "properties": {
+              "product_api": {
+                "const": "0.7.0-rc.4",
+                "type": "string"
+              },
+              "world_forge_api": {
+                "const": "0.1.0-rc.4",
+                "type": "string"
+              }
+            },
+            "required": [
+              "product_api",
+              "world_forge_api"
+            ],
+            "type": "object"
+          },
+          "kind": {
+            "const": "world_access_identity",
+            "type": "string"
+          },
+          "preview": {
+            "additionalProperties": false,
+            "properties": {
+              "capabilities_enabled": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 0,
+                "type": "array"
+              },
+              "kind": {
+                "const": "live_generated_world_access_development",
+                "type": "string"
+              },
+              "live_attendee_execution": {
+                "const": true,
+                "type": "boolean"
+              },
+              "live_capability_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "live_forge_evidence": {
+                "const": true,
+                "type": "boolean"
+              },
+              "loopback_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "process_local": {
+                "const": true,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "provider_calls",
+              "live_forge_evidence",
+              "live_attendee_execution",
+              "live_capability_evidence",
+              "loopback_only",
+              "process_local",
+              "capabilities_enabled"
+            ],
+            "type": "object"
+          },
+          "request_id": {
+            "$ref": "#/components/schemas/RequestId"
+          },
+          "service_epoch": {
+            "$ref": "#/components/schemas/ServiceEpoch"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "request_id",
+          "contract",
+          "preview",
+          "dependencies"
+        ],
+        "type": "object"
+      },
+      "IntegrationHttpScenario": {
+        "additionalProperties": false,
+        "properties": {
+          "condition": {
+            "enum": [
+              "wrong_actor_class",
+              "offering_revision_changed",
+              "offering_expired"
+            ],
+            "type": "string"
+          },
+          "expected_error_code": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "expected_http_status": {
+            "maximum": 599,
+            "minimum": 400,
+            "type": "integer"
+          },
+          "operation_id": {
+            "enum": [
+              "getWorldAccessIdentity",
+              "promoteSelectedForgeWorld",
+              "getWorldAccessPromotion",
+              "revealWorldAccessPromotion",
+              "getWorldAccessCatalog",
+              "exchangeWorldAccessOffering"
+            ],
+            "type": "string"
+          },
+          "request_actor_class": {
+            "enum": [
+              "operator",
+              "attendee"
+            ],
+            "type": "string"
+          },
+          "required_actor_class": {
+            "enum": [
+              "operator",
+              "attendee"
+            ],
+            "type": "string"
+          },
+          "side_effects_committed": {
+            "const": false,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "condition",
+          "operation_id",
+          "request_actor_class",
+          "required_actor_class",
+          "expected_http_status",
+          "expected_error_code",
+          "side_effects_committed"
+        ],
+        "type": "object"
+      },
+      "LaunchGrant": {
+        "pattern": "^launch-grant:[A-Za-z0-9_-]{24,480}$",
+        "type": "string"
+      },
+      "LaunchSelectionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "notice_version_presented": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "offering_id": {
+            "$ref": "#/components/schemas/OfferingId"
+          },
+          "offering_revision": {
+            "$ref": "#/components/schemas/OfferingRevision"
+          }
+        },
+        "required": [
+          "offering_id",
+          "offering_revision",
+          "notice_version_presented"
+        ],
+        "type": "object"
+      },
+      "LaunchSelectionResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "contract": {
+            "additionalProperties": false,
+            "properties": {
+              "compatibility": {
+                "const": "unfrozen-integration-preview",
+                "type": "string"
+              },
+              "name": {
+                "const": "dreamland-private-world-access-api",
+                "type": "string"
+              },
+              "revision": {
+                "const": "0.1.0-rc.4",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "revision",
+              "compatibility"
+            ],
+            "type": "object"
+          },
+          "grant_expires_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "minLength": 20,
+            "type": "string"
+          },
+          "kind": {
+            "const": "attendee_launch_selection_granted",
+            "type": "string"
+          },
+          "launch_binding_sha256": {
+            "description": "Server-only correlation evidence equal to the Product session snapshot launch_binding.sha256. This value is private BFF input and must not be accepted from requests or exposed to browsers.",
+            "pattern": "^[a-f0-9]{64}$",
+            "readOnly": true,
+            "type": "string"
+          },
+          "launch_grant": {
+            "$ref": "#/components/schemas/LaunchGrant"
+          },
+          "preview": {
+            "additionalProperties": false,
+            "properties": {
+              "capabilities_enabled": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 0,
+                "type": "array"
+              },
+              "kind": {
+                "const": "live_generated_world_access_development",
+                "type": "string"
+              },
+              "live_attendee_execution": {
+                "const": true,
+                "type": "boolean"
+              },
+              "live_capability_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "live_forge_evidence": {
+                "const": true,
+                "type": "boolean"
+              },
+              "loopback_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "process_local": {
+                "const": true,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "provider_calls",
+              "live_forge_evidence",
+              "live_attendee_execution",
+              "live_capability_evidence",
+              "loopback_only",
+              "process_local",
+              "capabilities_enabled"
+            ],
+            "type": "object"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "request_id": {
+            "$ref": "#/components/schemas/RequestId"
+          },
+          "selection": {
+            "additionalProperties": false,
+            "properties": {
+              "display": {
+                "additionalProperties": false,
+                "properties": {
+                  "revision_label": {
+                    "maxLength": 120,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "source_label": {
+                    "maxLength": 64,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "title": {
+                    "maxLength": 120,
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "title",
+                  "source_label",
+                  "revision_label"
+                ],
+                "type": "object"
+              },
+              "expires_at": {
+                "format": "date-time",
+                "maxLength": 64,
+                "minLength": 20,
+                "type": "string"
+              },
+              "notice_version": {
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+                "type": "string"
+              },
+              "offering_id": {
+                "$ref": "#/components/schemas/OfferingId"
+              },
+              "offering_revision": {
+                "$ref": "#/components/schemas/OfferingRevision"
+              },
+              "origin": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "authored_profile_snapshot",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "world_forge_selection",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "offering_id",
+              "offering_revision",
+              "origin",
+              "display",
+              "notice_version",
+              "expires_at"
+            ],
+            "type": "object"
+          },
+          "service_epoch": {
+            "$ref": "#/components/schemas/ServiceEpoch"
+          }
+        },
+        "required": [
+          "kind",
+          "service_epoch",
+          "launch_grant",
+          "launch_binding_sha256",
+          "grant_expires_at",
+          "selection",
+          "replayed",
+          "request_id",
+          "contract",
+          "preview"
+        ],
+        "type": "object"
+      },
+      "OfferingId": {
+        "pattern": "^offering:[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$",
+        "type": "string"
+      },
+      "OfferingRevision": {
+        "pattern": "^offering-revision:[A-Za-z0-9][A-Za-z0-9_.-]{15,127}$",
+        "type": "string"
+      },
+      "PreviewIdentity": {
+        "additionalProperties": false,
+        "properties": {
+          "capabilities_enabled": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 0,
+            "type": "array"
+          },
+          "kind": {
+            "const": "live_generated_world_access_development",
+            "type": "string"
+          },
+          "live_attendee_execution": {
+            "const": true,
+            "type": "boolean"
+          },
+          "live_capability_evidence": {
+            "const": false,
+            "type": "boolean"
+          },
+          "live_forge_evidence": {
+            "const": true,
+            "type": "boolean"
+          },
+          "loopback_only": {
+            "const": true,
+            "type": "boolean"
+          },
+          "process_local": {
+            "const": true,
+            "type": "boolean"
+          },
+          "provider_calls": {
+            "const": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "provider_calls",
+          "live_forge_evidence",
+          "live_attendee_execution",
+          "live_capability_evidence",
+          "loopback_only",
+          "process_local",
+          "capabilities_enabled"
+        ],
+        "type": "object"
+      },
+      "PromotionId": {
+        "pattern": "^generated-access-promotion:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      },
+      "PromotionRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "forge_job_reference": {
+            "maxLength": 512,
+            "minLength": 1,
+            "pattern": "^[\\x21-\\x7e]+$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "forge_job_reference"
+        ],
+        "type": "object"
+      },
+      "PromotionResponse": {
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "properties": {
+              "catalog_eligible": {
+                "const": false
+              },
+              "state": {
+                "const": "hidden"
+              }
+            },
+            "required": [
+              "state",
+              "catalog_eligible"
+            ]
+          },
+          {
+            "properties": {
+              "catalog_eligible": {
+                "const": true
+              },
+              "state": {
+                "const": "revealed"
+              }
+            },
+            "required": [
+              "state",
+              "catalog_eligible"
+            ]
+          }
+        ],
+        "properties": {
+          "access_record_id": {
+            "$ref": "#/components/schemas/AccessRecordId"
+          },
+          "catalog_eligible": {
+            "type": "boolean"
+          },
+          "changed_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "minLength": 20,
+            "type": "string"
+          },
+          "contract": {
+            "additionalProperties": false,
+            "properties": {
+              "compatibility": {
+                "const": "unfrozen-integration-preview",
+                "type": "string"
+              },
+              "name": {
+                "const": "dreamland-private-world-access-api",
+                "type": "string"
+              },
+              "revision": {
+                "const": "0.1.0-rc.4",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "revision",
+              "compatibility"
+            ],
+            "type": "object"
+          },
+          "created_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "minLength": 20,
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "maxLength": 64,
+            "minLength": 20,
+            "type": "string"
+          },
+          "kind": {
+            "const": "generated_world_access",
+            "type": "string"
+          },
+          "origin": {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "world_forge_selection",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "type": "object"
+          },
+          "preview": {
+            "additionalProperties": false,
+            "properties": {
+              "capabilities_enabled": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 0,
+                "type": "array"
+              },
+              "kind": {
+                "const": "live_generated_world_access_development",
+                "type": "string"
+              },
+              "live_attendee_execution": {
+                "const": true,
+                "type": "boolean"
+              },
+              "live_capability_evidence": {
+                "const": false,
+                "type": "boolean"
+              },
+              "live_forge_evidence": {
+                "const": true,
+                "type": "boolean"
+              },
+              "loopback_only": {
+                "const": true,
+                "type": "boolean"
+              },
+              "process_local": {
+                "const": true,
+                "type": "boolean"
+              },
+              "provider_calls": {
+                "const": true,
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "kind",
+              "provider_calls",
+              "live_forge_evidence",
+              "live_attendee_execution",
+              "live_capability_evidence",
+              "loopback_only",
+              "process_local",
+              "capabilities_enabled"
+            ],
+            "type": "object"
+          },
+          "promotion_id": {
+            "$ref": "#/components/schemas/PromotionId"
+          },
+          "replayed": {
+            "type": "boolean"
+          },
+          "request_id": {
+            "$ref": "#/components/schemas/RequestId"
+          },
+          "revision": {
+            "additionalProperties": false,
+            "properties": {
+              "revision_id": {
+                "pattern": "^world-revision:sha256:[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "revision_id",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "revision_number": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "service_epoch": {
+            "$ref": "#/components/schemas/ServiceEpoch"
+          },
+          "state": {
+            "enum": [
+              "hidden",
+              "revealed"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_id",
+          "contract",
+          "preview",
+          "kind",
+          "service_epoch",
+          "promotion_id",
+          "access_record_id",
+          "revision_number",
+          "state",
+          "origin",
+          "revision",
+          "created_at",
+          "changed_at",
+          "expires_at",
+          "catalog_eligible",
+          "replayed"
+        ],
+        "type": "object"
+      },
+      "RequestId": {
+        "maxLength": 128,
+        "minLength": 8,
+        "pattern": "^[A-Za-z0-9_.:-]+$",
+        "type": "string"
+      },
+      "RevealRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_access_record_id": {
+            "$ref": "#/components/schemas/AccessRecordId"
+          }
+        },
+        "required": [
+          "expected_access_record_id"
+        ],
+        "type": "object"
+      },
+      "SafeError": {
+        "additionalProperties": false,
+        "oneOf": [
+          {
+            "properties": {
+              "retry": {
+                "const": "after_delay"
+              },
+              "retry_after_ms": {
+                "maximum": 60000,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "retry",
+              "retry_after_ms"
+            ]
+          },
+          {
+            "properties": {
+              "retry": {
+                "const": "none"
+              },
+              "retry_after_ms": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "retry",
+              "retry_after_ms"
+            ]
+          },
+          {
+            "properties": {
+              "retry": {
+                "const": "same_request"
+              },
+              "retry_after_ms": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "retry",
+              "retry_after_ms"
+            ]
+          }
+        ],
+        "properties": {
+          "code": {
+            "maxLength": 128,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 160,
+            "minLength": 1,
+            "type": "string"
+          },
+          "retry": {
+            "enum": [
+              "none",
+              "same_request",
+              "after_delay"
+            ],
+            "type": "string"
+          },
+          "retry_after_ms": {
+            "oneOf": [
+              {
+                "maximum": 60000,
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "retry",
+          "retry_after_ms"
+        ],
+        "type": "object"
+      },
+      "SafeErrorEnvelope": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/SafeError"
+          },
+          "request_id": {
+            "$ref": "#/components/schemas/RequestId"
+          }
+        },
+        "required": [
+          "request_id",
+          "error"
+        ],
+        "type": "object"
+      },
+      "ServiceEpoch": {
+        "pattern": "^epoch:[A-Za-z0-9_-]{16,128}$",
+        "type": "string"
+      }
+    },
+    "securitySchemes": {
+      "PrivateBearer": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "Unfrozen Phase 8B live-development identity for one explicitly started, loopback-only composition. Authoritative live World Forge selections may be promoted and revealed for provider-backed attendee execution. All production capabilities remain disabled.",
+    "title": "DREAMLAND Private Live World Access Development",
+    "version": "0.1.0-rc.4"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/world-access/v1/catalog": {
+      "get": {
+        "description": "List bounded authored and revealed-generated attendee offerings.",
+        "operationId": "getWorldAccessCatalog",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogResponse"
+                }
+              }
+            },
+            "description": "Successful private response.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bounded transport-safe failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PrivateBearer": []
+          }
+        ],
+        "x-dreamland-actor-class": "attendee"
+      }
+    },
+    "/world-access/v1/identity": {
+      "get": {
+        "description": "Resolve the private World Access contract and current epoch.",
+        "operationId": "getWorldAccessIdentity",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentityResponse"
+                }
+              }
+            },
+            "description": "Successful private response.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bounded transport-safe failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PrivateBearer": []
+          }
+        ],
+        "x-dreamland-actor-class": "none"
+      }
+    },
+    "/world-access/v1/launch-selections": {
+      "post": {
+        "description": "Exchange exact catalog and notice evidence for a Product grant.",
+        "operationId": "exchangeWorldAccessOffering",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LaunchSelectionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LaunchSelectionResponse"
+                }
+              }
+            },
+            "description": "Successful private response.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bounded transport-safe failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PrivateBearer": []
+          }
+        ],
+        "x-dreamland-actor-class": "attendee",
+        "x-dreamland-idempotency": {
+          "old_epoch": "outcome_unknown_without_redispatch",
+          "same_key_changed_body": "idempotency_conflict",
+          "same_key_same_body": "replay_original_result_or_claimed_rejection",
+          "scope": [
+            "service_epoch",
+            "actor",
+            "operation_family",
+            "idempotency_key"
+          ],
+          "transient_capacity": "unclaimed_retry_after_delay"
+        }
+      }
+    },
+    "/world-access/v1/promotions": {
+      "post": {
+        "description": "Create hidden access truth from one server-resolved Forge selection.",
+        "operationId": "promoteSelectedForgeWorld",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromotionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromotionResponse"
+                }
+              }
+            },
+            "description": "Successful private response.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bounded transport-safe failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PrivateBearer": []
+          }
+        ],
+        "x-dreamland-actor-class": "operator",
+        "x-dreamland-idempotency": {
+          "old_epoch": "outcome_unknown_without_redispatch",
+          "same_key_changed_body": "idempotency_conflict",
+          "same_key_same_body": "replay_original_result_or_claimed_rejection",
+          "scope": [
+            "service_epoch",
+            "actor",
+            "operation_family",
+            "idempotency_key"
+          ],
+          "transient_capacity": "unclaimed_retry_after_delay"
+        }
+      }
+    },
+    "/world-access/v1/promotions/{promotion_id}": {
+      "get": {
+        "description": "Read the current safe promotion/access projection.",
+        "operationId": "getWorldAccessPromotion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromotionResponse"
+                }
+              }
+            },
+            "description": "Successful private response.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bounded transport-safe failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PrivateBearer": []
+          }
+        ],
+        "x-dreamland-actor-class": "operator"
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "promotion_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/PromotionId"
+          }
+        }
+      ]
+    },
+    "/world-access/v1/promotions/{promotion_id}/reveal": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "promotion_id",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/PromotionId"
+          }
+        }
+      ],
+      "post": {
+        "description": "Publish and reveal the expected hidden access-record revision.",
+        "operationId": "revealWorldAccessPromotion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RequestId"
+          },
+          {
+            "$ref": "#/components/parameters/ExpectedEpoch"
+          },
+          {
+            "$ref": "#/components/parameters/ActorContext"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevealRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromotionResponse"
+                }
+              }
+            },
+            "description": "Successful private response.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "default": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SafeErrorEnvelope"
+                }
+              }
+            },
+            "description": "Bounded transport-safe failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "PrivateBearer": []
+          }
+        ],
+        "x-dreamland-actor-class": "operator",
+        "x-dreamland-idempotency": {
+          "old_epoch": "outcome_unknown_without_redispatch",
+          "same_key_changed_body": "idempotency_conflict",
+          "same_key_same_body": "replay_original_result_or_claimed_rejection",
+          "scope": [
+            "service_epoch",
+            "actor",
+            "operation_family",
+            "idempotency_key"
+          ],
+          "transient_capacity": "unclaimed_retry_after_delay"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "PrivateBearer": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://127.0.0.1:{port}",
+      "variables": {
+        "port": {
+          "default": "0"
+        }
+      }
+    }
+  ],
+  "x-dreamland-boundary": {
+    "direct_browser_access": false,
+    "launch_binding_sha256_browser_exposed": false,
+    "launch_binding_sha256_server_only": true,
+    "launch_selection_id_exposed": false,
+    "live_attendee_execution": true,
+    "live_capability_evidence": false,
+    "live_forge_evidence": true,
+    "offering_id_is_authority": false,
+    "private_bff_only": true,
+    "production_capabilities_enabled": [],
+    "provider_calls": true
+  },
+  "x-dreamland-development-live": {
+    "capability_evidence": false,
+    "explicit_start_only": true,
+    "live_attendee_execution": true,
+    "live_forge_evidence": true,
+    "loopback_only": true,
+    "normal_runtime_composition": false,
+    "production_capabilities_enabled": [],
+    "provider_calls": true
+  }
+}

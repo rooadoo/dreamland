@@ -1,0 +1,8 @@
+{
+  "automatic_new_key_redispatch": false,
+  "expected_code": null,
+  "expected_outcome": "failed",
+  "reconcile_with": "command_result",
+  "same_key_replay": false,
+  "scenario": "forced_terminal_usage_settles_late"
+}

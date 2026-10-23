@@ -1,0 +1,21 @@
+{
+  "catalog_position": "catalog-position:0000000000000000000000000000000000000000",
+  "contract": {
+    "compatibility": "unfrozen-integration-preview",
+    "name": "dreamland-private-world-access-api",
+    "revision": "0.1.0-rc.3"
+  },
+  "kind": "world_access_catalog",
+  "offerings": [],
+  "preview": {
+    "capabilities_enabled": [],
+    "kind": "provider_free_generated_access_preview",
+    "live_capability_evidence": false,
+    "live_forge_evidence": false,
+    "loopback_only": true,
+    "process_local": true,
+    "provider_calls": false
+  },
+  "request_id": "request:phase8a-world-access-0001",
+  "service_epoch": "epoch:phase8a_world_access_0001"
+}

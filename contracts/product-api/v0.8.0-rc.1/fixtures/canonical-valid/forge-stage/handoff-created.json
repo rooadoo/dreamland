@@ -1,0 +1,131 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.8.0-rc.1"
+  },
+  "forge_selection": {
+    "expires_at": "2026-08-26T12:05:00Z",
+    "job_id": "forge-job:phase5_job_a_00000001",
+    "policy_id": "policy:forge-stage-live-handoff-v1",
+    "receipt_correlation_id": "forge-receipt:phase5_receipt_a_00000001",
+    "reference": "forge-reference:phase5_job_a_00000001",
+    "revision": {
+      "immutable_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "revision_id": "world-revision:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "selected_at": "2026-08-26T12:00:00Z",
+    "selected_record_id": "forge-selected-record:phase5_selection_a_00000001",
+    "service_epoch": "forge-epoch:phase5_forge_service_0001"
+  },
+  "kind": "forge_stage_session_created",
+  "preview": {
+    "executor": "private-attendee-security-no-provider-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": false,
+    "test_only": true
+  },
+  "replayed": false,
+  "service_epoch": "epoch:phase2preview0001",
+  "session_authority": "session-cap:forge_stage_alpha_capability_000001",
+  "snapshot": {
+    "authority_class": "presenter",
+    "available_controls": [
+      "snapshot",
+      "events",
+      "transcript",
+      "submit",
+      "reset",
+      "switch",
+      "close",
+      "xray"
+    ],
+    "command_slot": {
+      "active_command_id": null,
+      "generation": 0,
+      "state": "available"
+    },
+    "coordinates": {
+      "accepted_state_revision": 0,
+      "command_slot_generation": 0,
+      "control_revision": 1,
+      "event": {
+        "event_id": "event:phase2alphaevent:1",
+        "sequence": 1,
+        "stream_id": "stream:phase2alphaevents"
+      },
+      "transcript": {
+        "entry_id": null,
+        "position": 0,
+        "transcript_id": "transcript:phase2alphatranscript"
+      }
+    },
+    "latest_command": null,
+    "launch_binding": {
+      "limits": {
+        "absolute_ttl_ms": 3600000,
+        "command_reserved_spend_units": 1000,
+        "command_reserved_tokens": 2048,
+        "idle_ttl_ms": 1200000,
+        "max_command_bytes": 4096,
+        "max_commands": 16
+      },
+      "notice_version": "preview-notice-v1",
+      "policy_id": "preview-policy-v1",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "lifecycle": {
+      "absolute_expires_at_ms": 1777003600000,
+      "created_at_ms": 1777000000000,
+      "idle_expires_at_ms": 1777001200000,
+      "last_activity_at_ms": 1777000000010,
+      "state": "active"
+    },
+    "recovery": {
+      "retain_until_ms": null,
+      "tombstone": false
+    },
+    "reference": "session-ref:forge_stage_a_00000001",
+    "session_id": "session:forge_stage_a_00000001",
+    "stage": {
+      "admission_class": "presenter_stage_reserved",
+      "display": {
+        "revision_label": "World Forge aaaaaaaaaaaa",
+        "source_label": "Live World Forge",
+        "title": "Audience-created DREAMLAND world"
+      },
+      "reference": "session-ref:forge_stage_a_00000001",
+      "source": {
+        "forge_job_id": "forge-job:phase5_job_a_00000001",
+        "forge_reference": "forge-reference:phase5_job_a_00000001",
+        "immutable_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "kind": "world_forge_selection",
+        "selected_record_id": "forge-selected-record:phase5_selection_a_00000001"
+      },
+      "xray_available": true
+    },
+    "starting_revision": {
+      "revision_id": "world-revision:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "selected_record_id": "forge-selected-record:phase5_selection_a_00000001",
+      "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "transcript": {
+      "entries": [],
+      "kind": "transcript_page",
+      "omitted_after_entries": 0,
+      "omitted_before_entries": 0,
+      "position": {
+        "entry_id": null,
+        "position": 0,
+        "transcript_id": "transcript:phase2alphatranscript"
+      },
+      "retained_text_bytes": 0,
+      "retention_floor": {
+        "entry_id": null,
+        "position": 0,
+        "transcript_id": "transcript:phase2alphatranscript"
+      }
+    }
+  }
+}

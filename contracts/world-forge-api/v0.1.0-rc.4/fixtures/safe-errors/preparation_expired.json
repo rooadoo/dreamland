@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "preparation_expired",
+    "message": "Safe World Forge fixture for preparation expired.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-preparation_expired"
+}

@@ -1,0 +1,55 @@
+{
+  "contract": {
+    "compatibility": "unfrozen-release-candidate",
+    "name": "dreamland-private-product-api",
+    "revision": "0.7.0-rc.2"
+  },
+  "future_safe_top_level": {
+    "revision": 1
+  },
+  "kind": "presenter_stage_launch_options",
+  "options": [
+    {
+      "display": {
+        "revision_label": "Immutable A",
+        "source_label": "Authored",
+        "title": "Colony Ship A1"
+      },
+      "expires_at": null,
+      "launch_selection_id": "launch-selection:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "offering_id": "offering:authored-colonyship-a1",
+      "origin": {
+        "kind": "authored_profile_snapshot"
+      },
+      "revision": {
+        "revision_id": "world-revision:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "display": {
+        "revision_label": "Selected B",
+        "source_label": "World Forge",
+        "title": "Harbor Control"
+      },
+      "expires_at": "2026-08-27T14:00:00Z",
+      "launch_selection_id": "launch-selection:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "offering_id": "offering:forge-harbor-control",
+      "origin": {
+        "kind": "world_forge_selection"
+      },
+      "revision": {
+        "revision_id": "world-revision:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    }
+  ],
+  "preview": {
+    "executor": "development-live-launch-selection-langgraph-v1",
+    "integration_only": true,
+    "live_capability_evidence": false,
+    "provider_calls": true,
+    "test_only": true
+  },
+  "service_epoch": "epoch:phase2preview0001"
+}

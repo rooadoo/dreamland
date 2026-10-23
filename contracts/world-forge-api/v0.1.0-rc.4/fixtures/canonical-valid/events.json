@@ -1,0 +1,83 @@
+{
+  "events": [
+    {
+      "changed_at": "2026-08-25T12:00:00.000Z",
+      "cursor": "forge-cursor:fixture-00000008",
+      "event_id": "forge-event:fixture-00000009",
+      "job_id": "forge-job:fixture-00000003",
+      "requires_snapshot_reconciliation": true,
+      "sequence": 2,
+      "service_epoch": "forge-epoch:fixture-00000001",
+      "state": "queued",
+      "stream_id": "forge-stream:fixture-00000005",
+      "terminal": false
+    },
+    {
+      "changed_at": "2026-08-25T12:00:00.000Z",
+      "cursor": "forge-cursor:fixture-00000010",
+      "event_id": "forge-event:fixture-00000011",
+      "job_id": "forge-job:fixture-00000003",
+      "requires_snapshot_reconciliation": true,
+      "sequence": 3,
+      "service_epoch": "forge-epoch:fixture-00000001",
+      "state": "building",
+      "stream_id": "forge-stream:fixture-00000005",
+      "terminal": false
+    },
+    {
+      "changed_at": "2026-08-25T12:00:00.000Z",
+      "cursor": "forge-cursor:fixture-00000012",
+      "event_id": "forge-event:fixture-00000013",
+      "job_id": "forge-job:fixture-00000003",
+      "requires_snapshot_reconciliation": true,
+      "sequence": 4,
+      "service_epoch": "forge-epoch:fixture-00000001",
+      "state": "generated",
+      "stream_id": "forge-stream:fixture-00000005",
+      "terminal": false
+    },
+    {
+      "changed_at": "2026-08-25T12:00:00.000Z",
+      "cursor": "forge-cursor:fixture-00000014",
+      "event_id": "forge-event:fixture-00000015",
+      "job_id": "forge-job:fixture-00000003",
+      "requires_snapshot_reconciliation": true,
+      "sequence": 5,
+      "service_epoch": "forge-epoch:fixture-00000001",
+      "state": "validating",
+      "stream_id": "forge-stream:fixture-00000005",
+      "terminal": false
+    },
+    {
+      "changed_at": "2026-08-25T12:00:00.000Z",
+      "cursor": "forge-cursor:fixture-00000016",
+      "event_id": "forge-event:fixture-00000017",
+      "job_id": "forge-job:fixture-00000003",
+      "requires_snapshot_reconciliation": true,
+      "sequence": 6,
+      "service_epoch": "forge-epoch:fixture-00000001",
+      "state": "selected",
+      "stream_id": "forge-stream:fixture-00000005",
+      "terminal": true
+    }
+  ],
+  "kind": "forge_events",
+  "page_complete": true,
+  "position": {
+    "cursor": "forge-cursor:fixture-00000016",
+    "last_event_id": "forge-event:fixture-00000017",
+    "sequence": 6,
+    "service_epoch": "forge-epoch:fixture-00000001",
+    "stream_id": "forge-stream:fixture-00000005"
+  },
+  "requires_snapshot_reconciliation": true,
+  "service_epoch": "forge-epoch:fixture-00000001",
+  "source": {
+    "kind": "provider_free_integration_preview",
+    "label": "Deterministic no-provider World Forge backend integration preview",
+    "live_forge_evidence": false,
+    "provider_calls": false
+  },
+  "stream_id": "forge-stream:fixture-00000005",
+  "terminal": true
+}

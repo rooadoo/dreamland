@@ -1,0 +1,14 @@
+{
+  "display": {
+    "revision_label": "World Forge 0123456789ab",
+    "source_label": "World Forge",
+    "title": "Audience-created DREAMLAND world"
+  },
+  "expires_at": "2026-08-30T13:00:00Z",
+  "notice_version": "notice:phase8a-world-access-v1",
+  "offering_id": "offering:phase8a-generated",
+  "offering_revision": "offering-revision:generated-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "origin": {
+    "kind": "future_generated_origin"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "preparation_capacity_exhausted",
+    "message": "Safe World Forge fixture for preparation capacity exhausted.",
+    "retry": "none",
+    "retry_after_ms": null
+  },
+  "kind": "forge_error",
+  "request_id": "request:fixture-preparation_capacity_exhausted"
+}

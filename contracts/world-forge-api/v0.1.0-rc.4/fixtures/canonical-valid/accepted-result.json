@@ -1,0 +1,21 @@
+{
+  "deadline_at": "2026-08-25T12:02:00.000Z",
+  "job_id": "forge-job:fixture-00000003",
+  "kind": "forge_job_accepted",
+  "position": {
+    "cursor": "forge-cursor:fixture-00000006",
+    "last_event_id": "forge-event:fixture-00000007",
+    "sequence": 1,
+    "service_epoch": "forge-epoch:fixture-00000001",
+    "stream_id": "forge-stream:fixture-00000005"
+  },
+  "reference": "forge-reference:fixture-00000004",
+  "replayed": false,
+  "service_epoch": "forge-epoch:fixture-00000001",
+  "source": {
+    "kind": "provider_free_integration_preview",
+    "label": "Deterministic no-provider World Forge backend integration preview",
+    "live_forge_evidence": false,
+    "provider_calls": false
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$id": "https://dreamland.invalid/contracts/product-api/events.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "criticality": {
+      "enum": [
+        "authoritative",
+        "informational"
+      ],
+      "type": "string"
+    },
+    "data": {
+      "type": "object"
+    },
+    "emitted_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "event_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_revision": {
+      "const": "0.1.0-rc.1"
+    },
+    "sequence": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "stream_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "type": "string"
+    },
+    "type": {
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9_.-]*$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_revision",
+    "stream_id",
+    "sequence",
+    "event_id",
+    "type",
+    "criticality",
+    "emitted_at",
+    "data"
+  ],
+  "title": "DREAMLAND product event envelope foundation",
+  "type": "object",
+  "x-dreamland-event-transport": "unavailable-in-phase-0",
+  "x-dreamland-unknown-event-policy": {
+    "authoritative": "snapshot-resync-before-mutation",
+    "informational": "ignore-payload-and-advance-position"
+  }
+}

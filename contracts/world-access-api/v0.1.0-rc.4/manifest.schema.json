@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "backend_commit": {
+          "type": "null"
+        },
+        "publication_status": {
+          "const": "draft"
+        },
+        "published_at": {
+          "type": "null"
+        }
+      }
+    },
+    {
+      "properties": {
+        "backend_commit": {
+          "pattern": "^[a-f0-9]{40}$",
+          "type": "string"
+        },
+        "publication_status": {
+          "const": "published"
+        },
+        "published_at": {
+          "format": "date-time",
+          "maxLength": 64,
+          "minLength": 20,
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "properties": {
+    "artifacts": {
+      "additionalProperties": {
+        "pattern": "^[a-f0-9]{64}$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "backend_commit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "compatibility": {
+      "const": "unfrozen-integration-preview",
+      "type": "string"
+    },
+    "contract_name": {
+      "const": "dreamland-private-world-access-api",
+      "type": "string"
+    },
+    "contract_revision": {
+      "const": "0.1.0-rc.4",
+      "type": "string"
+    },
+    "dependencies": {
+      "additionalProperties": false,
+      "properties": {
+        "product_api": {
+          "additionalProperties": false,
+          "properties": {
+            "contract": {
+              "type": "string"
+            },
+            "manifest_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "revision": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "contract",
+            "revision",
+            "manifest_sha256"
+          ],
+          "type": "object"
+        },
+        "world_forge_api": {
+          "additionalProperties": false,
+          "properties": {
+            "contract": {
+              "type": "string"
+            },
+            "manifest_sha256": {
+              "pattern": "^[a-f0-9]{64}$",
+              "type": "string"
+            },
+            "revision": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "contract",
+            "revision",
+            "manifest_sha256"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "product_api",
+        "world_forge_api"
+      ],
+      "type": "object"
+    },
+    "fixture_set": {
+      "type": "object"
+    },
+    "generation": {
+      "type": "object"
+    },
+    "implementation_status": {
+      "const": "provider_backed_live_development_only",
+      "type": "string"
+    },
+    "publication_status": {
+      "enum": [
+        "draft",
+        "published"
+      ],
+      "type": "string"
+    },
+    "published_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "source": {
+      "type": "object"
+    },
+    "transport_status": {
+      "const": "manually_invoked_loopback_private_bff_only",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "contract_name",
+    "contract_revision",
+    "compatibility",
+    "publication_status",
+    "implementation_status",
+    "transport_status",
+    "backend_commit",
+    "published_at",
+    "dependencies",
+    "artifacts",
+    "fixture_set",
+    "generation",
+    "source"
+  ],
+  "type": "object"
+}

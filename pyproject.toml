@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dreamland"
+version = "0.1.0"
+description = "A configurable SSH simulation server with pluggable command agents."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+    "langchain-anthropic>=1.1,<2",
+    "langchain-openai>=1.3.5,<2",
+    "langchain-xai>=1.0,<2",
+    "langchain>=0.3",
+    "langfuse>=4",
+    "langgraph>=0.2",
+    "paramiko>=3.4,<4",
+    "prompt_toolkit>=3.0",
+]
+
+[project.optional-dependencies]
+admin = [
+    "fastapi>=0.115",
+    "mcp>=1.27,<2",
+    "uvicorn>=0.30",
+]
+dev = [
+    "jsonschema>=4,<5",
+    "mypy>=1.15",
+    "ruff>=0.11",
+]
+inspect = [
+    "inspect-ai",
+    "mcp>=1.27,<2",
+    "openai>=2.40",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"dreamland.default_state_profiles" = ["*.json"]
+"dreamland.deployment" = ["assets/*.json"]
+"dreamland.prompts" = ["*.md"]
+"dreamland.lobby_text" = ["*.txt"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "B",
+    "E",
+    "F",
+    "I",
+    "UP",
+]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["B007", "E402"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src/dreamland"]
+check_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+warn_redundant_casts = true
+warn_unused_ignores = true

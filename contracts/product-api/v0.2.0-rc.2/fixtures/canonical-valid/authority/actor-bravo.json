@@ -1,0 +1,8 @@
+{
+  "actor_context": "actor:preview_bravo_0001",
+  "authority_class": "presenter",
+  "expected_epoch_source": "getProductCapabilities.service_epoch",
+  "immutable_revision": "world-revision:preview_bravo_revision_0001",
+  "launch_grant": "launch-grant:preview_bravo_grant_00000001",
+  "selected_record_id": "selected-record:preview_bravo_0001"
+}
