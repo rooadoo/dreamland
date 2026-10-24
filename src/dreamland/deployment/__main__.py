@@ -34,6 +34,7 @@ def main(argv: list[str] | None = None) -> int:
         "validate",
         "show",
         "configure-ssh",
+        "configure-ssh-fast",
         "serve-ssh",
         "model-defaults",
     ):
@@ -104,6 +105,30 @@ def main(argv: list[str] | None = None) -> int:
                     sort_keys=True,
                 )
             )
+        elif arguments.command == "configure-ssh-fast":
+            configuration.validate(root, require_langfuse_credentials=False)
+            document, _ = storage.read_configuration(root)
+            if document["ssh_entry_mode"] != "lobby":
+                raise configuration.DeploymentError(
+                    "fast SSH logins require lobby entry mode"
+                )
+            if not sys.stdin.isatty():
+                raise configuration.DeploymentError(
+                    "configure-ssh-fast requires an interactive terminal"
+                )
+            normal_password = storage.read_secret(root, "ssh_password")
+            password = _prompt_secret("New DREAMLAND fast SSH password: ")
+            if password != _prompt_secret("Confirm fast SSH password: "):
+                raise configuration.DeploymentError(
+                    "fast SSH password confirmation did not match"
+                )
+            storage.validate_secret(password)
+            if password == normal_password:
+                raise configuration.DeploymentError(
+                    "fast SSH password must differ from the normal SSH password"
+                )
+            storage.write_secret(root, "ssh_fast_password", password)
+            print("Fast SSH password saved. Restart SSH to apply it.")
         elif arguments.command == "configure-ssh":
             # Langfuse completeness is intentionally not required here: for a
             # freshly initialized beta/conference deployment this command is
@@ -142,6 +167,12 @@ def main(argv: list[str] | None = None) -> int:
                         "SSH password confirmation did not match"
                     )
                 storage.validate_secret(password)
+                if storage.secret_present(root, "ssh_fast_password") and (
+                    password == storage.read_secret(root, "ssh_fast_password")
+                ):
+                    raise configuration.DeploymentError(
+                        "normal SSH password must differ from the fast SSH password"
+                    )
             if "openai_api_key" in needed:
                 api_key = _prompt_secret("Fresh deployment OpenAI API key: ")
                 storage.validate_secret(api_key)

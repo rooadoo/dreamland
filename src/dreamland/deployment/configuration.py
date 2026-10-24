@@ -300,6 +300,10 @@ def runtime_environment(
         environment["DREAMLAND_SSH_PASSWORD"] = storage.read_secret(
             root, "ssh_password"
         )
+        if storage.secret_present(root, "ssh_fast_password"):
+            environment["DREAMLAND_SSH_FAST_PASSWORD"] = storage.read_secret(
+                root, "ssh_fast_password"
+            )
     return environment
 
 

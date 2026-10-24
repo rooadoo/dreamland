@@ -347,6 +347,8 @@ relevant context for a change.
   explicit Fast defaults and local/demo adoption for every runtime model role.
 - [0119 Optional Lobby Entry Username](decisions/0119-optional-lobby-entry-username.md):
   saved-account resolution when adding a lobby entry without an explicit account.
+- [0130 Deployment Fast SSH Password](decisions/0130-deployment-fast-ssh-password.md):
+  optional persisted fast-login password, hidden setup, and restart handoff.
 
 The [contract inventory](../contracts/README.md) lists retained backend
 artifacts. The [developer tools review](../tools/README.md) records what remains

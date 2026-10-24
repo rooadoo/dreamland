@@ -15,7 +15,7 @@ from importlib.resources import files
 from pathlib import Path
 
 PROFILE_NAMES = ("lobby-supermarket", "lobby-colonyship", "lobby-offshore")
-SECRET_NAMES = frozenset({"ssh_password", "openai_api_key"})
+SECRET_NAMES = frozenset({"ssh_password", "ssh_fast_password", "openai_api_key"})
 _MARKER = ".initialized.json"
 _MARKER_DOCUMENT = {"kind": "dreamland.deployment.initialized", "schema_version": 1}
 _DIRECTORY_FLAGS = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC

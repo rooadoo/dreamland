@@ -106,7 +106,10 @@ The deployment foundation has provider-free owning suites
 create-once seeding and crash recovery, preservation of operator edits/removals,
 private file access, redacted failures, backend-only deployment policy, rejection
 of legacy combined UI/backend intent, and the daemon's credential/environment
-handoff. These checks do not prove Docker networking,
+handoff. Fast-password checks cover hidden setup/rotation, preservation of
+other credentials, confirmation and collision rejection, unsafe-file refusal,
+restart handoff, and authentication of both fast aliases. These checks do not
+prove Docker networking,
 container startup, provider access, or conference capacity. Record those results
 separately from the automated test results.
 

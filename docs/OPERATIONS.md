@@ -156,6 +156,13 @@ The demo password never admits a normal login, or vice versa. Spiritguide and
 enrichment keep their configured tiers. See [SSH Lobby](SSH_LOBBY.md#demo-service-tier)
 for connection lifetime, logging, and manual checks.
 
+In the Docker deployment, run `python -m dreamland.deployment configure-ssh-fast
+--root /var/lib/dreamland` from an interactive container terminal to initialize
+or rotate the optional fast password. Hidden prompts confirm a distinct,
+nonblank value and store it in the deployment volume without changing other
+credentials. Then restart the SSH container from the host. The launcher loads
+this stored value at startup; shell exports do not enable the existing process.
+
 The listener advertises password authentication only. It explicitly rejects
 public-key, none, keyboard-interactive, and GSSAPI authentication. Each
 connection may open one `session` channel for either a shell or an exec request.

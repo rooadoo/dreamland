@@ -15,6 +15,7 @@ from unittest.mock import patch
 
 from dreamland.deployment import configuration, storage
 from dreamland.deployment.__main__ import main
+from dreamland.ssh_auth import SharedPasswordAuthenticator
 
 
 class DeploymentConfigurationTests(unittest.TestCase):
@@ -142,7 +143,14 @@ class DeploymentConfigurationTests(unittest.TestCase):
         before = {
             path: path.read_bytes() for path in self.root.rglob("*") if path.is_file()
         }
-        for command in ("init", "validate", "show", "configure-ssh", "serve-ssh"):
+        for command in (
+            "init",
+            "validate",
+            "show",
+            "configure-ssh",
+            "configure-ssh-fast",
+            "serve-ssh",
+        ):
             with self.subTest(command=command), patch("os.execve") as execute:
                 code, output, error = self.invoke(command)
                 self.assertEqual(code, 1)
@@ -247,6 +255,7 @@ class DeploymentConfigurationTests(unittest.TestCase):
                     "OPENAI_BASE_URL": "https://lab.invalid",
                     "LANGFUSE_SECRET_KEY": "lab-trace",
                     "DREAMLAND_API_ENABLED": "true",
+                    "DREAMLAND_SSH_FAST_PASSWORD": "ambient-fast-password",
                     "HTTPS_PROXY": "http://lab.invalid",
                 },
             ),
@@ -266,12 +275,174 @@ class DeploymentConfigurationTests(unittest.TestCase):
             "OPENAI_BASE_URL",
             "LANGFUSE_SECRET_KEY",
             "DREAMLAND_API_ENABLED",
+            "DREAMLAND_SSH_FAST_PASSWORD",
             "HTTPS_PROXY",
         ):
             self.assertNotIn(key, environment)
         self.assertNotIn("deployment-key", output + error + str(argv))
         chdir.assert_called_once_with(self.root)
         umask.assert_called_once_with(0o077)
+
+    def test_fast_password_setup_survives_init_and_reaches_authentication(self) -> None:
+        storage.write_secret(self.root, "ssh_password", "normal-password")
+        storage.write_secret(self.root, "openai_api_key", "provider-key")
+        before = {
+            path: path.read_bytes() for path in self.root.rglob("*") if path.is_file()
+        }
+        with (
+            patch("sys.stdin.isatty", return_value=True),
+            patch("getpass.getpass", side_effect=["fast-password", "fast-password"]),
+        ):
+            code, output, error = self.invoke("configure-ssh-fast")
+        self.assertEqual(code, 0, error)
+        self.assertNotIn("fast-password", output + error)
+        self.assertEqual(before, {path: path.read_bytes() for path in before})
+        self.assertEqual(
+            (self.root / "secrets/ssh_fast_password").stat().st_mode & 0o777, 0o600
+        )
+        self.assertEqual(self.invoke("init")[0], 0)
+        with (
+            patch.dict(os.environ, {"DREAMLAND_SSH_FAST_PASSWORD": "ambient-password"}),
+            patch("os.execve") as execute,
+            patch("os.chdir"),
+            patch("os.umask"),
+        ):
+            code, output, error = self.invoke("serve-ssh")
+        self.assertEqual(code, 0, error)
+        environment = execute.call_args.args[2]
+        self.assertEqual(environment["DREAMLAND_SSH_FAST_PASSWORD"], "fast-password")
+        self.assertNotIn("fast-password", output + error)
+        authenticator = SharedPasswordAuthenticator(
+            environment["DREAMLAND_SSH_PASSWORD"],
+            required_username="dreamland",
+            allow_simple_login=True,
+            fast_password=environment["DREAMLAND_SSH_FAST_PASSWORD"],
+        )
+        for name in ("dreamland_fast", "dreamland_fast_simple"):
+            self.assertTrue(authenticator.authenticate_password(name, "fast-password"))
+            self.assertFalse(
+                authenticator.authenticate_password(name, "normal-password")
+            )
+        for name in ("dreamland", "dreamland_simple"):
+            self.assertTrue(
+                authenticator.authenticate_password(name, "normal-password")
+            )
+            self.assertFalse(authenticator.authenticate_password(name, "fast-password"))
+
+    def test_invalid_fast_password_preserves_all_stored_credentials(self) -> None:
+        storage.write_secret(self.root, "ssh_password", "normal-password")
+        storage.write_secret(self.root, "openai_api_key", "provider-key")
+        storage.write_secret(self.root, "ssh_fast_password", "previous-fast-password")
+        before = {
+            path: path.read_bytes() for path in self.root.rglob("*") if path.is_file()
+        }
+        for values in (
+            ["new-fast-password", "mismatch"],
+            ["normal-password", "normal-password"],
+            ["", ""],
+            ["   ", "   "],
+            ["bad\npassword", "bad\npassword"],
+        ):
+            with (
+                self.subTest(values=values),
+                patch("sys.stdin.isatty", return_value=True),
+                patch("getpass.getpass", side_effect=values),
+            ):
+                code, output, error = self.invoke("configure-ssh-fast")
+            self.assertEqual(code, 1)
+            self.assertNotIn("normal-password", output + error)
+            self.assertNotIn("previous-fast-password", output + error)
+            self.assertEqual(before, {path: path.read_bytes() for path in before})
+
+    def test_fast_password_rotation_preserves_normal_password_and_provider(
+        self,
+    ) -> None:
+        storage.write_secret(self.root, "ssh_password", "normal-password")
+        storage.write_secret(self.root, "openai_api_key", "provider-key")
+        storage.write_secret(self.root, "ssh_fast_password", "previous-fast-password")
+        with (
+            patch("sys.stdin.isatty", return_value=True),
+            patch("getpass.getpass", side_effect=["new-fast-password"] * 2),
+        ):
+            code, output, error = self.invoke("configure-ssh-fast")
+        self.assertEqual(code, 0, error)
+        self.assertEqual(
+            storage.read_secret(self.root, "ssh_fast_password"), "new-fast-password"
+        )
+        self.assertEqual(
+            storage.read_secret(self.root, "ssh_password"), "normal-password"
+        )
+        self.assertEqual(
+            storage.read_secret(self.root, "openai_api_key"), "provider-key"
+        )
+        self.assertNotIn("new-fast-password", output + error)
+
+    def test_fast_password_setup_requires_hidden_interactive_input(self) -> None:
+        storage.write_secret(self.root, "ssh_password", "normal-password")
+        with (
+            patch("sys.stdin.isatty", return_value=False),
+            patch("getpass.getpass") as prompt,
+        ):
+            code, _, error = self.invoke("configure-ssh-fast")
+        self.assertEqual(code, 1)
+        self.assertIn("interactive terminal", error)
+        prompt.assert_not_called()
+        with (
+            patch("sys.stdin.isatty", return_value=True),
+            patch("getpass.getpass", side_effect=getpass.GetPassWarning),
+        ):
+            code, _, _ = self.invoke("configure-ssh-fast")
+        self.assertEqual(code, 1)
+        self.assertFalse(storage.secret_present(self.root, "ssh_fast_password"))
+
+    def test_fast_password_setup_requires_a_normal_lobby_password(self) -> None:
+        with (
+            patch("sys.stdin.isatty", return_value=True),
+            patch("getpass.getpass") as prompt,
+        ):
+            code, _, _ = self.invoke("configure-ssh-fast")
+        self.assertEqual(code, 1)
+        prompt.assert_not_called()
+        document = configuration.default_document(ssh_entry_mode="direct")
+        (self.root / "deployment.json").write_text(json.dumps(document))
+        (self.root / "dreamland.ini").write_text(configuration.default_ini(document))
+        with patch("getpass.getpass") as prompt:
+            code, _, error = self.invoke("configure-ssh-fast")
+        self.assertEqual(code, 1)
+        self.assertIn("lobby entry mode", error)
+        prompt.assert_not_called()
+
+    def test_unsafe_fast_password_fails_before_daemon_start(self) -> None:
+        storage.write_secret(self.root, "ssh_password", "normal-password")
+        storage.write_secret(self.root, "openai_api_key", "provider-key")
+        storage.write_secret(self.root, "ssh_fast_password", "fast-password")
+        (self.root / "secrets/ssh_fast_password").chmod(0o644)
+        with patch("os.execve") as execute:
+            code, output, error = self.invoke("serve-ssh")
+        self.assertEqual(code, 1)
+        self.assertNotIn("fast-password", output + error)
+        execute.assert_not_called()
+
+    def test_normal_password_rotation_cannot_collide_with_stored_fast_password(
+        self,
+    ) -> None:
+        storage.write_secret(self.root, "ssh_password", "normal-password")
+        storage.write_secret(self.root, "openai_api_key", "provider-key")
+        storage.write_secret(self.root, "ssh_fast_password", "fast-password")
+        with (
+            patch("sys.stdin.isatty", return_value=True),
+            patch("getpass.getpass", side_effect=["fast-password"] * 2) as prompt,
+        ):
+            code, output, error = self.invoke("configure-ssh")
+        self.assertEqual(code, 1)
+        self.assertEqual(prompt.call_count, 2)
+        self.assertNotIn("fast-password", output + error)
+        self.assertEqual(
+            storage.read_secret(self.root, "ssh_password"), "normal-password"
+        )
+        self.assertEqual(
+            storage.read_secret(self.root, "openai_api_key"), "provider-key"
+        )
 
     def test_disabled_ssh_fails_before_exec(self) -> None:
         document = configuration.default_document(ssh=False)

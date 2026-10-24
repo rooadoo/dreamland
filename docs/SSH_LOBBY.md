@@ -134,6 +134,21 @@ demo aliases. A whitespace-only password or a password equal to the normal
 password fails lobby startup. Each password works only for its own login family.
 Reversed, repeated, or differently capitalized suffixes are rejected.
 
+Docker deployments store the optional password in the private deployment volume.
+Inside the updated container, initialize or rotate it with hidden prompts:
+
+```sh
+python -m dreamland.deployment configure-ssh-fast --root /var/lib/dreamland
+```
+
+Restart the SSH container from the host with `deploy/dreamlandctl restart`.
+This command changes only the fast password; normal SSH, OpenAI, and Langfuse
+credentials remain intact. The stored value enables both `dreamland_fast` and
+`dreamland_fast_simple`. Existing deployments without it keep those aliases
+disabled. An environment variable exported in an interactive container shell
+does not change the running server, and the deployment launcher ignores ambient
+credential overrides. See [decision 0130](decisions/0130-deployment-fast-ssh-password.md).
+
 ```sh
 ssh -t -p 2222 dreamland_fast@127.0.0.1
 ssh -t -p 2222 dreamland_fast_simple@127.0.0.1
